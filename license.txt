@@ -1,6 +1,6 @@
 ImproveMyCity - Report, vote and track non-emergency issues
 
-Copyright 2010, 2011 by Ioannis Tsampoulatidis, Nicos Komninos,
+Copyright 2011, 2012 by Ioannis Tsampoulatidis, Nicos Komninos,
 Christina Kakderi, Panagiotis Tsarchopoulos, 
 Research Committee of the Aristotle University of Thessaloniki
 
