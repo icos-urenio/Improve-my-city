@@ -1,0 +1,361 @@
+/**
+ * @version     1.0
+ * @package     com_improvemycity
+ * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * @author      URENIO Research Unit
+ */
+ 
+#markerInfo img{	padding: 2px; margin: 1px; border: none;}
+#wrapper-improvemycity {margin: 0;	padding: 0;}
+#toggleMap{	width: auto;float:right;text-align:right;}
+#toggleMap span{font-size: 10px;}
+
+#improvemycity{clear: both; position:relative;}
+
+#wrapper-filters{
+	position: absolute;
+	top: 55px;
+	right: 15px;
+	width: 200px;
+	height: 75%;
+	background-color: #ffffff;
+	padding: 10px;
+	
+}
+
+#wrapper-info{
+	position: absolute;
+	top: 55px;
+	left: 20px;
+	width: 340px;
+	height: 75%;
+	background-color: #ffffff;
+	padding: 10px;
+	display: none;
+	
+}
+
+#content-info, #content-filters{
+	clear: both;
+	overflow: auto;
+	width: auto;
+	height: 100%;
+}
+
+#content-filters h3{
+	margin: 5px;
+	padding: 5px 0;
+}
+.new-vote,
+.new-issue{
+	float: right;
+	background-color: #FFFFFF;
+
+	border-bottom: 1px solid #E02E65;
+	border-top: 1px solid #E02E65;
+	
+	font-size: 14px;
+    font-weight: bold;
+    margin: 10px 1px 0 1px;	
+	padding: 5px 10px;	
+	color: #45484C;
+}
+
+.new-vote {
+	display: block;
+	margin-top: -5px;
+}
+
+.new-vote a{	color: #45484C;}
+.vote-closed{color: #1090B0; font-size: 11px; float: right;}
+.comments-closed{color: #1090B0; font-size: 11px; float: right; padding: 15px 15px 0 0 ;}
+
+.filter-open{float: right;}
+
+.filter-close,
+.info-close{
+	float: right;
+	position: relative;
+	right: -1px;
+	top: -1px;
+	margin: 0;
+	padding: 0;
+	width: 18px;
+	height: 18px;
+}
+
+#wrapper-filters header .title,
+#wrapper-info header .title {
+    background-color: #780E00;
+    color: #FFFFFF;
+    float: left;
+    line-height: 30px;
+    margin: 0 0 14px -20px;
+    padding: 4px 15px 4px 10px;
+    position: relative;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+#wrapper-info h2,
+#wrapper-info h3,
+#wrapper-info h4 {margin: 5px 0;}
+
+#content-filters ul{margin: 0;padding-left: 16px;}
+#content-filters li{list-style-type:none;}
+
+#content-info ul{margin: 0;padding: 0;}
+#content-info li{list-style-type:none; display:inline;}
+
+
+
+/* issues and map */
+#details-sidebar{
+	float:left; 
+	width: 40%; 
+}
+#mapCanvas{
+	width: 95%; 
+	height: 300px;
+	margin: 10px auto;
+}
+#issues-list{
+	float:left;
+	width: 60%;
+}
+
+#improvemycity-filters{
+	margin: 10px;
+}
+#improvemycity-filters h2{
+}
+
+#ordering-content{
+	padding-left: 16px;
+}
+#adminForm .display-limit{
+	padding-top: 15px;
+}
+#adminForm .display-limit .inputbox{
+	width: 50px;
+}
+
+#mapCanvasNew{
+	float:left; 
+	width: 60%; 
+	height: 500px;
+	margin-top: 15px;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+#issue-form{
+	float:left;
+	width: 40%;
+}
+
+#adminForm label{
+	display: block;
+}
+
+#adminForm .inputbox{
+	width: 312px;
+	margin: 0;
+	
+}
+#adminForm #jform_catid {width: 322px;}
+#adminForm #jform_description{
+	max-height: 183px; min-height: 65px; max-width: 310px; min-width: 310px; width: 310px;
+}
+#adminForm select, #adminForm input, #adminForm  textarea{
+	color: #45484C;
+}
+#adminForm fieldset{
+	padding-top: 0;
+}
+
+.issue-item-details{
+	margin: 0 15px 10px 0;
+	padding: 5px;
+	border: solid 1px #ccc;
+	clear: both;
+}
+
+.issue-item{
+	margin: 0 15px 10px 0;
+	padding: 5px;
+	border: solid 1px #ccc;
+	clear: both;
+	overflow: hidden;
+	position: relative;
+}
+
+.issue-new{
+	margin: 0 0 10px 10px;
+	
+}
+
+.issue-item img, .issue-item img{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+
+.issue-votes{
+	float: left;
+	width: 60px;
+	height: 60px;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 2px rgba(0, 0, 0, 0.12);	
+}
+
+.issue-votes span.title{
+	display: block; 
+	width: 100%; 
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.issue-votes span.num{
+	width: 100%;
+	display: block; 
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 9px;
+}
+
+#steps {
+	margin-bottom: 20px;
+	font-weight: bold;
+}
+
+#steps span{
+	
+	margin-right: 10px;
+	
+}
+
+#steps img {
+	position: relative;
+	top: 5px;
+	padding-right: 5px;
+}
+
+
+.issue-review h2{ font-size: 14px; margin: 0; padding: 0;}
+.issue-review h2 span.status-OPEN, .issue-review h2 span.status-ACK, .issue-review h2 span.status-CLOSED{
+	margin-left: 10px;
+	font-weight: normal;
+}
+.status-OPEN{ color: green;}
+.status-ACK{ color: orange;}
+.status-CLOSED{ color: #1090B0;}
+.status-GRAY{ color: #ccc;}
+
+.issue-review{
+	padding-left: 5px;
+	margin-left: 70px;
+}
+
+.issue-posted{
+	display: inline;
+	color: #45484C;
+	font-size: 11px;
+}
+
+.issue-join {
+	display: block;
+	
+	font-size: 11px;
+	text-align: right;
+}
+
+.chat{
+	margin: 5px 75px 5px 75px;
+	padding: 0 0 5px 75x;
+	
+	background: url(../images/no-avatar.png) 0 0 no-repeat;
+	min-height: 36px;
+}
+
+.chat-info{
+	color: #1090B0;
+	font-size: 11px;
+	font-weight: bold;
+	display:block;
+	margin-left: 36px;
+}
+
+.chat-desc{
+	/* font-size: 10px; */
+	line-height: 15px;
+	display:block;
+	margin-left: 36px;
+}
+
+h2.issue-title{
+	margin: 0;
+	padding: 0;
+	color: #45484C;
+	
+}
+
+#issue-general-info{
+	padding: 15px;
+	margin-bottom: 15px;
+	border-bottom: 1px dashed #ccc;
+}
+
+#issue-description{
+	padding: 10px 5px 30px 5px;
+}
+
+#issue-description .img-wrp {	
+	float: left;
+	width: 100%;
+}
+#issue-description img {	
+	max-width:100%;
+	height:auto;
+	/* Give it some text styles to offset alt text */
+	font-style:italic;
+	color:#c00;
+
+}
+
+.strong{
+	font-weight: bold;
+	color: #334256;
+}
+.votes{
+	font-weight: bold;
+	font-size: 15px;
+	text-align: left;
+	display: inline;
+	padding: 10px 0;
+}
+
+
+#new_comment_wrapper{ 
+	margin: 30px 0;
+	padding: 5px 10px 0 5px;
+	/* box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 2px rgba(0, 0, 0, 0.12); */
+	overflow: hidden;
+}
+
+#addComment, #add-comment{
+	padding: 5px 0;
+	cursor: pointer;
+	font-weight: bold;
+	float: right;
+}
+
+#addComment:hover, #add-comment:hover{
+	color: #E02E2E;
+}
+
+#loading img{
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+
+form#adminForm {width: 100%;}
