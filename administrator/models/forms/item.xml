@@ -19,7 +19,7 @@
 		<field
 			name="catid"
 			type="category"
-			extension="com_IMPROVEMYCITY"
+			extension="com_improvemycity"
 			class="inputbox"
 			default=""
 			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_CATID_LABEL"
