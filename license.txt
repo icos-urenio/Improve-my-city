@@ -2,7 +2,7 @@ ImproveMyCity - Report, vote and track non-emergency issues
 
 Copyright 2011, 2012 by Ioannis Tsampoulatidis, Nicos Komninos,
 Christina Kakderi, Panagiotis Tsarchopoulos, 
-Research Committee of the Aristotle University of Thessaloniki
+URENIO Research Unit
 
 ImproveMyCity is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
