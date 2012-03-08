@@ -70,6 +70,11 @@ class ImprovemycityModelIssue extends JModelItem
 				$query->select('u.name AS username');
 				$query->join('LEFT', '#__users AS u on u.id = a.userid');	
 
+				// Join on catid table.
+				$query->select('c.title AS catname');
+				$query->join('LEFT', '#__categories AS c on c.id = a.catid');	
+
+				
 				$db->setQuery((string) $query);
 
 				if (!$db->query()) {

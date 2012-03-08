@@ -21,7 +21,7 @@
 			default=""
 			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_CATID_LABEL"
 			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_CATID_DESC"
-			required="false"
+			required="true"
 		>
 		
 			<option value="0">JOPTION_SELECT_CATEGORY</option>

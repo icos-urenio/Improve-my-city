@@ -138,22 +138,5 @@
 			type="hidden"
 		/>			
 	</fieldset>
-	<fields name="params">
-		<fieldset
-			name="params"
-			label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
-		>
-			<field
-				name="show_category"
-				type="list"
-				label="COM_INFOMAP_INFOMAP_FIELD_SHOW_CATEGORY_LABEL"
-				description="COM_INFOMAP_INFOMAP_FIELD_SHOW_CATEGORY_DESC"
-				default=""
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-		</fieldset>
-	</fields>
+	
 </form>

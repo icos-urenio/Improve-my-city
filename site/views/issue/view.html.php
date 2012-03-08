@@ -24,6 +24,11 @@ class ImprovemycityViewIssue extends JView
 	protected $guest;
 	protected $voted;
 	protected $hasVoted;
+	protected $language = '';
+	protected $region = '';
+	protected $lat = '';
+	protected $lon = '';
+	protected $searchterm = '';
 	
 	function display($tpl = null)
 	{
@@ -37,6 +42,17 @@ class ImprovemycityViewIssue extends JView
 		
 		$this->pageclass_sfx = htmlspecialchars($this->params->get('pageclass_sfx'));
 		
+		$lang = $this->params->get('maplanguage');
+		$region = $this->params->get('mapregion');
+		$lat = $this->params->get('latitude');
+		$lon = $this->params->get('longitude');
+		$term = $this->params->get('searchterm');
+		
+		$this->language = (empty($lang) ? "en" : $lang);
+		$this->region = (empty($region) ? "GB" : $region);
+		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
+		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
+		$this->searchterm = (empty($term) ? "" : $term);
 		
 		
 		//while inserting new issue: if model return false it redirects to view=issue&layout=edit	
@@ -79,9 +95,6 @@ class ImprovemycityViewIssue extends JView
 		
 		// Set the document
 		$this->setDocument();
-		
-		
-		
 	}
 
 	
@@ -123,17 +136,13 @@ class ImprovemycityViewIssue extends JView
 
 		
 		//add google maps
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=el&region=GR");
+		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/infobox_packed.js');	
 		
 		$document->addScriptDeclaration('var jsonMarkers = '.json_encode($this->getMarkerArrayFromItem()).';');
 		
-		$LAT = $this->item->latitude;
-		$LON = $this->item->longitude;
-		if($LAT == '' || $LON == ''){
-			$LAT = '20.54629751976399';
-			$LON = '23.01861169311519';
-		}
+		$LAT = $this->lat;
+		$LON = $this->lon;
 		
 		
 		$googleMapInit = "
@@ -324,7 +333,7 @@ class ImprovemycityViewIssue extends JView
 				html += '<p>' + marker.description + '</p>';
 
 				if(marker.photos != ''){
-					html += '<h3>Φωτογραφίες</h3>';
+					html += '<h3>Photos</h3>';
 					html += createInfoImages(marker);
 				}
 

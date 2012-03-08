@@ -30,11 +30,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				</h1>
 				<?php endif; ?>
 				
-				<!--
-				<a class="filter-open" href="#">Φίλτρα</a><br />
-				<div id="toggleMap"><a id="toggleMapSize" href="#"><span id="map-size">(Μεγάλος χάρτης)</span></a></div>
-				-->
-				
+	
 				<a class="new-issue" style="float: right;" href="<?php echo JRoute::_('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue');?>"><?php echo JText::_('REPORT_AN_ISSUE');?></a><br />
 				
 				<div id="loading"><img src="<?php echo JURI::base().'components/com_improvemycity/images/ajax-loader.gif';?>" /></div>
@@ -119,7 +115,9 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
 							<input type="hidden" name="status[0]" value="0" />
 							<input type="hidden" name="cat[0]" value="0" />
-							
+							<input type="hidden" name="limitstart" value="" />
+							<input type="hidden" name="task" value="" />
+
 							<div class="display-limit">
 								<?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>&#160;
 								<?php echo $this->getLimitBox; ?>

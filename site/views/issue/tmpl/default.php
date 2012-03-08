@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 //JHtml::_('behavior.modal');
-
+JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT'); 
 ?>
 <div id="system">	
 	<div id="wrapper-improvemycity">
@@ -64,10 +64,10 @@ defined('_JEXEC') or die;
 					<h2 class="issue-title">#<?php echo $this->item->id . ' ' . $this->item->title;?></h2>
 					<div id="issue-general-info">
 						
+						<span class="strong"><?php echo JText::_('CATEGORY');?></span><?php echo $this->item->catname;?><br />
 						<span class="strong"><?php echo JText::_('ADDRESS');?></span><?php echo $this->item->address;?><br />
 						<span class="strong"><?php echo JText::_('REPORTED_BY');?></span><?php echo $this->item->username . ' ' . $this->item->reported_rel;?><br />
 						<span class="strong"><?php echo JText::_('VIEWED');?></span><?php echo $this->item->hits;?><br />
-						
 
 						<span class="strong"><?php echo JText::_('ISSUE_STATUS');?></span><span class="status-<?php echo $status;?>"><?php echo JText::_($status);?></span>						
 						<p>

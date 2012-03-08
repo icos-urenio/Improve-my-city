@@ -50,7 +50,7 @@ JHtml::_('behavior.formvalidation');
 								echo $field->label;
 								echo $field->input;
 								if($field->id == 'jform_address'){
-									echo '<a href="javascript:void(0);" onclick="codeAddress();">'.JText::_('FIND_ADDRESS_ON_MAP').'</a>';
+									echo '<br /><a href="javascript:void(0);" onclick="codeAddress();">'.JText::_('FIND_ADDRESS_ON_MAP').'</a>';
 								}
 								?>
 								

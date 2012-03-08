@@ -29,6 +29,11 @@ class ImprovemycityViewIssues extends JView
 	protected $markers = '';
 	protected $statusFilters = '';
 	protected $getLimitBox = '';
+	protected $language = '';
+	protected $region = '';
+	protected $lat = '';
+	protected $lon = '';
+	protected $searchterm = '';
 	
 	function display($tpl = null)
 	{
@@ -54,6 +59,28 @@ class ImprovemycityViewIssues extends JView
 		//merge params
 		$this->params	= $this->state->get('params');
 		
+
+		/*
+			This method only for menu parameters namely: views/issues/tmpl/default.xml
+		$lang = JRequest::getVar('maplanguage');
+		$region = JRequest::getVar('mapregion');
+		$lat = JRequest::getFloat('latitude');
+		$lon = JRequest::getFloat('longitude');
+		$term = JRequest::getVar('searchterm');
+		*/
+		
+		$lang = $this->params->get('maplanguage');
+		$region = $this->params->get('mapregion');
+		$lat = $this->params->get('latitude');
+		$lon = $this->params->get('longitude');
+		$term = $this->params->get('searchterm');
+		
+		$this->language = (empty($lang) ? "en" : $lang);
+		$this->region = (empty($region) ? "GB" : $region);
+		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
+		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
+		$this->searchterm = (empty($term) ? "" : $term);
+
 		
 		
 		//testing: retrieve data from another model
@@ -61,9 +88,7 @@ class ImprovemycityViewIssues extends JView
 		//$item = $model->getItem();		
 		//testing ends
 		
-		
-		
-		
+
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) 
 		{
@@ -194,21 +219,13 @@ class ImprovemycityViewIssues extends JView
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 		
 		//add google maps
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=el&region=GR");
+		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=". $this->language ."&region=". $this->region);
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/infobox_packed.js');		
-
-
-
 
 		$document->addScriptDeclaration('var jsonMarkers = '.json_encode($this->getMarkersArrayFromItems()).';');
 		
-		
-		$LAT = ''; //todo get point from component's parameter
-		$LON = '';
-		if($LAT == '' || $LON == ''){
-			$LAT = '40.54629751976399';
-			$LON = '23.01861169311519';
-		}
+		$LAT = $this->lat;
+		$LON = $this->lon;
 		
 		//prepare custom icons according (get images from improvemycity categories)
 		

@@ -24,6 +24,11 @@ class ImprovemycityViewAddissue extends JView
 	protected $return_page;
 	protected $pageclass_sfx;
 	protected $guest;
+	protected $language = '';
+	protected $region = '';
+	protected $lat = '';
+	protected $lon = '';
+	protected $searchterm = '';	
 
 	
 	function display($tpl = null)
@@ -42,6 +47,18 @@ class ImprovemycityViewAddissue extends JView
 		$user =& JFactory::getUser();
 		$this->guest = $user->guest;
 		
+		$lang = $this->params->get('maplanguage');
+		$region = $this->params->get('mapregion');
+		$lat = $this->params->get('latitude');
+		$lon = $this->params->get('longitude');
+		$term = $this->params->get('searchterm');
+		
+		$this->language = (empty($lang) ? "en" : $lang);
+		$this->region = (empty($region) ? "GB" : $region);
+		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
+		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
+		$this->searchterm = (empty($term) ? "" : $term);
+
 		
 		// Get some data from the models
 		$this->state = $this->get('State');
@@ -75,21 +92,15 @@ class ImprovemycityViewAddissue extends JView
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.5.2.min.js');
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui.min.js');
 		
-		
-		
 		$document->addScript(JURI::root(true) . "/components/com_improvemycity/js/colorbox/jquery.colorbox-min.js");
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
-		//$document->addScript(JURI::root(true).'/components/com_improvemycity/js/comments.js');	
 
-		
 		//add google maps
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=el&region=GR");
+		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
 
-			$LAT = '40.54629751976399';
-			$LON = '23.01861169311519';
-	
-		
-		
+		$LAT = $this->lat;
+		$LON = $this->lon;
+
 		$googleMapInit = "
 			var geocoder = new google.maps.Geocoder();
 			var map;
@@ -111,8 +122,8 @@ class ImprovemycityViewAddissue extends JView
 			
 			
 			function codeAddress() {
-				var address = document.getElementById('jform_address').value + ' Θέρμη 57001';
-				geocoder.geocode( { 'address': address, 'language': 'el'}, function(results, status) {
+				var address = document.getElementById('jform_address').value + ' ".$this->searchterm."';
+				geocoder.geocode( { 'address': address, 'language': '".$this->language."'}, function(results, status) {
 				  if (status == google.maps.GeocoderStatus.OK) {
 					map.setCenter(results[0].geometry.location);
 					marker.setPosition(results[0].geometry.location);
@@ -125,7 +136,7 @@ class ImprovemycityViewAddissue extends JView
 					updateMarkerAddress(results[0].formatted_address);			
 
 				  } else {
-					alert('Δεν μπορεί να εντοπιστεί η διεύθυνση. Status: ' + status);
+					alert('".JText::_('COM_IMPROVEMYCITY_ADDRESS_NOT_FOUND')."');
 				  }
 				});		
 			}
@@ -134,12 +145,12 @@ class ImprovemycityViewAddissue extends JView
 			function geocodePosition(pos) {
 			  geocoder.geocode({
 				latLng: pos,
-				language: 'el'
+				language: '".$this->language."'
 			  }, function(responses) {
 				if (responses && responses.length > 0) {
 				  updateMarkerAddress(responses[0].formatted_address);
 				} else {
-				  updateMarkerAddress('Δεν μπορεί να εντοπιστεί η διεύθυνση.');
+				  updateMarkerAddress('".JText::_('COM_IMPROVEMYCITY_ADDRESS_NOT_FOUND')."');
 				}
 			  });
 			}
@@ -182,12 +193,12 @@ class ImprovemycityViewAddissue extends JView
 			  
 			  marker = new google.maps.Marker({
 				position: latLng,
-				title: 'Το σημείο για το οποίο γίνεται η αναφορά',
+				title: '".JText::_('COM_IMPROVEMYCITY_REPORT_LOCATION')."',
 				map: map,
 				draggable: true
 			  });
 			  
-			  var infoString = 'Σύρετε τον <span style=\"color: red;\">κόκκινο</span> δείκτη για να<br />βελτιώσετε τη γεωγραφική θέση';
+			  var infoString = '".JText::_('COM_IMPROVEMYCITY_DRAG_MARKER')."';
 			  
 				
 			  var infowindow = new google.maps.InfoWindow({
@@ -202,16 +213,14 @@ class ImprovemycityViewAddissue extends JView
 			  // Add dragging event listeners.
 			  google.maps.event.addListener(marker, 'dragstart', function() {
 				infowindow.close();
-				//updateMarkerAddress('Μετακίνηση...');
+				
 			  });
 			  
 			  google.maps.event.addListener(marker, 'drag', function() {
-				//updateMarkerStatus('Μετακίνηση...');
-				//updateMarkerPosition(marker.getPosition());
+
 			  });
 			  
 			  google.maps.event.addListener(marker, 'dragend', function() {
-				//updateMarkerStatus('Drag ended');
 				updateMarkerPosition(marker.getPosition());
 				infowindow.open(map, marker);
 				geocodePosition(marker.getPosition());
@@ -250,3 +259,4 @@ class ImprovemycityViewAddissue extends JView
 	
 	
 }
+//Σύρετε τον <span style=\"color: red;\">κόκκινο</span> δείκτη για να<br />βελτιώσετε τη γεωγραφική θέση

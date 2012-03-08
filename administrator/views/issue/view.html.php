@@ -20,7 +20,12 @@ class ImprovemycityViewIssue extends JView
 	protected $state;
 	protected $item;
 	protected $form;
-
+	
+	protected $language = '';
+	protected $region = '';
+	protected $lat = '';
+	protected $lon = '';
+	protected $searchterm = '';
 	/**
 	 * Display the view
 	 */
@@ -30,6 +35,17 @@ class ImprovemycityViewIssue extends JView
 		$this->item		= $this->get('Item');
 		$this->form		= $this->get('Form');
 
+		$lang = $this->state->params->get('maplanguage');
+		$region = $this->state->params->get('mapregion');
+		$lat = $this->state->params->get('latitude');
+		$lon = $this->state->params->get('longitude');
+		$term = $this->state->params->get('searchterm');
+		
+		$this->language = (empty($lang) ? "en" : $lang);
+		$this->region = (empty($region) ? "GB" : $region);
+		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
+		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
+		$this->searchterm = (empty($term) ? "" : $term);
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
@@ -92,13 +108,13 @@ class ImprovemycityViewIssue extends JView
 		$document = JFactory::getDocument();
 		$document->setTitle($isNew ? JText::_('COM_IMPROVEMYCITY_IMPROVEMYCITY_CREATING') : JText::_('COM_IMPROVEMYCITY_IMPROVEMYCITY_EDITING'));
 		
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=el&region=GR");
+		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
 
 		$LAT = $this->form->getValue('latitude');
 		$LON = $this->form->getValue('longitude');
 		if($isNew || $LAT == '' || $LON == ''){
-			$LAT = '40.54629751976399';
-			$LON = '23.01861169311519';
+			$LAT = $this->lat;
+			$LON = $this->lon;
 		}
 		
 		$googleMapInit = "
@@ -118,8 +134,8 @@ class ImprovemycityViewIssue extends JView
 			
 			
 			function codeAddress() {
-				var address = document.getElementById('address').value + ' Θέρμη 57001';
-				geocoder.geocode( { 'address': address, 'language': 'el'}, function(results, status) {
+				var address = document.getElementById('address').value + ' ".$this->searchterm."';
+				geocoder.geocode( { 'address': address, 'language': '".$this->language."'}, function(results, status) {
 				  if (status == google.maps.GeocoderStatus.OK) {
 					map.setCenter(results[0].geometry.location);
 					marker.setPosition(results[0].geometry.location);
@@ -130,7 +146,7 @@ class ImprovemycityViewIssue extends JView
 					updateMarkerAddress(results[0].formatted_address);			
 
 				  } else {
-					alert('Η διεύθυνση δε μπορεί να βρεθεί. Status: ' + status);
+					alert('".JText::_('COM_IMPROVEMYCITY_ADDRESS_NOT_FOUND')."');
 				  }
 				});		
 			}
@@ -139,12 +155,12 @@ class ImprovemycityViewIssue extends JView
 			function geocodePosition(pos) {
 			  geocoder.geocode({
 				latLng: pos,
-				language: 'el'
+				language: '".$this->language."'
 			  }, function(responses) {
 				if (responses && responses.length > 0) {
 				  updateMarkerAddress(responses[0].formatted_address);
 				} else {
-				  updateMarkerAddress('Δεν μπορεί να εντοπιστεί η διεύθυνση.');
+				  updateMarkerAddress('".JText::_('COM_IMPROVEMYCITY_ADDRESS_NOT_FOUND')."');
 				}
 			  });
 			}
@@ -187,13 +203,13 @@ class ImprovemycityViewIssue extends JView
 			  
 			  marker = new google.maps.Marker({
 				position: latLng,
-				title: 'Το σημείο για το οποίο γίνεται η αναφορά',
+				title: '".JText::_('COM_IMPROVEMYCITY_REPORT_LOCATION')."',
 				map: map,
 				draggable: true
 			  });
 			  
-			  var infoString = 'Σύρετε τον κόκκινο δείκτη για να<br />βελτιώσετε τη γεωγραφική θέση';
 			  
+			  var infoString = '".JText::_('COM_IMPROVEMYCITY_DRAG_MARKER')."';
 				
 			  var infowindow = new google.maps.InfoWindow({
 				content: infoString
@@ -207,16 +223,14 @@ class ImprovemycityViewIssue extends JView
 			  // Add dragging event listeners.
 			  google.maps.event.addListener(marker, 'dragstart', function() {
 				infowindow.close();
-				updateMarkerAddress('Μετακίνηση...');
+				updateMarkerAddress('".JText::_('COM_IMPROVEMYCITY_MOVING')."');
 			  });
 			  
 			  google.maps.event.addListener(marker, 'drag', function() {
-				//updateMarkerStatus('Μετακίνηση...');
 				updateMarkerPosition(marker.getPosition());
 			  });
 			  
 			  google.maps.event.addListener(marker, 'dragend', function() {
-				//updateMarkerStatus('Drag ended');
 				infowindow.open(map, marker);
 				geocodePosition(marker.getPosition());
 			  });
@@ -233,7 +247,6 @@ class ImprovemycityViewIssue extends JView
 		//add the javascript to the head of the html document
 		$document->addScriptDeclaration($googleMapInit);
 	
-		JText::script('COM_IMPROVEMYCITY_IMPROVEMYCITY_ERROR_UNACCEPTABLE');
 	}	
 	
 }

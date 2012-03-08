@@ -5,15 +5,36 @@
 		description="COM_IMPROVEMYCITY_COMPONENT_DESC"
 	>
 
-        <field name="test"
-             type="radio"
-             default="1"
-             label="COM_IMPROVEMYCITY_TEST_LABEL"
-             description="COM_IMPROVEMYCITY_TEST_DESC">
-                 <option value="0">JHIDE</option>
-                 <option value="1">JSHOW</option>
-         </field>
-
+			<field
+				name="latitude"
+				type="improvemycity"
+				label="Latitude"
+				description="Set the initial google map latitude (e.g. 40.54629751976399)"
+			/>
+			<field
+				name="longitude"
+				type="improvemycity"
+				label="Longitude"
+				description="Set the initial google map longitude (e.g. 23.01861169311519)"
+			/>
+			<field
+				name="maplanguage"
+				type="improvemycity"
+				label="Map Language"
+				description="Setting the google map language so as to display addresses correctly (e.g. en)"
+			/>			
+			<field
+				name="mapregion"
+				type="improvemycity"
+				label="Map Region"
+				description="Setting the google map language so as to display addresses correctly (e.g. GR)"
+			/>
+			<field
+				name="searchterm"
+				type="improvemycity"
+				label="Hidden search term"
+				description="Define a hidden term for reverse geocoding like the name of a Municipality or Post Office"
+			/>
 	</fieldset>
 
 	<fieldset name="permissions"
@@ -22,7 +43,7 @@
 	>
 
 		<field name="rules" type="rules"
-			component="com_IMPROVEMYCITY"
+			component="com_improvemycity"
 			filter="rules"
 			validate="rules"
 			label="JCONFIG_PERMISSIONS_LABEL"
