@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
 /**
  * View class for a list of Improvemycity.
  */
-class ImprovemycityViewIssues extends JView
+class ImprovemycityViewComments extends JView
 {
 	protected $items;
 	protected $pagination;
@@ -50,20 +50,20 @@ class ImprovemycityViewIssues extends JView
 		require_once JPATH_COMPONENT.DS.'helpers'.DS.'improvemycity.php';
 
 		$state	= $this->get('State');
-		$canDo	= ImprovemycityHelper::getActions($state->get('filter.category_id'));
-		
-		JToolBarHelper::title(JText::_('COM_IMPROVEMYCITY_TITLE_ITEMS'), 'items.png');
+		$canDo	= ImprovemycityHelper::getActions($state->get('filter.improvemycityid'));
+
+		JToolBarHelper::title(JText::_('COM_IMPROVEMYCITY_TITLE_COMMENTS'), 'items.png');
 
         //Check if the form exists before showing the add/edit buttons
-        $formPath = JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'issue';
+        $formPath = JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'comment';
         if (file_exists($formPath)) {
 
             if ($canDo->get('core.create')) {
-			    JToolBarHelper::addNew('issue.add','JTOOLBAR_NEW');
+			    JToolBarHelper::addNew('comment.add','JTOOLBAR_NEW');
 		    }
 
 		    if ($canDo->get('core.edit')) {
-			    JToolBarHelper::editList('issue.edit','JTOOLBAR_EDIT');
+			    JToolBarHelper::editList('comment.edit','JTOOLBAR_EDIT');
 		    }
 
         }
@@ -72,29 +72,29 @@ class ImprovemycityViewIssues extends JView
 
             if (isset($this->items[0]->state)) {
 			    JToolBarHelper::divider();
-			    JToolBarHelper::custom('issues.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			    JToolBarHelper::custom('issues.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+			    JToolBarHelper::custom('comments.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+			    JToolBarHelper::custom('comments.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
             } else {
                 //If this component does not use state then show a direct delete button as we can not trash
-                JToolBarHelper::deleteList('', 'issues.delete','JTOOLBAR_DELETE');
+                JToolBarHelper::deleteList('', 'comments.delete','JTOOLBAR_DELETE');
             }
 
             if (isset($this->items[0]->state)) {
 			    JToolBarHelper::divider();
-			    JToolBarHelper::archiveList('issues.archive','JTOOLBAR_ARCHIVE');
+			    JToolBarHelper::archiveList('comments.archive','JTOOLBAR_ARCHIVE');
             }
             if (isset($this->items[0]->checked_out)) {
-            	JToolBarHelper::custom('issues.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+            	JToolBarHelper::custom('comments.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
             }
 		}
         
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
 		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    JToolBarHelper::deleteList('', 'issues.delete','JTOOLBAR_EMPTY_TRASH');
+			    JToolBarHelper::deleteList('', 'comments.delete','JTOOLBAR_EMPTY_TRASH');
 			    JToolBarHelper::divider();
 		    } else if ($canDo->get('core.edit.state')) {
-			    JToolBarHelper::trash('issues.trash','JTOOLBAR_TRASH');
+			    JToolBarHelper::trash('comments.trash','JTOOLBAR_TRASH');
 			    JToolBarHelper::divider();
 		    }
         }

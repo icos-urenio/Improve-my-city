@@ -21,7 +21,7 @@ $canOrder	= $user->authorise('core.edit.state', 'com_improvemycity');
 $saveOrder	= $listOrder == 'a.ordering';
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_improvemycity&view=issues'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_improvemycity&view=comments'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
@@ -31,15 +31,12 @@ $saveOrder	= $listOrder == 'a.ordering';
 		</div>
 		<div class="filter-select fltrt">
 
-			<select name="filter_category_id" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_CATEGORY');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('category.options', 'com_improvemycity'), 'value', 'text', $this->state->get('filter.category_id'));?>
-			</select>			
+            
 
 		</div>
 	</fieldset>
 	<div class="clr"> </div>
-	<?php if(empty($this->items)) {echo '<strong>'.JText::_('COM_IMPROVEMYCITY_NO_ISSUES_YET').'</strong>'; }?>
+	<?php if(empty($this->items)) {echo '<strong>'.JText::_('COM_IMPROVEMYCITY_NO_COMMMENTS_YET').'</strong>'; }?>
 
 	<table class="adminlist">
 		<thead>
@@ -52,7 +49,7 @@ $saveOrder	= $listOrder == 'a.ordering';
 				<th width="10%">
 					<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ORDERING', 'a.ordering', $listDirn, $listOrder); ?>
 					<?php if ($canOrder && $saveOrder) :?>
-						<?php echo JHtml::_('grid.order',  $this->items, 'filesave.png', 'issues.saveorder'); ?>
+						<?php echo JHtml::_('grid.order',  $this->items, 'filesave.png', 'comments.saveorder'); ?>
 					<?php endif; ?>
 				</th>
                 <?php } ?>
@@ -61,9 +58,9 @@ $saveOrder	= $listOrder == 'a.ordering';
                     <?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>
-                <?php if (isset($this->items[0]->title)) { ?>
+                <?php if (isset($this->items[0]->description)) { ?>
                 <th width="54%" class="nowrap">
-                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_TITLE', 'a.title', $listDirn, $listOrder); ?>
+                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_TITLE', 'a.description', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>
                 <?php if (isset($this->items[0]->state)) { ?>
@@ -71,14 +68,14 @@ $saveOrder	= $listOrder == 'a.ordering';
 					<?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.state', $listDirn, $listOrder); ?>
 				</th>
                 <?php } ?>
-                <?php if (isset($this->items[0]->catid)) { ?>
+                <?php if (isset($this->items[0]->userid)) { ?>
                 <th width="30%" class="nowrap">
-                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_CATEGORY', 'a.catid', $listDirn, $listOrder); ?>
+                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_USERID', 'a.userid', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>					
-                <?php if (isset($this->items[0]->currentstatus)) { ?>
+                <?php if (isset($this->items[0]->improvemycityid)) { ?>
                 <th width="30%" class="nowrap">
-                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_CURRENTSTATUS', 'a.currentstatus', $listDirn, $listOrder); ?>
+                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_IMPROVEMYCITYID', 'a.improvemycityid', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>					
 				
@@ -111,11 +108,11 @@ $saveOrder	= $listOrder == 'a.ordering';
 					    <?php if ($canChange) : ?>
 						    <?php if ($saveOrder) :?>
 							    <?php if ($listDirn == 'asc') : ?>
-								    <span><?php echo $this->pagination->orderUpIcon($i, true, 'issues.orderup', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
+								    <span><?php echo $this->pagination->orderUpIcon($i, true, 'comments.orderup', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
 								    <span><?php echo $this->pagination->orderDownIcon($i, $this->pagination->total, true, 'items.orderdown', 'JLIB_HTML_MOVE_DOWN', $ordering); ?></span>
 							    <?php elseif ($listDirn == 'desc') : ?>
-								    <span><?php echo $this->pagination->orderUpIcon($i, true, 'issues.orderdown', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
-								    <span><?php echo $this->pagination->orderDownIcon($i, $this->pagination->total, true, 'issues.orderup', 'JLIB_HTML_MOVE_DOWN', $ordering); ?></span>
+								    <span><?php echo $this->pagination->orderUpIcon($i, true, 'comments.orderdown', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
+								    <span><?php echo $this->pagination->orderDownIcon($i, $this->pagination->total, true, 'comments.orderup', 'JLIB_HTML_MOVE_DOWN', $ordering); ?></span>
 							    <?php endif; ?>
 						    <?php endif; ?>
 						    <?php $disabled = $saveOrder ?  '' : 'disabled="disabled"'; ?>
@@ -131,44 +128,33 @@ $saveOrder	= $listOrder == 'a.ordering';
 				</td>
                 <?php } ?>
 
-               <?php if (isset($this->items[0]->title)) { ?>
+               <?php if (isset($this->items[0]->description)) { ?>
 				<td>
-					<a href="<?php echo JRoute::_('index.php?option=com_improvemycity&task=issue.edit&id=' . $item->id); ?>">
-						<?php echo $item->title; ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_improvemycity&task=comment.edit&id=' . $item->id); ?>">
+						<?php echo $item->description; ?>
 					</a>		
 					<br />
 				</td>
                 <?php } ?>				
                 <?php if (isset($this->items[0]->state)) { ?>
 				    <td class="center">
-					    <?php echo JHtml::_('jgrid.published', $item->state, $i, 'issues.', $canChange, 'cb'); ?>
+					    <?php echo JHtml::_('jgrid.published', $item->state, $i, 'comments.', $canChange, 'cb'); ?>
 				    </td>
                 <?php } ?>		
-                <?php if (isset($this->items[0]->catid)) { ?>
+                <?php if (isset($this->items[0]->userid)) { ?>
 				<td>
-					<?php echo '<strong>'.$item->category.'</strong>'; 
-						if($item->path == '') echo ' -'; else echo ' ('.$item->path.')';
+					<?php echo '<strong>'.$item->userid.'</strong>'; 
+						//if($item->path == '') echo ' -'; else echo ' ('.$item->path.')';
 					?>
 					
 				</td>
                 <?php } ?>		
-                <?php if (isset($this->items[0]->currentstatus)) { ?>
-				    <td class="center">
-					    <?php 
-							switch ((int) $item->currentstatus){
-								case 1:
-									echo JText::_('JOPTION_SELECT_STATUS_OPEN');
-								break;
-								case 2:
-									echo JText::_('JOPTION_SELECT_STATUS_ACK');
-								break;
-								case 3:
-									echo JText::_('JOPTION_SELECT_STATUS_CLOSED');
-								break;
-							}
-						?>
-				    </td>
-                <?php } ?>					
+
+
+
+
+
+
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
@@ -181,5 +167,4 @@ $saveOrder	= $listOrder == 'a.ordering';
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
-	
 </form>

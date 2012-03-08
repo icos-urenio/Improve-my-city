@@ -14,7 +14,7 @@ jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Improvemycity records.
  */
-class ImprovemycityModelissues extends JModelList
+class ImprovemycityModelitems extends JModelList
 {
 
     /**
@@ -47,8 +47,7 @@ class ImprovemycityModelissues extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
-		$session = JFactory::getSession();
+		$app = JFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
@@ -57,15 +56,12 @@ class ImprovemycityModelissues extends JModelList
 		$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
 		$this->setState('filter.state', $published);
 
-		$categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
-		$this->setState('filter.category_id', $categoryId);		
-		
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_improvemycity');
 		$this->setState('params', $params);
 
 		// List state information.
-		parent::populateState('a.id', 'desc');
+		parent::populateState('a.id', 'asc');
 	}
 
 	/**
@@ -84,7 +80,7 @@ class ImprovemycityModelissues extends JModelList
 		// Compile the store id.
 		$id.= ':' . $this->getState('filter.search');
 		$id.= ':' . $this->getState('filter.state');
-		$id	.= ':'.$this->getState('filter.category_id');
+
 		return parent::getStoreId($id);
 	}
 
@@ -123,14 +119,7 @@ class ImprovemycityModelissues extends JModelList
                 $query->where('(a.title LIKE '.$search.')');
 			}
 		}
-		
-		// Filter by a single or group of categories.
-		$baselevel = 1;
-		$categoryId = $this->getState('filter.category_id');
-		if (is_numeric($categoryId)) {
-			$query->where('a.catid IN ('.$categoryId.')');
-		}
-		
+
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');
 		$orderDirn	= $this->state->get('list.direction');

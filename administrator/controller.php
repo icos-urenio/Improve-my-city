@@ -30,7 +30,8 @@ class ImprovemycityController extends JController
 		ImprovemycityHelper::addSubmenu(JRequest::getCmd('view', 'issues'));
 
 		$view = JRequest::getCmd('view', 'issues');
-        JRequest::setVar('view', $view);
+        
+		JRequest::setVar('view', $view);
 
 		parent::display();
 

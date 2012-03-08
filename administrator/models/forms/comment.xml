@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_improvemycity/models/rules">
+	<fieldset name="details">
+		<field
+			name="id"
+			type="hidden"
+		/>
+		<field
+			name="userid"
+			type="text"
+			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_TITLE_LABEL"
+			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_TITLE_DESC"
+			size="46"
+			class="inputbox validate-title"
+			required="true"
+			default=""
+		/>
+	
+		<field
+			name="description"
+			type="textarea"
+			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_DESCRIPTION_LABEL"
+			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_DESCRIPTION_DESC"
+			class="inputbox validate-description"
+			filter="safehtml"
+			buttons="false"
+			hide="readmore,pagebreak,toggleeditor"
+			required="true"
+			default=""
+			rows="5"
+			cols="200"
+		/>		
+	
+		
+		
+
+		
+			
+		<field type="spacer" name="spacer2" hr="true" />
+		
+		<field
+			name="userid"
+			type="hidden"
+		/>			
+	</fieldset>
+	
+</form>
