@@ -56,7 +56,7 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	*/	
 	public function save($data)
 	{
-		//$data = JRequest::getVar('jform', array(), 'post', 'array');
+		$data = JRequest::getVar('jform', array(), 'post', 'array');
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
 		
 		if ($file) {
@@ -217,6 +217,45 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		$this->setState($this->getName().'.id', $table->$pkName);
 		}
 		$this->setState($this->getName().'.new', $isNew);
+
+
+		/**
+		*----------------------   Send notification mail 
+		**/
+		//get the link to the newly created issue
+		$issueLink = $_SERVER['HTTP_HOST'] .  JRoute::_('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
+		
+		//get the recipient email as defined in the "note" field of the selected category
+		$issueRecipient = '';
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$query->select('a.note as note');
+		$query->from('`#__categories` AS a');
+		
+		$query->where('a.id = ' . $data['catid']);		
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		if(!empty($result)){
+			$issueRecipient = $result;
+		}		
+
+		//various information like username, title, etc set on subject and body
+		$user = JFactory::getUser();
+
+		$app = JFactory::getApplication();
+		$mailfrom	= $app->getCfg('mailfrom');
+		$fromname	= $app->getCfg('fromname');
+		$sitename	= $app->getCfg('sitename');
+
+		$subject = 'New issue is submitted by ' . $user->name  ;
+		$body = 'A <a href="'.$issueLink.'">new issue</a> is submitted by '. $user->name . ' entitled: ' . $data['title'] . ' at ' . $data['address'];
+
+		$mail = JFactory::getMailer();
+		$mail->addRecipient($issueRecipient);
+		$mail->setSender(array($mailfrom, $fromname));
+		$mail->setSubject($sitename.': '.$subject);
+		$mail->setBody($body);
+		$sent = $mail->Send();
 
 		return true;		
 
