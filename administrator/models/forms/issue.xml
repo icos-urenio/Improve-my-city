@@ -12,7 +12,6 @@
 			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_TITLE_DESC"
 			size="46"
 			class="inputbox validate-title"
-			validate="title"
 			required="true"
 			default=""
 		/>
@@ -87,7 +86,6 @@
 			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_VOTES_DESC"
 			size="4"
 			class="inputbox validate-votes"
-			validate="votes"
 			required="false"
 			default=""
 		/>		
