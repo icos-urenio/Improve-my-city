@@ -1,0 +1,6 @@
+#imc-lock {
+	background: url(../images/lock.png) no-repeat 50% 50% transparent;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCCFCFCF,endColorstr=#CCCFCFCF)"; /* IE8 */    
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCCFCFCF,endColorstr=#CCCFCFCF);   /* IE6 & 7 */      
+	zoom: 1;
+}

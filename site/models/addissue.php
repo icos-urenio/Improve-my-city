@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -28,7 +28,10 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	 */
 	public function getReturnPage()
 	{
-		return base64_encode(JRoute::_('index.php?option=com_improvemycity&view=issues'));
+
+		//return base64_encode(JRoute::_('index.php?option=com_improvemycity&view=issues'));
+		//return base64_encode(JRoute::_('index.php?option=com_improvemycity&view=issues&Itemid='.JRequest::getint( 'Itemid' )));
+		return base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issues'));
 	}
 	
 	
@@ -49,6 +52,15 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		$this->setState('return_page', base64_decode($return));		
 	}
 
+	/**
+	 * Method to get the script that have to be included on the form
+	 *
+	 * @return string	Script files
+	 */
+	public function getScript() 
+	{
+		return 'components/com_improvemycity/models/forms/issue.js';
+	}	
 	 
 	/**
 	* Get file (photo) from POST and save it
@@ -218,45 +230,93 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		}
 		$this->setState($this->getName().'.new', $isNew);
 
-
-		/**
-		*----------------------   Send notification mail 
-		**/
-		//get the link to the newly created issue
-		$issueLink = $_SERVER['HTTP_HOST'] .  JRoute::_('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
 		
-		//get the recipient email as defined in the "note" field of the selected category
+		/* TODO: Tide up the following lines to a decent member function...  */
+		/* TODO: Translate strings...  */
+		
+		//get the link to the newly created issue
+		$issueLink = 'http://'. $_SERVER['HTTP_HOST'] . ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
+
+		//$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&layout=edit&id='.$table->id;
+		/*fixing "You are not permitted to use that link to directly access that page"*/
+		$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&task=issue.edit&id='.$table->id; 
+		
+		
+		$user = JFactory::getUser();
+		$app = JFactory::getApplication();
+		$mailfrom	= $app->getCfg('mailfrom');
+		$fromname	= $app->getCfg('fromname');
+		$sitename	= $app->getCfg('sitename');		
+
+
+		/* (A) ****--- Send notification mail to appropriate admin (as defined on category) */
+		
+		//get the recipient email(s) as defined in the "note" field of the selected category
 		$issueRecipient = '';
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
-		$query->select('a.note as note');
+		$query->select('a.note as note, a.title as title');
 		$query->from('`#__categories` AS a');
 		
 		$query->where('a.id = ' . $data['catid']);		
 		$db->setQuery($query);
-		$result = $db->loadResult();
-		if(!empty($result)){
-			$issueRecipient = $result;
+		//$result = $db->loadResult();
+		$row = $db->loadAssoc();
+		if(!empty($row)){
+			$issueRecipient = $row['note'];
+			$arRecipient = explode(";",$issueRecipient);
+			$arRecipient = array_filter($arRecipient, 'strlen');
+			$categoryTitle = $row['title'];
 		}		
 
-		//various information like username, title, etc set on subject and body
-		$user = JFactory::getUser();
+		if(!empty($issueRecipient)){		//only if category note contains email(s)
+			$subject = 'Νέο αίτημα από χρήστη: ' . $user->name  .' (' . $user->email . ')';
+	
+			$body = '';
+			$body .= 'Ένα νέο αίτημα καταχωρήθηκε στο σύστημα που σχετίζεται με την κατηγορία: ' . $categoryTitle . '.' . '<br />';
+			$body .= 'To αίτημα "'.$data['title'].'" είναι σχετικό με τη διεύθυνση: "'.$data['address'].'".' . '<br />';
+			$body .= 'Ακολουθήστε <a href="'.$issueLink.'">αυτό το σύνδεσμο</a> για να το δείτε και να το εκτυπώσετε.' . '<br />';
+			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
+			$body .= '<br /><br />';
+			$body .= 'Ακολουθήστε <a href="'.$issueAdminLink.'">αυτό το σύνδεσμο</a> για να το δείτε και να το διαχειριστείτε.' . '<br />';
+			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueAdminLink;			
 
-		$app = JFactory::getApplication();
-		$mailfrom	= $app->getCfg('mailfrom');
-		$fromname	= $app->getCfg('fromname');
-		$sitename	= $app->getCfg('sitename');
+			$mail = JFactory::getMailer();
+			$mail->isHTML(true);
+			$mail->Encoding = 'base64';
+			foreach($arRecipient as $recipient)
+				$mail->addRecipient($recipient);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject($sitename.': '.$subject);
+			$mail->setBody($body);
+			$sent = $mail->Send();
+		}
+		
 
-		$subject = 'New issue is submitted by ' . $user->name  ;
-		$body = 'A <a href="'.$issueLink.'">new issue</a> is submitted by '. $user->name . ' entitled: ' . $data['title'] . ' at ' . $data['address'];
-
-		$mail = JFactory::getMailer();
-		$mail->addRecipient($issueRecipient);
-		$mail->setSender(array($mailfrom, $fromname));
-		$mail->setSubject($sitename.': '.$subject);
-		$mail->setBody($body);
-		$sent = $mail->Send();
-
+		/* (B) ****---   Send notification mail to the user who submitted the issue */
+		// recipient is the user
+		$issueRecipient = $user->email;
+		
+		if($issueRecipient != ''){		//check just in case...
+			$subject = 'Υποβολή νέου αιτήματος';
+			
+			$body = '';
+			$body .= 'Το αίτημά σας καταχωρήθηκε με επιτυχία. Μπορείτε να το δείτε <a href="'.$issueLink.'">εδώ</a>.' . '<br />';
+			$body .= 'Για κάθε ενέργεια του Δήμου σχετικά με το αίτημά σας θα λαμβάνετε ενημερωτικό email.' . '<br />';
+			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
+			
+			$mail = JFactory::getMailer();
+			$mail->isHTML(true);
+			$mail->Encoding = 'base64';
+			$mail->addRecipient($issueRecipient);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject($sitename.': '.$subject);
+			$mail->setBody($body);
+			$sent = $mail->Send();		
+			//also inform user at the frontend for the email that is about to receive
+			JFactory::getApplication()->enqueueMessage( 'Το αίτημα σας καταχωρήθηκε με επιτυχία. Θα λάβετε ενημερωτικό email.' );				
+		}
+		
 		return true;		
 
 	}

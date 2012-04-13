@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -17,6 +17,7 @@ jimport('joomla.application.component.view');
  */
 class ImprovemycityViewAddissue extends JView
 {
+	protected $script;
 	protected $state;
 	protected $item;
 	protected $form;
@@ -64,6 +65,10 @@ class ImprovemycityViewAddissue extends JView
 		$this->state = $this->get('State');
 		$this->form	= $this->get('Form');
 		$this->return_page = $this->get('ReturnPage');
+
+		$script = $this->get('Script');
+		$this->script = $script;	//validating category (not 0)
+
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) 
@@ -76,25 +81,30 @@ class ImprovemycityViewAddissue extends JView
 		
 		// Set the document
 		$this->setDocument();
-		
-		
-		
 	}
 	
 	protected function setDocument() 
 	{
-		
 		$document = JFactory::getDocument();
-		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/js/colorbox/css/colorbox.css');
+		
+		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');					
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/improvemycity.css');	
 
-		//add jquery
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.5.2.min.js');
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui.min.js');
-		
-		$document->addScript(JURI::root(true) . "/components/com_improvemycity/js/colorbox/jquery.colorbox-min.js");
+		$ie  = '<!--[if lt IE 9]>' . "\n";
+		$ie .= '<link rel="stylesheet" href="'.JURI::root(true).'/components/com_improvemycity/css/ie.css'.'">' . "\n";
+		$ie .= '<![endif]-->' . "\n";
+		//$document->addStyleDeclaration($ie); 	//do not work
+		$document->addCustomTag($ie);			//work :)
+	
+		//add scripts
+		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
+		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui-1.8.18.custom.min.js');
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
-
+		
+		/* category validation only works on server-side with the JRule regex, make it validate on client-side as well*/
+		$document->addScript(JURI::root() . $this->script);
+		//$document->addScript(JURI::root() . "/components/com_improvemycity/views/addissue/submitbutton.js");
+		
 		//add google maps
 		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
 
@@ -119,8 +129,7 @@ class ImprovemycityViewAddissue extends JView
 				map.setCenter(marker.getPosition());
 				map.setZoom(map.getZoom()-1);
 			}
-			
-			
+
 			function codeAddress() {
 				var address = document.getElementById('jform_address').value + ' ".$this->searchterm."';
 				geocoder.geocode( { 'address': address, 'language': '".$this->language."'}, function(results, status) {
@@ -155,22 +164,13 @@ class ImprovemycityViewAddissue extends JView
 			  });
 			}
 
-			//function updateMarkerStatus(str) {
-			//  document.getElementById('markerStatus').innerHTML = str;
-			//}
-
 			function updateMarkerPosition(latLng) {
-			  //document.getElementById('info').innerHTML = [
-				//latLng.lat(),
-				//latLng.lng()
-			  //].join(', ');
 			  //update fields
 			  document.getElementById('jform_latitude').value = latLng.lat();
 			  document.getElementById('jform_longitude').value = latLng.lng();
 			}
 
 			function updateMarkerAddress(str) {
-			  //document.getElementById('near_address').innerHTML = str;
 			  document.getElementById('jform_address').value = str;
 			}
 
@@ -199,8 +199,7 @@ class ImprovemycityViewAddissue extends JView
 			  });
 			  
 			  var infoString = '".JText::_('COM_IMPROVEMYCITY_DRAG_MARKER')."';
-			  
-				
+
 			  var infowindow = new google.maps.InfoWindow({
 				content: infoString
 			  });
@@ -213,7 +212,6 @@ class ImprovemycityViewAddissue extends JView
 			  // Add dragging event listeners.
 			  google.maps.event.addListener(marker, 'dragstart', function() {
 				infowindow.close();
-				
 			  });
 			  
 			  google.maps.event.addListener(marker, 'drag', function() {
@@ -226,9 +224,7 @@ class ImprovemycityViewAddissue extends JView
 				geocodePosition(marker.getPosition());
 				blink();
 			  });
-			  
-		  
-			  
+
 			  infowindow.open(map, marker);
 			}
 
@@ -239,7 +235,6 @@ class ImprovemycityViewAddissue extends JView
 
 		//add the javascript to the head of the html document
 		$document->addScriptDeclaration($googleMapInit);
-	
 	
 		$f = "
 		Joomla.submitbutton = function(task) {
@@ -253,10 +248,5 @@ class ImprovemycityViewAddissue extends JView
 		}
 		";
 		$document->addScriptDeclaration($f);	
-	
-	
 	}
-	
-	
 }
-//Σύρετε τον <span style=\"color: red;\">κόκκινο</span> δείκτη για να<br />βελτιώσετε τη γεωγραφική θέση

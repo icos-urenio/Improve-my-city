@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -22,7 +22,7 @@ class ImprovemycityModelIssue extends JModelAdmin
 	 * @since	1.6
 	 */
 	protected $text_prefix = 'COM_IMPROVEMYCITY';
-	
+
 
 	/**
 	 * Returns a reference to the a Table object, always creating it.
@@ -89,11 +89,13 @@ class ImprovemycityModelIssue extends JModelAdmin
 	public function getItem($pk = null)
 	{
 		if ($item = parent::getItem($pk)) {
-
 			//Do any procesing on fields here if needed
 			if($item->votes == 0 || $item->votes == '')
-				$item->votes = 1;
-
+				$item->votes = 0;	/* changed temporarly from 1*/
+				
+			//keep issue status to session so before saving to check for changes...
+			$session =& JFactory::getSession();
+			$session->set( 'previousIssueStatus', $item->currentstatus );
 		}
 		
 		return $item;
@@ -140,9 +142,68 @@ class ImprovemycityModelIssue extends JModelAdmin
 			
 		}
 		
-		$user =& JFactory::getUser();
-		$table->userid = $user->id;
+		if($table->userid == 0){
+			$user =& JFactory::getUser();
+			$table->userid = $user->id;  
+		}
+		
+		/*TODO: Tide up the following lines to a decent member function */
+		
+		//get link to the issue
+		$issueLink = 'http://' . $_SERVER['HTTP_HOST'] . JRoute::_('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
+		$issueLink = str_replace('/administrator', '', $issueLink);
+		
+		$user =& JFactory::getUser($table->userid);	//user's id needed. Not admin's
+		$app = JFactory::getApplication();
+		$mailfrom	= $app->getCfg('mailfrom');
+		$fromname	= $app->getCfg('fromname');
+		$sitename	= $app->getCfg('sitename');		
+
+		$session =& JFactory::getSession();
+		$prev 	 = $session->get( 'previousIssueStatus', -1 );		
+		$current = $table->currentstatus;		
+		
+		/* (A) ****---   Send notification mail for status change to the user who submitted the issue */		
+		
+		$issueRecipient = $user->email;		
+		if($prev != -1 && $issueRecipient != ''){	//just in case anything wrong with session...
+			$subject = 'Αλλαγή κατάστασης αιτήματος';
+
+			$mail = JFactory::getMailer();
+			$mail->isHTML(true);
+			$mailer->Encoding = 'base64';
+			$mail->addRecipient($issueRecipient);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject($sitename.': '.$subject);
+
+			if($prev == 1 && $current == 2){	//open to ack
+				$body = '';
+				$body .= 'To αίτημα σας με τίτλο "'.$table->title.'" προωθήθηκε στην αρμόδια υπηρεσία του Δήμου.' . '<br />';
+				$body .= 'Μπορείτε να δείτε <a href="'.$issueLink.'">εδώ</a> τα σχετικά σχόλια (αν υπάρχουν).' . '<br />';
+				$body .= 'Μόλις το αίτημά σας διεκπεραιωθεί θα λάβετε ενημερωτικό email.' . '<br />';
+				$body .= '<br />' . $issueLink;
+				
+				$mail->setBody($body);
+				$sent = $mail->Send();			
+				
+				//inform admin with message than an email is sent to the user
+				JFactory::getApplication()->enqueueMessage( 'Η κατάσταση του αιτήματος άλλαξε. Ένα ενημερωτικό email στάλθηκε στον χρήστη: ' . $user->email . ' (' . $user->name .')' );				
+			}
+			if( ($prev == 2 && $current == 3) || ($prev == 1 && $current == 3) ){	//ack to close or open to close
+				
+				$body = '';
+				$body .= 'To αίτημα σας με τίτλο "'.$table->title.'" διεκπεραιώθηκε από την αρμόδια υπηρεσία του Δήμου.' . '<br />';
+				$body .= 'Μπορείτε να δείτε <a href="'.$issueLink.'">εδώ</a> τα σχετικά σχόλια (αν υπάρχουν).' . '<br />';
+				$body .= '<br />' . $issueLink;
+				
+				$mail->setBody($body);
+				$sent = $mail->Send();				
+				
+				//inform admin with message than an email is sent to the user
+				JFactory::getApplication()->enqueueMessage( 'Το αίτημα διεκπεραιώθηκε. Ένα ενημερωτικό email στάλθηκε στον χρήστη: ' . $user->email . ' (' . $user->name .')' );				
+			}
+
+		}
 			
 	}
-
 }

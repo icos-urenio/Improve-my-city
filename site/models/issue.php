@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -166,5 +166,28 @@ class ImprovemycityModelIssue extends JModelItem
 		return $results;
 	}
 	
+	public function getCategoryIcon($pk = 0)
+	{
+		$pk = (!empty($pk)) ? $pk : (int) $id = $this->getState('improvemycity.id');
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+
+		$query->select('a.catid');
+		$query->from('#__improvemycity as a');
+		$query->where('a.id = ' . (int) $id);
+		// Join on catid table.
+		$query->select('c.params AS params');
+		$query->join('LEFT', '#__categories AS c on c.id = a.catid');	
+		
+		$db->setQuery($query);
+		//$result = $db->loadResult();
+		$row = $db->loadAssoc();
+
+		$parameters = new JRegistry();
+		$parameters->loadJSON($row['params']);
+		$image = $parameters->get('image');		
+
+		return $image;
+	}
 }
 

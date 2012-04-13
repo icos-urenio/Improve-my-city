@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -9,6 +9,15 @@
  
 abstract class ImprovemycityHelper
 {
+	/* 
+	*	Simple helper to add itemid to every link so as to match joomla's active menu id 
+	*
+	*/
+	public function generateRouteLink($link) {
+		return JRoute::_($link.'&amp;Itemid='.JRequest::getint( 'Itemid' ));
+		//return $link.'&amp;Itemid='.JRequest::getint( 'Itemid' );
+	}	
+
 	public static function getRelativeTime($time)
 	{
 		if(strtotime($time) <= 0)

@@ -1,0 +1,14 @@
+#imc-wrapper {font: 13px/20px Arial,Helvetica,sans-serif;background-color: #fff;}
+#imc-wrapper h1{font-size: 20px;}
+#imc-wrapper h2{font-size: 17px;}
+#imc-wrapper h3{margin:0;padding:0;}
+#imc-wrapper .img-wrp img{width: 130px;height:auto;padding-top: 10px;}
+#imc-details-sidebar {min-height: 100%;}
+#imc-details-sidebar #mapCanvas{height: 250px;}
+#imc-comments-wrapper {border-top: 1px dashed #ccc;padding:20px 0;margin: 20px 0;}
+#imc-comments-wrapper .imc-chat {background: none; margin: 0; padding: 0;}
+
+#imc-print-header {text-align:center; font-size: 16px; padding-bottom: 20px; border-bottom: 1px solid #ccc;}
+#imc-print-header a {text-decoration: none; color: #790101;}
+#imc-print-header a:hover {color: #000;}
+

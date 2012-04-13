@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -33,6 +33,7 @@ class ImprovemycityController extends JController
 		$view = JRequest::getCmd('view', 'addissue');
 		JRequest::setVar('view', $view);
 		
+		
 		$v = & $this->getView($view, 'html');
 		$v->setModel($this->getModel($view));
 		//$v->display();
@@ -48,6 +49,8 @@ class ImprovemycityController extends JController
 	*/
 	function addComment()
 	{
+		/* TODO: Admins must have different avatar */
+		/* $user =& JFactory::getUser();	print_r($user);  http://forum.joomla.org/viewtopic.php?p=2730458 */
 		JRequest::checkToken('get') or jexit('Invalid Token');
 		
 		$user =& JFactory::getUser();
@@ -152,4 +155,27 @@ class ImprovemycityController extends JController
 		$v->setModel($this->getModel('issue'), true);
 		$v->display();
 	}	
+	
+
+	function printIssue()
+	{
+		$v = & $this->getView('issue', 'print');		//view.print.php
+		$v->setModel($this->getModel('issue'), true);	//load issue model
+		$v->setModel($this->getModel('discussions'));	//load comments as well
+		$v->display('print');							//template set to tmpl/default_print.php
+		
+	}
+	
+	/* 
+		model loads and inside view.print.php all issues without paging
+		are loaded.
+	*/
+	function printIssues()
+	{
+		$v = & $this->getView('issues', 'print');		//view.print.php
+		$v->setModel($this->getModel('issues'), true);	//load issues model
+		$v->display('print');							//template set to tmpl/default_print.php
+	}
+	
+	
 }

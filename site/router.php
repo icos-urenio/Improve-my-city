@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -64,7 +64,16 @@ function improvemycityParseRoute( $segments )
 			case 'smartLogin':
 				$vars['task'] = 'smartLogin';
 				$vars['controller'] = 'improvemycity';
+			break;	
+			case 'printIssue':
+				$vars['task'] = 'printIssue';
+				$vars['controller'] = 'improvemycity';
+				$vars['issue_id'] = (int) $segments[0];
 			break;				
+			case 'printIssues':
+				$vars['task'] = 'printIssues';
+				$vars['controller'] = 'improvemycity';
+			break;			
        }
 	   
 	   //TODO: revision needed...
@@ -80,6 +89,15 @@ function improvemycityParseRoute( $segments )
 					$vars['controller'] = 'improvemycity';
 					$vars['issue_id'] = (int) $segments[0];
 				break;				
+				case 'printIssue':
+					$vars['task'] = 'printIssue';
+					$vars['controller'] = 'improvemycity';
+					$vars['issue_id'] = (int) $segments[0];
+				break;			
+				case 'printIssues':
+					$vars['task'] = 'printIssues';
+					$vars['controller'] = 'improvemycity';
+				break;						
 			}
 	   }
 	   

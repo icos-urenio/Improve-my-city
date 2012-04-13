@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -34,7 +34,9 @@ class ImprovemycityViewIssues extends JView
 	protected $lat = '';
 	protected $lon = '';
 	protected $searchterm = '';
-	
+	protected $arCat;
+
+	public $f = '';	
 	function display($tpl = null)
 	{
 		$app		= JFactory::getApplication();
@@ -53,9 +55,11 @@ class ImprovemycityViewIssues extends JView
 		//echo json_encode($this->items);
 		$this->categories = $this->get('Categories');
 		$this->pagination	= $this->get('Pagination');
+		$this->arCat = $this->createFiltersAsArray($this->categories);
 		$this->createFilters($this->categories);				
 		$this->statusFilters = $this->createStatusFilters();
 		$this->getLimitBox = $this->createLimitBox();
+
 		//merge params
 		$this->params	= $this->state->get('params');
 		
@@ -107,49 +111,67 @@ class ImprovemycityViewIssues extends JView
 	protected function createFilters($cats = array())
 	{
 		$filter_category = $this->state->get('filter_category');	
+	
 		$this->filters .= '<ul>';
 		foreach($cats as $JCatNode){
-			//name is the parent id
 			//id is the category id
-			//$this->filters .='<li><input path="'.$JCatNode->path.'" name="box'.$JCatNode->parentid.'" type="checkbox" checked="checked" id="box'.$JCatNode->id.'" onclick="boxclick2(this,'.$JCatNode->id.',\''.$JCatNode->parentid.'\')" />'.$JCatNode->title.'</li>' . "\n";
-			//$this->filters .='<li><input path="'.$JCatNode->path.'" name="box" type="checkbox" checked="checked" id="box'.$JCatNode->id.'" onclick="boxclick2(this,'.$JCatNode->id.')" />'.$JCatNode->title.'</li>' . "\n";
-			
 			if(empty($filter_category)){
-				$this->filters .='<li><input name="cat[]" value="'.$JCatNode->id.'" type="checkbox" checked="checked" id="cat-'.$JCatNode->id.'" />'.$JCatNode->title.'</li>' . "\n";
+				if($JCatNode->parentid == 'root')		
+					$this->filters .='<li><input path="'.$JCatNode->path.'" parent="box'.$JCatNode->parentid.'" name="cat[]" value="'.$JCatNode->id.'" type="checkbox" checked="checked" id="cat-'.$JCatNode->id.'" onclick="boxclick2(this,'.$JCatNode->id.')" /><span class="root">'.$JCatNode->title.'</span></li>' . "\n";
+				else
+					$this->filters .='<li><input path="'.$JCatNode->path.'" parent="box'.$JCatNode->parentid.'" name="cat[]" value="'.$JCatNode->id.'" type="checkbox" checked="checked" id="cat-'.$JCatNode->id.'" onclick="boxclick2(this,'.$JCatNode->id.')" />'.$JCatNode->title.'</li>' . "\n";
 			}
 			else{
-				$this->filters .='<li><input name="cat[]" value="'.$JCatNode->id.'" type="checkbox" '; if(in_array($JCatNode->id, $filter_category)) $this->filters .= 'checked="checked"'; $this->filters .= ' id="cat-'.$JCatNode->id.'" />'.$JCatNode->title.'</li>' . "\n";
+				if($JCatNode->parentid == 'root'){
+					$this->filters .='<li><input path="'.$JCatNode->path.'" parent="box'.$JCatNode->parentid.'" name="cat[]" value="'.$JCatNode->id.'" type="checkbox" '; if(in_array($JCatNode->id, $filter_category)) $this->filters .= 'checked="checked"'; $this->filters .= ' id="cat-'.$JCatNode->id.'" onclick="boxclick2(this,'.$JCatNode->id.')" /><span class="root">'.$JCatNode->title.'</span></li>' . "\n";
+				}
+				else{
+					$this->filters .='<li><input path="'.$JCatNode->path.'" parent="box'.$JCatNode->parentid.'" name="cat[]" value="'.$JCatNode->id.'" type="checkbox" '; if(in_array($JCatNode->id, $filter_category)) $this->filters .= 'checked="checked"'; $this->filters .= ' id="cat-'.$JCatNode->id.'" onclick="boxclick2(this,'.$JCatNode->id.')" />'.$JCatNode->title.'</li>' . "\n";
+				}	
 			}
 			
-			if(!empty($JCatNode->children))
+			if(!empty($JCatNode->children)){
 				$this->createFilters($JCatNode->children);
+			}
 		
 		}
 		$this->filters .= '</ul>';
-		return false;
+
+		return $this->filters;
+	}
+	
+	protected function createFiltersAsArray($cats)
+	{
+		foreach($cats as $cat){
+			$this->filters = '';
+			$ar[] = $this->createFilters(array($cat));
+		}
+		$this->filters = '';
+		return $ar;
 	}
 	
 	protected function createStatusFilters()
 	{
 		$filter_status = $this->state->get('filter_status');
+		$html = '';
 		if(empty($filter_status)){
-			$html = '<ul>';
-			$html .= '<li><input name="status[]" value="1" type="checkbox" checked="checked" id="status-1" />'.JText::_('OPEN').'</li>' . "\n";
-			$html .= '<li><input name="status[]" value="2" type="checkbox" checked="checked" id="status-2" />'.JText::_('ACK').'</li>' . "\n";
-			$html .= '<li><input name="status[]" value="3" type="checkbox" checked="checked" id="status-3" />'.JText::_('CLOSED').'</li>' . "\n";
-			$html .= '</ul>';
+			//$html = '<ul>';
+			$html .= '<li style="display: inline;"><input name="status[]" value="1" type="checkbox" checked="checked" id="status-1" />'.JText::_('OPEN').'</li>' . "\n";
+			$html .= '<li style="display: inline;"><input name="status[]" value="2" type="checkbox" checked="checked" id="status-2" />'.JText::_('ACK').'</li>' . "\n";
+			$html .= '<li style="display: inline;"><input name="status[]" value="3" type="checkbox" checked="checked" id="status-3" />'.JText::_('CLOSED').'</li>' . "\n";
+			//$html .= '</ul>';
 		}
 		else {
-			$html = '<ul>';
-			$html .= '<li><input name="status[]" value="1" type="checkbox" '; if(in_array(1, $filter_status)) $html .= 'checked="checked"'; $html .= ' id="status-1" />'.JText::_('OPEN').'</li>' . "\n";
-			$html .= '<li><input name="status[]" value="2" type="checkbox" '; if(in_array(2, $filter_status)) $html .= 'checked="checked"'; $html .= ' id="status-2" />'.JText::_('ACK').'</li>' . "\n";
-			$html .= '<li><input name="status[]" value="3" type="checkbox" '; if(in_array(3, $filter_status)) $html .= 'checked="checked"'; $html .= ' id="status-3" />'.JText::_('CLOSED').'</li>' . "\n";
-			$html .= '</ul>';
+			//$html = '<ul>';
+			$html .= '<li style="display: inline;"><input name="status[]" value="1" type="checkbox" '; if(in_array(1, $filter_status)) $html .= 'checked="checked"'; $html .= ' id="status-1" />'.JText::_('OPEN').'</li>' . "\n";
+			$html .= '<li style="display: inline;"><input name="status[]" value="2" type="checkbox" '; if(in_array(2, $filter_status)) $html .= 'checked="checked"'; $html .= ' id="status-2" />'.JText::_('ACK').'</li>' . "\n";
+			$html .= '<li style="display: inline;"><input name="status[]" value="3" type="checkbox" '; if(in_array(3, $filter_status)) $html .= 'checked="checked"'; $html .= ' id="status-3" />'.JText::_('CLOSED').'</li>' . "\n";
+			//$html .= '</ul>';
 		}
 		return $html;
-	}
+	}	
 	
-	protected function createLimitBox()
+/* 	protected function createLimitBox()
 	{
 		$selected = $this->state->get('list.limit');
 		$html = '<select id="limit" name="limit" class="inputbox" size="1" onchange="this.form.submit()">';
@@ -160,9 +182,26 @@ class ImprovemycityViewIssues extends JView
 				$html .= '<option value="'.$i.'">'.$i.'</option>';
 		}
 		$html .= '</select>';
+		
+		
 		return $html;
 	}
-
+ */	
+	protected function createLimitBox()
+	{
+		$selected = $this->state->get('list.limit');
+		$html = '';
+		for($i=5;$i<=15;$i+=5){
+			if($selected == $i)
+				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$i.' <i class="icon-ok"></i></a></li>';
+			else
+				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$i.'</a></li>';
+		}
+		return $html;
+	}	
+		
+	
+	
 	protected function createCustomMarkers($cats = array())
     {
         if(is_array($cats))
@@ -210,14 +249,16 @@ class ImprovemycityViewIssues extends JView
 	protected function setDocument() 
 	{
 		$document = JFactory::getDocument();
-		//$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/js/colorbox/css/colorbox.css');
+		
+		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');	
+		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/mega-menu.css');	
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/improvemycity.css');	
 
-		//add jquery
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.5.2.min.js');
-		$document->addScript(JURI::root(true) . "/components/com_improvemycity/js/colorbox/jquery.colorbox-min.js");
+		//add scripts
+		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
+		$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
-		
+	
 		//add google maps
 		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=". $this->language ."&region=". $this->region);
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/infobox_packed.js');		
@@ -227,8 +268,7 @@ class ImprovemycityViewIssues extends JView
 		$LAT = $this->lat;
 		$LON = $this->lon;
 		
-		//prepare custom icons according (get images from improvemycity categories)
-		
+		//prepare custom icons accordingly (get images from improvemycity categories)
 		$this->createCustomMarkers($this->categories);
 		$this->customMarkers = substr($this->customMarkers, 0, -2);	//remove /n and comma
 		
@@ -292,10 +332,6 @@ class ImprovemycityViewIssues extends JView
 					,enableEventPropagation: false
 				};
 				infoBox = new InfoBox(infoBoxOptions);				
-					
-			" .		
-				
-				"
 
 				for (var i = 0; i < jsonMarkers.length; i++) {
 					var name = jsonMarkers[i].name;
@@ -350,28 +386,26 @@ class ImprovemycityViewIssues extends JView
 			
 			//alternative to infoWindow is the infoBox
 			function bindInfoBox(marker, map, infoWindow, html) {
-			
 				var boxText = document.createElement(\"div\");
 				boxText.style.cssText = \"border: 1px solid black; margin-top: 8px; background-color: yellow; padding: 5px;\";
 				boxText.innerHTML = html;			
 		
 				google.maps.event.addListener(marker, 'click', function() {
-					//infoBox.setContent(boxText);
-					//infoBox.open(map, marker);
-					//map.panTo(marker.getPosition());
-					//alert('". JRoute::_('index.php?option=com_improvemycity&view=issue&issue_id=') . "' + marker.id);
-					window.location.href = '". JRoute::_('index.php?option=com_improvemycity&view=issue&issue_id=') . "' + marker.id;
-					
-					//showInfo(marker);
+					window.location.href = '". ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id=') . "' + marker.id;
 				});
 			  
 				google.maps.event.addListener(marker, 'mouseover', function() {
 					infoBox.setContent(boxText);
 					infoBox.open(map, marker);
+					$(\"#issueid-\"+marker.id).addClass(\"imc-highlight\");
+				});			  
+				
+				google.maps.event.addListener(marker, 'mouseout', function() {
+					infoBox.close();
+					$(\"#issueid-\"+marker.id).removeClass(\"imc-highlight\");
 				});			  
 			}			
 			
-
 			function downloadUrl(url, callback) {
 			  var request = window.ActiveXObject ?
 				  new ActiveXObject('Microsoft.XMLHTTP') :
@@ -412,66 +446,14 @@ class ImprovemycityViewIssues extends JView
 			
 			//show markers according to filtering
 			function show(category) {
-				for (var i=0; i<gmarkers.length; i++) {
-					if (gmarkers[i].catid == category) {
-						gmarkers[i].setVisible(true);
-					}
-				}
 				// == check the checkbox ==
-				document.getElementById('box'+category).checked = true;
-				resetBounds();
+				document.getElementById('cat-'+category).checked = true;
 			}			
-			function hide(category) {
-				for (var i=0; i<gmarkers.length; i++) {
-					if (gmarkers[i].catid == category) {
-						gmarkers[i].setVisible(false);
-					}
-				}
-				// == clear the checkbox ==
-				document.getElementById('box'+category).checked = false;
-				if(infoWindow != null)
-					infoWindow.close();
-				if(infoBox != null)
-					infoBox.close();				
-				
-				$(\"#markerInfo\").html('');
-				
-				
-				$(\"#wrapper-info\").hide(500);
-				
-				resetBounds();
-			}
 			
-			//--- recursively get tree
-			function boxclick(box, category, parent) {
-				if (box.checked) {
-					show(category);
-				} else {
-					hide(category);	
-				}
-				
-				var arr = new Array();
-				arr = document.getElementsByName('box'+category);
-
-				for(var i = 0; i < arr.length; i++)
-				{
-					var obj = document.getElementsByName('box'+category).item(i);
-					var c = obj.id.substr(3, obj.id.length);
-					var p = obj.name.substr(3, obj.name.length);
-
-					if (box.checked) {
-						obj.checked = true;
-					} else {
-						obj.checked = false;
-					}
-					boxclick(obj, c, p);
-					
-				}
-				
-				// == rebuild the side bar
-				makeSidebar();
-				return false;
-			}			
+			function hide(category) {
+				// == clear the checkbox ==
+				document.getElementById('cat-'+category).checked = false;
+			}
 			
 			//--- non recursive since IE cannot handle it (doh!!)
 			function boxclick2(box, category) {
@@ -480,16 +462,14 @@ class ImprovemycityViewIssues extends JView
 				} else {
 					hide(category);	
 				}
-				
-				var com = box.getAttribute('path');				
+				var com = box.getAttribute('path');
 				var arr = new Array();
-				arr = document.getElementsByName('box');
-				
+				arr = document.getElementsByName('cat[]');
 				for(var i = 0; i < arr.length; i++)
 				{
-					var obj = document.getElementsByName('box').item(i);
-					var c = obj.id.substr(3, obj.id.length);
-					
+					var obj = document.getElementsByName('cat[]').item(i);
+					var c = obj.id.substr(4, obj.id.length);
+
 					var path = obj.getAttribute('path');
 					if(com == path.substring(0,com.length)){
 						if (box.checked) {
@@ -501,9 +481,6 @@ class ImprovemycityViewIssues extends JView
 						}
 					}
 				}
-				
-				// == rebuild the side bar
-				makeSidebar();
 				return false;
 			}			
 			
@@ -519,22 +496,83 @@ class ImprovemycityViewIssues extends JView
 					}
 				}
 				google.maps.event.trigger(gmarkers[index],'mouseover');
-			}			
-
-			// == rebuilds the sidebar to match the markers currently displayed ==
-			function makeSidebar() {
-				var html = '<ul>';
-				for (var i=0; i<gmarkers.length; i++) {
-					if (gmarkers[i].getVisible()) {
-						html += '<li><a href=\"javascript:markerclick(' + i + ');\">' + gmarkers[i].title + '<\/a><\/li>';
+			}
+			
+			function markerout(id) {
+				var index;
+				for (var i=0; i<gmarkers.length; i++) {				
+					if(gmarkers[i].id == id){
+						index = i;
+						
 					}
 				}
-				html += '<\/ul>';
-				document.getElementById('infobar').innerHTML = html;
-			}
+				google.maps.event.trigger(gmarkers[index],'mouseout');
 
-		
+			}			
 			
+			window.addEvent('domready', function() {
+				$(\".imc-issue-item\").mouseenter(function(event)
+				{
+					$(this).addClass(\"imc-highlight\");
+					markerhover($(this).attr('id').substring(8));
+				});
+
+				$(\".imc-issue-item\").mouseleave(function(event)
+				{
+					$(this).removeClass(\"imc-highlight\");
+					markerout($(this).attr('id').substring(8));
+				});	  
+
+				$(document).click(function(e) {
+					if( $('#drop-1').is('.hover')) { $('#drop-1').removeClass('hover');	}				   
+					if( $('#drop-2').is('.hover')) { $('#drop-2').removeClass('hover');	}				   
+					if( $('#drop-3').is('.hover')) { $('#drop-3').removeClass('hover');	}				   
+				});
+				
+				$('#btn-1').click(function(event)
+				{
+					if( $('#drop-2').is('.hover')) { $('#btn-2').click(); }
+					if( $('#drop-3').is('.hover')) { $('#btn-3').click(); }
+					
+					if( $('#drop-1').is('.hover')) {
+						$('#drop-1').removeClass('hover');
+					}
+					else{
+						$('#drop-1').addClass('hover');
+					}
+					event.stopPropagation();
+				});
+				
+				$('#btn-2').click(function(event)
+				{
+					if( $('#drop-1').is('.hover')) { $('#btn-1').click(); }
+					if( $('#drop-3').is('.hover')) { $('#btn-3').click(); }
+				
+					if( $('#drop-2').is('.hover')) {
+						$('#drop-2').removeClass('hover');
+					}
+					else{
+						$('#drop-2').addClass('hover');
+					}
+					event.stopPropagation();
+				});
+				$('#btn-3').click(function(event)
+				{
+					if( $('#drop-1').is('.hover')) { $('#btn-1').click(); }
+					if( $('#drop-2').is('.hover')) { $('#btn-2').click(); }
+				
+					if( $('#drop-3').is('.hover')) {
+						$('#drop-3').removeClass('hover');
+					}
+					else{
+						$('#drop-3').addClass('hover');
+					}
+					event.stopPropagation();
+				});
+				
+				$('.megadrop').click(function(event) { event.stopPropagation();	});
+				
+			});
 			
 			// Onload handler to fire off the app.
 			google.maps.event.addDomListener(window, 'load', initialize);
@@ -543,6 +581,5 @@ class ImprovemycityViewIssues extends JView
 
 		//add the javascript to the head of the html document
 		$document->addScriptDeclaration($googleMapInit);
-		
 	}
 }

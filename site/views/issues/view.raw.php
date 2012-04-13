@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -40,6 +40,7 @@ class ImprovemycityViewIssues extends JView
 
 	protected function getMarkersAsXML()
 	{
+		JRequest::checkToken('get') or jexit('Invalid Token');
 
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$node = $dom->createElement("markers2");

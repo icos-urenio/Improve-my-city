@@ -1,14 +1,13 @@
 <?php
 
 /**
- * @version		$Id: greeting.php 74 2010-12-01 22:04:52Z chdemko $
- * @package		Joomla16.Tutorials
- * @subpackage	Components
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
- * @author		Christophe Demko
- * @link		http://joomlacode.org/gf/project/helloworld_1_6/
- * @license		License GNU General Public License version 2 or later
+ * @version     2.0
+ * @package     com_improvemycity
+ * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * @author      URENIO Research Unit
  */
+
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
