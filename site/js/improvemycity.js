@@ -65,15 +65,10 @@ function comment(issue_id, token){
 			else{
 			
 				//create a container for the new comment
-				var div = $("<div>").addClass("imc-chat").prependTo("#imc-comments-wrapper");
-
-				//add author name and comment to container
-				$("<span class=\"imc-chat-info\">").text(data.comments.textual_descr).appendTo(div);
-				$("<span class=\"imc-chat-desc\">").text(data.comments.description).appendTo(div);
+				var content = '<div class="imc-chat"><span class="imc-chat-info">'+data.comments.textual_descr+'</span><span class=\"imc-chat-desc\">'+data.comments.description+'</span><div>';
+				div = $(content).prependTo("#imc-comments-wrapper");
 				$("#imc-comment-area").val('');
 				div.effect("highlight", {color: '#60FF05'}, 1500);
-				
-				
 			}
 		}		
 	});
