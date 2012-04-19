@@ -57,13 +57,13 @@ function comment(issue_id, token){
 		type : 'GET',
 		url : 'index.php',
 		datatype: 'json',
-		data: 'option=com_improvemycity&controller=improvemycity&task=addComment&format=json&issue_id=' + issue_id + '&' + token + '=1&description=' + description ,
+		data: 'option=com_improvemycity&controller=improvemycity&task=addComment&format=json&issue_id=' + issue_id + '&' + token + '=1&description=' + encodeURI(description) ,
 		success: function(data){
 			if (data.comments === undefined){
 				donothing = 1;
 			}
 			else{
-			
+				
 				//create a container for the new comment
 				var content = '<div class="imc-chat"><span class="imc-chat-info">'+data.comments.textual_descr+'</span><span class=\"imc-chat-desc\">'+data.comments.description+'</span><div>';
 				div = $(content).prependTo("#imc-comments-wrapper");
