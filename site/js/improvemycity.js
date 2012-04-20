@@ -52,14 +52,14 @@ function comment(issue_id, token){
 	
 	var htmlStr = $('#imc-comment-area').val(); 
 	description = $('<div/>').text(htmlStr).html(); //trick to get PHP equivalent of htmlentities
-	
 	$.ajax({
-		type : 'GET',
+		type : 'post',
 		url : 'index.php',
 		datatype: 'json',
 		data: 'option=com_improvemycity&controller=improvemycity&task=addComment&format=json&issue_id=' + issue_id + '&' + token + '=1&description=' + encodeURI(description) ,
 		success: function(data){
 			if (data.comments === undefined){
+				alert('Problem sending message');
 				donothing = 1;
 			}
 			else{

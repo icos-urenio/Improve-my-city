@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     2.0
+ * @version     1.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -51,16 +51,27 @@ class ImprovemycityController extends JController
 	{
 		/* TODO: Admins must have different avatar */
 		/* $user =& JFactory::getUser();	print_r($user);  http://forum.joomla.org/viewtopic.php?p=2730458 */
-		JRequest::checkToken('get') or jexit('Invalid Token');
+		JRequest::checkToken('post') or jexit('Invalid Token');
 		
 		$user =& JFactory::getUser();
 		
 		if(!$user->guest)
 		{
+			/* ONLY FOR DEBUGGING
+			ob_start(); 
+			print_r( JRequest::getVar('description', '', 'post') );
+			$var = ob_get_contents(); 
+			ob_end_clean(); 
+			$fp=fopen('zlog.txt','w'); 
+			fputs($fp,$var); 
+			fclose($fp); 		
+			*/
+		
 			//update comments
 			$model = $this->getModel('discussions');
-			$comments = $model->comment(JRequest::getVar('issue_id'), $user->id, JRequest::getVar('description')); 
-			
+			$comments = $model->comment(JRequest::getVar('issue_id'), $user->id, JRequest::getVar('description', '', 'post')); 
+
+ 			
 			if($comments == false){
 				$ret['msg'] = JText::_('COMMENT_ERROR');
 				echo json_encode($ret);
@@ -70,13 +81,14 @@ class ImprovemycityController extends JController
 			$ret['msg'] = JText::_('COMMENT_ADDED');
 			//$ret['comments'] = json_encode($comments);
 			$ret['comments'] = $comments;
-			
+			header("Content-Type: application/xhtml+xml; charset=utf-8");
 			echo json_encode($ret);
-			return;	
+			//return;	
 		}
 		else {
 			//$this->setRedirect(JRoute::_('index.php?option=com_users&view=login', false));
 			$ret['msg'] = JText::_('ONLY_LOGGED_COMMENT');
+			header("Content-Type: application/xhtml+xml; charset=utf-8");
 			echo json_encode($ret);
 			
 		}
