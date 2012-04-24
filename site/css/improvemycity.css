@@ -160,7 +160,7 @@ h2.imc-issue-title a:hover{color: #790101;}
 }
 #imc-steps {	margin-bottom: 20px; font-weight: bold; border-bottom: 1px dashed #ccc; padding-bottom: 10px;}
 #imc-steps span{	margin-right: 10px;}
-#imc-steps img {position: relative; top: 5px; padding-right: 5px;}
+#imc-steps img {position: relative; padding-right: 5px;}
 
 #imc-issue-general-info{
 	padding: 15px;
