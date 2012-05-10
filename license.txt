@@ -16,6 +16,11 @@ General Public License for more details.
 You should have received a copy of the GNU Affero General Public License 
 along with this program. If not, see <http://www.gnu.org/licenses/>. 
 
+ImproveMyCity was developed within the European project
+"PEOPLE: Pilot smart urban Ecosystems leveraging Open innovation for 
+Promoting and enabLing future E- services" which is cofinanced by the 
+European Commission (THEME [CIP-ICT-PSP.2010.4.1]).
+
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 
 
 GNU AFFERO GENERAL PUBLIC LICENSE 
@@ -589,8 +594,9 @@ WRITTEN OFFER
 The source code for any program binaries or compressed scripts that are 
 included with ImproveMyCity can be freely obtained at the following URL: 
 
-https://github.com/people-project/Improve-my-city Learn more about the 
-application by visiting: http://smartcityapps.urenio.org/ 
+https://github.com/people-project/Improve-my-city 
+Learn more about the application by visiting: 
+http://smartcityapps.urenio.org/ 
 
 Contact Panagiotis Tsarchopoulos at patsar@arch.auth.gr or
  
