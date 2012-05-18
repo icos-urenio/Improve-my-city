@@ -125,21 +125,27 @@
 	padding-left: 5px;
 	/* margin-left: 70px; */
 }
-.imc-issue-review h2{ font-size: 14px; margin: 0; padding: 0;}
+.imc-issue-review h2{ font-size: 14px; margin: 0; padding: 0;color: #790101; line-height: 20px;}
+.imc-issue-review h2.imc-issue-tile {font-size: 14px; font-family: Arial, sans-serif;}
 .imc-issue-review h2 span.status-OPEN, .imc-issue-review h2 span.status-ACK, .imc-issue-review h2 span.status-CLOSED{
 	/* margin-left: 10px; */
 	font-weight: normal;
 }
-h2.imc-issue-title {
+#imc-issue-item-details h2.imc-issue-title {
+	font-family: 'Open Sans Condensed', sans-serif;
 	margin: 0;
 	padding: 0;
 	color: #790101;
-	line-height: 20px;
+	line-height: 22px;
+	font-size: 20px;
 }
 h2.imc-issue-title a:hover{color: #790101;}
 
+
+#imc-issue-item-details h3{font-family: 'Open Sans Condensed', sans-serif;}
+
 .imc-issue-posted{
-	display: inline;
+	width: 90%;
 	color: #45484C;
 	font-size: 11px;
 }
