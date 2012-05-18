@@ -117,7 +117,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<div class="imc-issue-content">
 						<div class="imc-issue-review">
 							<h2 class="imc-issue-title">
-								<?php echo $item->title;?>
+								<?php echo '#' . $item->id . '. ' .$item->title;?>
 								<?php $status = '';
 									switch($item->currentstatus){
 										case 1:

@@ -44,26 +44,32 @@ function dump(arr,level) {
 	return dumped_text;
 }
 
-function comment(issue_id, token){
+function htmlEscape(str) {
+    return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function comment(){
 	if($("#imc-comment-area").val() == ''){
 		alert(Joomla.JText._('COM_IMPROVEMYCITY_WRITE_COMMENT')); 
 		return;
 	}
-	
-	var htmlStr = $('#imc-comment-area').val(); 
-	description = $('<div/>').text(htmlStr).html(); //trick to get PHP equivalent of htmlentities
+
 	$.ajax({
-		type : 'post',
+		type : 'POST',
 		url : 'index.php',
 		datatype: 'json',
-		data: 'option=com_improvemycity&controller=improvemycity&task=addComment&format=json&issue_id=' + issue_id + '&' + token + '=1&description=' + encodeURI(description) ,
+		data: jQuery('#com_improvemycity_comments').serialize(),
 		success: function(data){
 			if (data.comments === undefined){
-				alert('Problem sending message');
+				alert('Problem sending message (trying to send invalid tags ?)');
 				donothing = 1;
 			}
 			else{
-				
 				//create a container for the new comment
 				var content = '<div class="imc-chat"><span class="imc-chat-info">'+data.comments.textual_descr+'</span><span class=\"imc-chat-desc\">'+data.comments.description+'</span><div>';
 				div = $(content).prependTo("#imc-comments-wrapper");

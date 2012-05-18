@@ -57,9 +57,9 @@ class ImprovemycityController extends JController
 		
 		if(!$user->guest)
 		{
-			/* ONLY FOR DEBUGGING
+			/* FOR DEBUGGING ONLY
 			ob_start(); 
-			print_r( JRequest::getVar('description', '', 'post') );
+			echo ( JRequest::getVar('description', '', 'post', STRING, JREQUEST_ALLOWHTML) );
 			$var = ob_get_contents(); 
 			ob_end_clean(); 
 			$fp=fopen('zlog.txt','w'); 
@@ -69,8 +69,9 @@ class ImprovemycityController extends JController
 		
 			//update comments
 			$model = $this->getModel('discussions');
-			$comments = $model->comment(JRequest::getVar('issue_id'), $user->id, JRequest::getVar('description', '', 'post')); 
-
+			//$descr = JRequest::getVar('description', '', 'post');
+			$descr = $_POST['description'];
+			$comments = $model->comment(JRequest::getVar('issue_id'), $user->id, $descr); 
  			
 			if($comments == false){
 				$ret['msg'] = JText::_('COMMENT_ERROR');
