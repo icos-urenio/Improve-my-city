@@ -102,15 +102,15 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 					switch($this->item->currentstatus){
 						case 1:
 						$status = 'OPEN';
-						$steps .= $arrow_open . '<span class="status-OPEN">' . JText::_('OPEN') . '</span>' . $arrow_gray . '<span class="status-GRAY">' . JText::_('ACK') . '</span>' . $arrow_gray . '<span class="status-GRAY">' . JText::_('CLOSED') . '<span>';
+						$steps .= $arrow_open . '<span class="status-OPEN">' . JText::_('OPEN') . '</span>' . $arrow_gray . '<span class="status-GRAY">' . JText::_('ACK') . '</span>' . $arrow_gray . '<span class="status-GRAY">' . JText::_('CLOSED') . '</span>';
 						break;
 						case 2:
 						$status = 'ACK';
-						$steps .= $arrow_open . '<span class="status-OPEN">' . JText::_('OPEN') . '</span>' . $arrow_ack . '<span class="status-ACK">' . JText::_('ACK') . '</span>' . $arrow_gray . '<span class="status-GRAY">' . JText::_('CLOSED') . '<span>';							
+						$steps .= $arrow_open . '<span class="status-OPEN">' . JText::_('OPEN') . '</span>' . $arrow_ack . '<span class="status-ACK">' . JText::_('ACK') . '</span>' . $arrow_gray . '<span class="status-GRAY">' . JText::_('CLOSED') . '</span>';							
 						break;
 						case 3:
 						$status = 'CLOSED';
-						$steps .= $arrow_open . '<span class="status-OPEN">' . JText::_('OPEN') . '</span>' . $arrow_ack . '<span class="status-ACK">' . JText::_('ACK') . '</span>' . $arrow_closed . '<span class="status-CLOSED">' . JText::_('CLOSED') . '<span>' ;
+						$steps .= $arrow_open . '<span class="status-OPEN">' . JText::_('OPEN') . '</span>' . $arrow_ack . '<span class="status-ACK">' . JText::_('ACK') . '</span>' . $arrow_closed . '<span class="status-CLOSED">' . JText::_('CLOSED') . '</span>' ;
 						break;
 					}
 				?>					
