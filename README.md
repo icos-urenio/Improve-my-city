@@ -1,5 +1,5 @@
 # ImproveMyCity - Citizens Requests, Complaints & Suggestions
-ImproveMyCity is a Joomla 2.5.x compatible component to report, vote and track non-emergency issues. Developed within the European project PEOPLE. Find out more at[http://smartcityapps.urenio.org](http://smartcityapps.urenio.org/improve-my-city_en.html).
+ImproveMyCity is a Joomla 2.5.x compatible component to report, vote and track non-emergency issues. Developed within the European project PEOPLE. Find out more at [http://smartcityapps.urenio.org](http://smartcityapps.urenio.org/improve-my-city_en.html).
 
 ## Installation and Documentation
 Refer to ImproveMyCity [wiki pages](https://github.com/icos-urenio/Improve-my-city/wiki).
