@@ -78,13 +78,33 @@ class ImprovemycityController extends JController
 				echo json_encode($ret);
 				return;
 			}
+
+			//notify admin by email
+			$mail = $model->commentNotificationMail(JRequest::getVar('issue_id'), $user->id, $descr);
+ 			if ($mail == false ){
+
+/* 				ob_start(); 
+				echo 'mail failed';
+				$var = ob_get_contents(); 
+				ob_end_clean(); 
+				$fp=fopen('zlog.txt','w'); 
+				fputs($fp,$var); 
+				fclose($fp); 
+ */				
+				$ret['msg'] = JText::_('Comment sent but no notification mail sent to administrator (Please refresh by pressing F5');
+				echo json_encode($ret);
+				return;
+			}
+			
 			
 			$ret['msg'] = JText::_('COMMENT_ADDED');
 			//$ret['comments'] = json_encode($comments);
 			$ret['comments'] = $comments;
 			header("Content-Type: application/xhtml+xml; charset=utf-8");
 			echo json_encode($ret);
-			//return;	
+			
+			
+			return;	
 		}
 		else {
 			//$this->setRedirect(JRoute::_('index.php?option=com_users&view=login', false));

@@ -114,6 +114,84 @@ class ImprovemycityModelDiscussions extends JModelList
 	}	
 	
 	
+	public function commentNotificationMail($pk = 0, $userid = 0, $description = '')
+	{
+		//send notification mail to the category admin 
+
+		/* TODO: Translate strings...  */
+		
+		//get the link to the commented issue
+		$issueLink = 'http://'. $_SERVER['HTTP_HOST'] . ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$pk);
+
+		//$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&layout=edit&id='.$table->id;
+		/*fixing "You are not permitted to use that link to directly access that page"*/
+		$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&task=issue.edit&id='.$pk; 
+		
+		
+		$user = JFactory::getUser($userid);
+		$app = JFactory::getApplication();
+		$mailfrom	= $app->getCfg('mailfrom');
+		$fromname	= $app->getCfg('fromname');
+		$sitename	= $app->getCfg('sitename');		
+
+
+		/* (A) ****--- Send notification mail to appropriate admin (as defined on category) */
+		
+		//get the catid of the issue
+		$catid = 0;
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$query->select('a.catid');
+		$query->from('`#__improvemycity` AS a');
+		
+		$query->where('a.id = ' . $pk);		
+		$db->setQuery($query);
+		$catid = $db->loadResult();
+		
+		//get the recipient email(s) as defined in the "note" field of the selected category
+		$issueRecipient = '';
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$query->select('a.note as note, a.title as title');
+		$query->from('`#__categories` AS a');
+		
+		$query->where('a.id = ' . $catid);		
+		$db->setQuery($query);
+		//$result = $db->loadResult();
+		$row = $db->loadAssoc();
+		if(!empty($row)){
+			$issueRecipient = $row['note'];
+			$arRecipient = explode(";",$issueRecipient);
+			$arRecipient = array_filter($arRecipient, 'strlen');
+			$categoryTitle = $row['title'];
+		}		
+
+		if(!empty($issueRecipient)){		//only if category note contains email(s)
+			$subject = 'Νέο σχόλιο από χρήστη: ' . $user->name  .' (' . $user->email . ')';
+	
+			$body = '';
+			$body .= 'Ένα νέο σχόλιο καταχωρήθηκε στο σύστημα που σχετίζεται με την κατηγορία: ' . $categoryTitle . '.' . '<br />';
+			$body .= 'Το περιεχόμενο του σχολίου είναι: <p>"'.$description.'"</p>' . '<br />';
+			$body .= 'Ακολουθήστε <a href="'.$issueLink.'">αυτό το σύνδεσμο</a> για να δείτε το σχόλιο.' . '<br />';
+			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
+			$body .= '<br /><br />';
+			$body .= 'Ακολουθήστε <a href="'.$issueAdminLink.'">αυτό το σύνδεσμο</a> για να διαχειριστείτε το αίτημα.' . '<br />';
+			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueAdminLink;			
+
+			$mail = JFactory::getMailer();
+			$mail->isHTML(true);
+			$mail->Encoding = 'base64';
+			foreach($arRecipient as $recipient)
+				$mail->addRecipient($recipient);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject($sitename.': '.$subject);
+			$mail->setBody($body);
+			$sent = $mail->Send();
+			return true;
+		}
+		return false;
+	}
+	
 	public function comment($pk = 0, $userid = 0, $description = '')
 	{
 		
@@ -130,7 +208,6 @@ class ImprovemycityModelDiscussions extends JModelList
 				$this->setError($db->getErrorMsg());
 				return false;
 		}		
-
 		
 		//return the latest comment so as to be displayed with ajax in the frontend
 		$query	= $db->getQuery(true);
