@@ -58,6 +58,9 @@ function comment(){
 		alert(Joomla.JText._('COM_IMPROVEMYCITY_WRITE_COMMENT')); 
 		return;
 	}
+	
+	var htmlStr = $('#imc-comment-area').val();
+	$('#imc-comment-area').val($('<div/>').text(htmlStr).html());
 
 	$.ajax({
 		type : 'POST',
@@ -66,7 +69,7 @@ function comment(){
 		data: jQuery('#com_improvemycity_comments').serialize(),
 		success: function(data){
 			if (data.comments === undefined){
-				alert('Problem sending message (trying to send invalid tags ?)');
+				alert('Problem sending message (trying to send invalid characters like quotes?)');
 				donothing = 1;
 			}
 			else{
