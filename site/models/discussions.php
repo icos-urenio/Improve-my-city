@@ -141,12 +141,17 @@ class ImprovemycityModelDiscussions extends JModelList
 		$catid = 0;
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
-		$query->select('a.catid');
+		$query->select('a.catid, a.userid');
 		$query->from('`#__improvemycity` AS a');
 		
 		$query->where('a.id = ' . $pk);		
 		$db->setQuery($query);
-		$catid = $db->loadResult();
+		//$catid = $db->loadResult();
+		$row = $db->loadAssoc();
+		$catid = $row['catid'];
+		$initialUser = JFactory::getUser($row['userid']);
+		
+		
 		
 		//get the recipient email(s) as defined in the "note" field of the selected category
 		$issueRecipient = '';
@@ -177,7 +182,7 @@ class ImprovemycityModelDiscussions extends JModelList
 			$body .= '<br /><br />';
 			$body .= 'Ακολουθήστε <a href="'.$issueAdminLink.'">αυτό το σύνδεσμο</a> για να διαχειριστείτε το αίτημα.' . '<br />';
 			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueAdminLink;			
-
+			
 			$mail = JFactory::getMailer();
 			$mail->isHTML(true);
 			$mail->Encoding = 'base64';
@@ -187,9 +192,32 @@ class ImprovemycityModelDiscussions extends JModelList
 			$mail->setSubject($sitename.': '.$subject);
 			$mail->setBody($body);
 			$sent = $mail->Send();
-			return true;
+			
 		}
-		return false;
+
+		/* (B) ****--- Send notification mail to issue submitter */
+		
+		$issueRecipient = $initialUser->email;
+		if($issueRecipient != ''){		//check just in case...
+			$subject = 'Νέο σχόλιο από χρήστη: ' . $user->name  .' (' . $user->email . ')';
+			$body = '';
+			$body .= 'Ένα νέο σχόλιο που αφορά στο αίτημα σας καταχωρήθηκε στην εφαρμογή Βελτιώνω την πόλη μου' . '<br />';
+			$body .= 'Το περιεχόμενο του σχολίου είναι: <p>"'.$description.'"</p>' . '<br />';
+			$body .= 'Ακολουθήστε <a href="'.$issueLink.'">αυτό το σύνδεσμο</a> για να δείτε το σχόλιο.' . '<br />';
+			$body .= 'Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
+			
+			$mail = JFactory::getMailer();
+			$mail->isHTML(true);
+			$mail->Encoding = 'base64';
+			$mail->addRecipient($issueRecipient);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject($sitename.': '.$subject);
+			$mail->setBody($body);
+			$sent = $mail->Send();			
+		}		
+		
+		
+		return true;
 	}
 	
 	public function comment($pk = 0, $userid = 0, $description = '')
