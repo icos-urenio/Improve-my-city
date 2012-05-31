@@ -128,7 +128,7 @@ class ImprovemycityViewIssue extends JView
 		$document = JFactory::getDocument();
 		
 		//make it social network friendly
-		$document->setTitle(JText::_('COM_IMPROVEMYCITY') . ' - ' . $this->item->title);
+		$document->setTitle($this->item->title);
 		$document->setDescription(mb_substr($this->item->description, 0, 130, 'utf-8') . '...');
 		
 		
