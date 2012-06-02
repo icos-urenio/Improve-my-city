@@ -180,6 +180,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		</div>
 		<div id="imc-details-sidebar-fifty">
 			<div id="mapCanvas"><?php echo JText::_('COM_IMPROVEMYCITY');?></div>
+			<div style="margin-top: 30px;" class="alert alert-info"><?php echo JText::_('COM_IMPROVEMYCITY_INFOALERT');?></div>
 		</div>	
 	</div>
 </div>

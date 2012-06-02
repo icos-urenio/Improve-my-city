@@ -22,11 +22,11 @@ JTable::addIncludePath(JPATH_ROOT . '/administrator/components/com_improvemycity
  */
 class ImprovemycityModelDiscussions extends JModelList
 {
+	protected $mailNewCommentUser;
+	protected $mailNewCommentAdmins;
 	
 	protected $items;
 	private $issue_id = null;
-
-	
 	
 	function getItems($issue_id = '')	//usually we don't use arguments but it's really useful for the issues view and model
 	{
@@ -101,7 +101,13 @@ class ImprovemycityModelDiscussions extends JModelList
 		
 		// Initialise variables.
 		$app	= JFactory::getApplication();
+		// Load the parameters.
+		$params	= $app->getParams();
+				
 		//$params	= JComponentHelper::getParams('com_improvemycity');
+
+		$this->mailNewCommentAdmins = $params->get('mailnewcommentadmins');
+		$this->mailNewCommentUser = $params->get('mailnewcommentuser');
 
  		// List state information
 		// $value = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
@@ -116,6 +122,12 @@ class ImprovemycityModelDiscussions extends JModelList
 		
 	public function commentNotificationMail($pk = 0, $userid = 0, $description = '')
 	{
+		// Initialise variables (populate state is not called from json calls).
+		$app	= JFactory::getApplication();
+		$params	= $app->getParams();
+		$this->mailNewCommentAdmins = $params->get('mailnewcommentadmins');
+		$this->mailNewCommentUser = $params->get('mailnewcommentuser');		
+		
 		//send notification mail to the category admin 
 		
 		//get the link to the commented issue
@@ -134,84 +146,84 @@ class ImprovemycityModelDiscussions extends JModelList
 
 
 		/* (A) ****--- Send notification mail to appropriate admin (as defined on category) */
-		
-		//get the catid of the issue
-		$catid = 0;
-		$db		= $this->getDbo();
-		$query	= $db->getQuery(true);
-		$query->select('a.catid, a.userid');
-		$query->from('`#__improvemycity` AS a');
-		
-		$query->where('a.id = ' . $pk);		
-		$db->setQuery($query);
-		//$catid = $db->loadResult();
-		$row = $db->loadAssoc();
-		$catid = $row['catid'];
-		$initialUser = JFactory::getUser($row['userid']);
-		
-		
-		
-		//get the recipient email(s) as defined in the "note" field of the selected category
-		$issueRecipient = '';
-		$db		= $this->getDbo();
-		$query	= $db->getQuery(true);
-		$query->select('a.note as note, a.title as title');
-		$query->from('`#__categories` AS a');
-		
-		$query->where('a.id = ' . $catid);		
-		$db->setQuery($query);
-		//$result = $db->loadResult();
-		$row = $db->loadAssoc();
-		if(!empty($row)){
-			$issueRecipient = $row['note'];
-			$arRecipient = explode(";",$issueRecipient);
-			$arRecipient = array_filter($arRecipient, 'strlen');
-			$categoryTitle = $row['title'];
-		}		
+		if($this->mailNewCommentAdmins == 1){
+			//get the catid of the issue
+			$catid = 0;
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			$query->select('a.catid, a.userid');
+			$query->from('`#__improvemycity` AS a');
+			
+			$query->where('a.id = ' . $pk);		
+			$db->setQuery($query);
+			//$catid = $db->loadResult();
+			$row = $db->loadAssoc();
+			$catid = $row['catid'];
+			$initialUser = JFactory::getUser($row['userid']);
+			
+			
+			
+			//get the recipient email(s) as defined in the "note" field of the selected category
+			$issueRecipient = '';
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			$query->select('a.note as note, a.title as title');
+			$query->from('`#__categories` AS a');
+			
+			$query->where('a.id = ' . $catid);		
+			$db->setQuery($query);
+			//$result = $db->loadResult();
+			$row = $db->loadAssoc();
+			if(!empty($row)){
+				$issueRecipient = $row['note'];
+				$arRecipient = explode(";",$issueRecipient);
+				$arRecipient = array_filter($arRecipient, 'strlen');
+				$categoryTitle = $row['title'];
+			}		
 
-		if(!empty($issueRecipient)){		//only if category note contains email(s)
-			$subject = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_COMMENT_SUBJECT'), $user->name, $user->email);
-			
-			$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_COMMENT_BODY')
-					, $categoryTitle
-					, $description
-					, $issueLink
-					, $issueLink
-					, $issueAdminLink
-					, $issueAdminLink );			
-			
-			$mail = JFactory::getMailer();
-			$mail->isHTML(true);
-			$mail->Encoding = 'base64';
-			foreach($arRecipient as $recipient)
-				$mail->addRecipient($recipient);
-			$mail->setSender(array($mailfrom, $fromname));
-			$mail->setSubject($sitename.': '.$subject);
-			$mail->setBody($body);
-			$sent = $mail->Send();
-			
+			if(!empty($issueRecipient)){		//only if category note contains email(s)
+				$subject = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_COMMENT_SUBJECT'), $user->name, $user->email);
+				
+				$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_COMMENT_BODY')
+						, $categoryTitle
+						, $description
+						, $issueLink
+						, $issueLink
+						, $issueAdminLink
+						, $issueAdminLink );			
+				
+				$mail = JFactory::getMailer();
+				$mail->isHTML(true);
+				$mail->Encoding = 'base64';
+				foreach($arRecipient as $recipient)
+					$mail->addRecipient($recipient);
+				$mail->setSender(array($mailfrom, $fromname));
+				$mail->setSubject($sitename.': '.$subject);
+				$mail->setBody($body);
+				$sent = $mail->Send();
+				
+			}
 		}
-
 		/* (B) ****--- Send notification mail to issue submitter */
-		
-		$issueRecipient = $initialUser->email;
-		if($issueRecipient != ''){		//check just in case...
-			$subject = JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_COMMENT_SUBJECT');
-			$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_COMMENT_BODY')
-					, $description
-					, $issueLink
-					, $issueLink );
-			
-			$mail = JFactory::getMailer();
-			$mail->isHTML(true);
-			$mail->Encoding = 'base64';
-			$mail->addRecipient($issueRecipient);
-			$mail->setSender(array($mailfrom, $fromname));
-			$mail->setSubject($sitename.': '.$subject);
-			$mail->setBody($body);
-			$sent = $mail->Send();			
-		}		
-		
+		if($this->mailNewCommentUser == 1){
+			$issueRecipient = $initialUser->email;
+			if($issueRecipient != ''){		//check just in case...
+				$subject = JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_COMMENT_SUBJECT');
+				$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_COMMENT_BODY')
+						, $description
+						, $issueLink
+						, $issueLink );
+				
+				$mail = JFactory::getMailer();
+				$mail->isHTML(true);
+				$mail->Encoding = 'base64';
+				$mail->addRecipient($issueRecipient);
+				$mail->setSender(array($mailfrom, $fromname));
+				$mail->setSubject($sitename.': '.$subject);
+				$mail->setBody($body);
+				$sent = $mail->Send();			
+			}		
+		}
 		
 		return true;
 	}

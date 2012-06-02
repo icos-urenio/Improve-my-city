@@ -29,8 +29,11 @@ class ImprovemycityViewAddissue extends JView
 	protected $region = '';
 	protected $lat = '';
 	protected $lon = '';
-	protected $searchterm = '';	
-
+	protected $searchterm = '';
+	protected $zoom;	
+	protected $loadjquery;
+	protected $loadbootstrap;
+	protected $loadbootstrapcss;
 	
 	function display($tpl = null)
 	{
@@ -48,19 +51,6 @@ class ImprovemycityViewAddissue extends JView
 		$user =& JFactory::getUser();
 		$this->guest = $user->guest;
 		
-		$lang = $this->params->get('maplanguage');
-		$region = $this->params->get('mapregion');
-		$lat = $this->params->get('latitude');
-		$lon = $this->params->get('longitude');
-		$term = $this->params->get('searchterm');
-		
-		$this->language = (empty($lang) ? "en" : $lang);
-		$this->region = (empty($region) ? "GB" : $region);
-		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
-		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
-		$this->searchterm = (empty($term) ? "" : $term);
-
-		
 		// Get some data from the models
 		$this->state = $this->get('State');
 		$this->form	= $this->get('Form');
@@ -69,7 +59,24 @@ class ImprovemycityViewAddissue extends JView
 		$script = $this->get('Script');
 		$this->script = $script;	//validating category (not 0)
 
+		$lang = $this->params->get('maplanguage');
+		$region = $this->params->get('mapregion');
+		$lat = $this->params->get('latitude');
+		$lon = $this->params->get('longitude');
+		$term = $this->params->get('searchterm');
+		$zoom = $this->params->get('zoom');
+		$this->loadjquery = $this->params->get('loadjquery');
+		$this->loadbootstrap = $this->params->get('loadbootstrap');
+		$this->loadbootstrapcss = $this->params->get('loadbootstrapcss');
 		
+		$this->language = (empty($lang) ? "en" : $lang);
+		$this->region = (empty($region) ? "GB" : $region);
+		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
+		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
+		$this->searchterm = (empty($term) ? "" : $term);
+		$this->zoom = (empty($zoom) ? 17 : $zoom);
+		
+				
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) 
 		{
@@ -87,7 +94,9 @@ class ImprovemycityViewAddissue extends JView
 	{
 		$document = JFactory::getDocument();
 		
-		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');					
+		if($this->loadbootstrapcss == 1)
+			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');					
+		
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/improvemycity.css');	
 
 		$ie  = '<!--[if lt IE 9]>' . "\n";
@@ -97,8 +106,10 @@ class ImprovemycityViewAddissue extends JView
 		$document->addCustomTag($ie);			//work :)
 	
 		//add scripts
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui-1.8.18.custom.min.js');
+		if($this->loadjquery == 1){
+			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
+			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui-1.8.18.custom.min.js');
+		}
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 		
 		/* category validation only works on server-side with the JRule regex, make it validate on client-side as well*/
@@ -181,7 +192,7 @@ class ImprovemycityViewAddissue extends JView
 
 			  var latLng = new google.maps.LatLng(LAT, LON);
 			  map = new google.maps.Map(document.getElementById('mapCanvasNew'), {
-				zoom: 17,
+				zoom: ".$this->zoom.",
 				center: latLng,
 				panControl: false,
 				streetViewControl: false,

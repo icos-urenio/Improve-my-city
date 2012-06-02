@@ -34,6 +34,10 @@ class ImprovemycityViewIssues extends JView
 	protected $lat = '';
 	protected $lon = '';
 	protected $searchterm = '';
+	protected $zoom;
+	protected $loadjquery;
+	protected $loadbootstrap;
+	protected $loadbootstrapcss;
 	protected $arCat;
 
 	public $f = '';	
@@ -65,7 +69,7 @@ class ImprovemycityViewIssues extends JView
 		
 
 		/*
-			This method only for menu parameters namely: views/issues/tmpl/default.xml
+		This method only for menu parameters namely: views/issues/tmpl/default.xml
 		$lang = JRequest::getVar('maplanguage');
 		$region = JRequest::getVar('mapregion');
 		$lat = JRequest::getFloat('latitude');
@@ -78,12 +82,17 @@ class ImprovemycityViewIssues extends JView
 		$lat = $this->params->get('latitude');
 		$lon = $this->params->get('longitude');
 		$term = $this->params->get('searchterm');
+		$zoom = $this->params->get('zoom');
+		$this->loadjquery = $this->params->get('loadjquery');
+		$this->loadbootstrap = $this->params->get('loadbootstrap');
+		$this->loadbootstrapcss = $this->params->get('loadbootstrapcss');
 		
 		$this->language = (empty($lang) ? "en" : $lang);
 		$this->region = (empty($region) ? "GB" : $region);
 		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
 		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
 		$this->searchterm = (empty($term) ? "" : $term);
+		$this->zoom = (empty($zoom) ? 17 : $zoom);
 
 		
 		
@@ -250,13 +259,18 @@ class ImprovemycityViewIssues extends JView
 	{
 		$document = JFactory::getDocument();
 		
-		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');	
+		if($this->loadbootstrapcss == 1)
+			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');	
+		
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/mega-menu.css');	
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/improvemycity.css');	
 
 		//add scripts
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');
+		if($this->loadjquery == 1)
+			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
+		if($this->loadbootstrap == 1)
+			$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');
+
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 	
 		//add google maps
@@ -302,7 +316,7 @@ class ImprovemycityViewIssues extends JView
 
 				var latLng = new google.maps.LatLng(LAT, LON);
 				map = new google.maps.Map(document.getElementById('mapCanvas'), {
-				zoom: 11,
+				zoom: ".$this->zoom.",
 				center: latLng,
 				panControl: false,
 				streetViewControl: false,

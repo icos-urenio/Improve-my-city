@@ -53,7 +53,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 
 			<!-- Vote +1 -->
 			<div class="btn-group imc-right">
-				<?php if($this->item->currentstatus != 3) : ?>
+				<?php if($this->item->currentstatus != 3 || $this->allowVotingOnClose == 1) : ?>
 					<?php if(!$this->guest) : ?>
 						<?php if(!$this->hasVoted) :?>
 							<a class="btn btn-success" href="javascript:vote(<?php echo $this->item->id; ?>, '<?php echo JUtility::getToken(); ?>');"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
@@ -159,12 +159,9 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 				<?php endif;?>
 				</div>
 				
-				<?php //if($this->item->currentstatus != 3) : 
-				if (true) :
-				?>
+				<?php if($this->item->currentstatus != 3 || $this->allowCommentingOnClose == 1) : ?> 
 				<div id="imc-new-comment-wrapper">
 					<?php if(!$this->guest) :?>
-					
 					<form name="com_improvemycity_comments" id="com_improvemycity_comments" method="post" action="#">
 							<input type="hidden" name="option" value ="com_improvemycity" />
 							<input type="hidden" name="controller" value="improvemycity" />
@@ -191,7 +188,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 			</div>
 		</div>
 		<div id="imc-details-sidebar">			
-			<?php if($this->item->currentstatus != 3) : ?>
+			<?php if($this->item->currentstatus != 3 || $this->allowVotingOnClose == 1) : ?>
 				<?php if($this->guest) :?>
 					<div class="alert alert-error">
 					<?php echo JText::_('ONLY_LOGGED_VOTE');?>
