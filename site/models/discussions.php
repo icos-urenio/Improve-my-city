@@ -113,12 +113,10 @@ class ImprovemycityModelDiscussions extends JModelList
 		$this->setState('list.start', $value);
 	}	
 	
-	
+		
 	public function commentNotificationMail($pk = 0, $userid = 0, $description = '')
 	{
 		//send notification mail to the category admin 
-
-		/* TODO: Translate strings...  */
 		
 		//get the link to the commented issue
 		$issueLink = 'http://'. $_SERVER['HTTP_HOST'] . ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$pk);
@@ -172,16 +170,15 @@ class ImprovemycityModelDiscussions extends JModelList
 		}		
 
 		if(!empty($issueRecipient)){		//only if category note contains email(s)
-			$subject = 'Νέο σχόλιο από χρήστη: ' . $user->name  .' (' . $user->email . ')';
-	
-			$body = '';
-			$body .= 'Ένα νέο σχόλιο καταχωρήθηκε στο σύστημα που σχετίζεται με την κατηγορία: ' . $categoryTitle . '.' . '<br />';
-			$body .= 'Το περιεχόμενο του σχολίου είναι: <p>"'.$description.'"</p>' . '<br />';
-			$body .= 'Ακολουθήστε <a href="'.$issueLink.'">αυτό το σύνδεσμο</a> για να δείτε το σχόλιο.' . '<br />';
-			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
-			$body .= '<br /><br />';
-			$body .= 'Ακολουθήστε <a href="'.$issueAdminLink.'">αυτό το σύνδεσμο</a> για να διαχειριστείτε το αίτημα.' . '<br />';
-			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueAdminLink;			
+			$subject = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_COMMENT_SUBJECT'), $user->name, $user->email);
+			
+			$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_COMMENT_BODY')
+					, $categoryTitle
+					, $description
+					, $issueLink
+					, $issueLink
+					, $issueAdminLink
+					, $issueAdminLink );			
 			
 			$mail = JFactory::getMailer();
 			$mail->isHTML(true);
@@ -199,12 +196,11 @@ class ImprovemycityModelDiscussions extends JModelList
 		
 		$issueRecipient = $initialUser->email;
 		if($issueRecipient != ''){		//check just in case...
-			$subject = 'Νέο σχόλιο στο αίτημα σας';
-			$body = '';
-			$body .= 'Ένα νέο σχόλιο που αφορά στο αίτημα σας καταχωρήθηκε στην εφαρμογή Βελτιώνω την πόλη μου' . '<br />';
-			$body .= 'Το περιεχόμενο του σχολίου είναι: <p>"'.$description.'"</p>' . '<br />';
-			$body .= 'Ακολουθήστε <a href="'.$issueLink.'">αυτό το σύνδεσμο</a> για να δείτε το σχόλιο.' . '<br />';
-			$body .= 'Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
+			$subject = JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_COMMENT_SUBJECT');
+			$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_COMMENT_BODY')
+					, $description
+					, $issueLink
+					, $issueLink );
 			
 			$mail = JFactory::getMailer();
 			$mail->isHTML(true);

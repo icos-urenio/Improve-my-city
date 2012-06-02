@@ -52,6 +52,7 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		$this->setState('return_page', base64_decode($return));		
 	}
 
+
 	/**
 	 * Method to get the script that have to be included on the form
 	 *
@@ -61,6 +62,96 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	{
 		return 'components/com_improvemycity/models/forms/issue.js';
 	}	
+	 
+    private function notifyByEmail($id, $data)
+	{
+		/* TODO: Tide up the following lines to a decent member function...  */
+		/* TODO: Translate strings...  */
+		
+		//get the link to the newly created issue
+		$issueLink = 'http://'. $_SERVER['HTTP_HOST'] . ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$id);
+
+		//$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&layout=edit&id='.$table->id;
+		
+		/*fixing "You are not permitted to use that link to directly access that page"*/
+		$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&task=issue.edit&id='.$id; 
+		
+		
+		$user = JFactory::getUser();
+		$app = JFactory::getApplication();
+		$mailfrom	= $app->getCfg('mailfrom');
+		$fromname	= $app->getCfg('fromname');
+		$sitename	= $app->getCfg('sitename');		
+
+
+		/* (A) ****--- Send notification mail to appropriate admins (as defined on category note field) */
+		
+		//get the recipient email(s) as defined in the "note" field of the selected category
+		$issueRecipient = '';
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$query->select('a.note as note, a.title as title');
+		$query->from('`#__categories` AS a');
+		
+		$query->where('a.id = ' . $data['catid']);		
+		$db->setQuery($query);
+		//$result = $db->loadResult();
+		$row = $db->loadAssoc();
+		if(!empty($row)){
+			$issueRecipient = $row['note'];
+			$arRecipient = explode(";",$issueRecipient);
+			$arRecipient = array_filter($arRecipient, 'strlen');
+			$categoryTitle = $row['title'];
+		}		
+
+		if(!empty($issueRecipient)){		//only if category note contains email(s)
+			$subject = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_ISSUE_SUBJECT'), $user->name, $user->email);
+			
+			$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_ISSUE_BODY')
+					, $categoryTitle
+					, $data['title']
+					, $data['address']
+					, $issueLink
+					, $issueLink
+					, $issueAdminLink
+					, $issueAdminLink );
+			
+			$mail = JFactory::getMailer();
+			$mail->isHTML(true);
+			$mail->Encoding = 'base64';
+			foreach($arRecipient as $recipient)
+				$mail->addRecipient($recipient);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject($sitename.': '.$subject);
+			$mail->setBody($body);
+			$sent = $mail->Send();
+		}
+		
+
+		/* (B) ****---   Send notification mail to the user who submitted the issue */
+		// recipient is the user
+		$issueRecipient = $user->email;
+		
+		if($issueRecipient != ''){		//check just in case...
+			$subject = JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_ISSUE_SUBJECT');
+			$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_USER_NEW_ISSUE_BODY')
+					, $issueLink
+					, $issueLink );
+					
+			$mail = JFactory::getMailer();
+			$mail->isHTML(true);
+			$mail->Encoding = 'base64';
+			$mail->addRecipient($issueRecipient);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject($sitename.': '.$subject);
+			$mail->setBody($body);
+			$sent = $mail->Send();		
+			//also inform user at the frontend for the email that is about to receive
+			JFactory::getApplication()->enqueueMessage( JText::_('COM_IMPROVEMYCITY_NEW_ISSUE_SAVE_SUCCESS') );				
+		}
+		
+		return true;		
+	}	 
 	 
 	/**
 	* Get file (photo) from POST and save it
@@ -176,149 +267,63 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		// Allow an exception to be thrown.
 		try
 		{
-		// Load the row if saving an existing record.
-		if ($pk > 0) {
-		$table->load($pk);
-		$isNew = false;
-		}
+			// Load the row if saving an existing record.
+			if ($pk > 0) {
+				$table->load($pk);
+				$isNew = false;
+			}
 
-		// Bind the data.
-		if (!$table->bind($data)) {
-		$this->setError($table->getError());
-		return false;
-		}
+			// Bind the data.
+			if (!$table->bind($data)) {
+				$this->setError($table->getError());
+				return false;
+			}
 
-		// Prepare the row for saving
-		$this->prepareTable($table);
+			// Prepare the row for saving
+			$this->prepareTable($table);
 
-		// Check the data.
-		if (!$table->check()) {
-		$this->setError($table->getError());
-		return false;
-		}
+			// Check the data.
+			if (!$table->check()) {
+				$this->setError($table->getError());
+				return false;
+			}
 
-		// Trigger the onContentBeforeSave event.
-		$result = $dispatcher->trigger($this->event_before_save, array($this->option.'.'.$this->name, &$table, $isNew));
-		if (in_array(false, $result, true)) {
-		$this->setError($table->getError());
-		return false;
-		}
+			// Trigger the onContentBeforeSave event.
+			$result = $dispatcher->trigger($this->event_before_save, array($this->option.'.'.$this->name, &$table, $isNew));
+			if (in_array(false, $result, true)) {
+				$this->setError($table->getError());
+				return false;
+			}
 
-		// Store the data.
-		if (!$table->store()) {
-		$this->setError($table->getError());
-		return false;
-		}
+			// Store the data.
+			if (!$table->store()) {
+				$this->setError($table->getError());
+				return false;
+			}
 
-		// Clean the cache.
-		$this->cleanCache();
+			// Clean the cache.
+			$this->cleanCache();
 
-		// Trigger the onContentAfterSave event.
-		$dispatcher->trigger($this->event_after_save, array($this->option.'.'.$this->name, &$table, $isNew));
+			// Trigger the onContentAfterSave event.
+			$dispatcher->trigger($this->event_after_save, array($this->option.'.'.$this->name, &$table, $isNew));
 		}
 		catch (Exception $e)
 		{
-		$this->setError($e->getMessage());
-
-		return false;
+			$this->setError($e->getMessage());
+			return false;
 		}
 
 		$pkName = $table->getKeyName();
 
 		if (isset($table->$pkName)) {
-		$this->setState($this->getName().'.id', $table->$pkName);
+			$this->setState($this->getName().'.id', $table->$pkName);
 		}
 		$this->setState($this->getName().'.new', $isNew);
 
+		//notify admins and user
+		$this->notifyByEmail($table->id, $data);	
 		
-		/* TODO: Tide up the following lines to a decent member function...  */
-		/* TODO: Translate strings...  */
-		
-		//get the link to the newly created issue
-		$issueLink = 'http://'. $_SERVER['HTTP_HOST'] . ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
-
-		//$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&layout=edit&id='.$table->id;
-		/*fixing "You are not permitted to use that link to directly access that page"*/
-		$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&task=issue.edit&id='.$table->id; 
-		
-		
-		$user = JFactory::getUser();
-		$app = JFactory::getApplication();
-		$mailfrom	= $app->getCfg('mailfrom');
-		$fromname	= $app->getCfg('fromname');
-		$sitename	= $app->getCfg('sitename');		
-
-
-		/* (A) ****--- Send notification mail to appropriate admin (as defined on category) */
-		
-		//get the recipient email(s) as defined in the "note" field of the selected category
-		$issueRecipient = '';
-		$db		= $this->getDbo();
-		$query	= $db->getQuery(true);
-		$query->select('a.note as note, a.title as title');
-		$query->from('`#__categories` AS a');
-		
-		$query->where('a.id = ' . $data['catid']);		
-		$db->setQuery($query);
-		//$result = $db->loadResult();
-		$row = $db->loadAssoc();
-		if(!empty($row)){
-			$issueRecipient = $row['note'];
-			$arRecipient = explode(";",$issueRecipient);
-			$arRecipient = array_filter($arRecipient, 'strlen');
-			$categoryTitle = $row['title'];
-		}		
-
-		if(!empty($issueRecipient)){		//only if category note contains email(s)
-			$subject = 'Νέο αίτημα από χρήστη: ' . $user->name  .' (' . $user->email . ')';
-	
-			$body = '';
-			$body .= 'Ένα νέο αίτημα καταχωρήθηκε στο σύστημα που σχετίζεται με την κατηγορία: ' . $categoryTitle . '.' . '<br />';
-			$body .= 'To αίτημα "'.$data['title'].'" είναι σχετικό με τη διεύθυνση: "'.$data['address'].'".' . '<br />';
-			$body .= 'Ακολουθήστε <a href="'.$issueLink.'">αυτό το σύνδεσμο</a> για να το δείτε και να το εκτυπώσετε.' . '<br />';
-			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
-			$body .= '<br /><br />';
-			$body .= 'Ακολουθήστε <a href="'.$issueAdminLink.'">αυτό το σύνδεσμο</a> για να το δείτε και να το διαχειριστείτε.' . '<br />';
-			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueAdminLink;			
-
-			$mail = JFactory::getMailer();
-			$mail->isHTML(true);
-			$mail->Encoding = 'base64';
-			foreach($arRecipient as $recipient)
-				$mail->addRecipient($recipient);
-			$mail->setSender(array($mailfrom, $fromname));
-			$mail->setSubject($sitename.': '.$subject);
-			$mail->setBody($body);
-			$sent = $mail->Send();
-		}
-		
-
-		/* (B) ****---   Send notification mail to the user who submitted the issue */
-		// recipient is the user
-		$issueRecipient = $user->email;
-		
-		if($issueRecipient != ''){		//check just in case...
-			$subject = 'Υποβολή νέου αιτήματος';
-			
-			$body = '';
-			$body .= 'Το αίτημά σας καταχωρήθηκε με επιτυχία. Μπορείτε να το δείτε <a href="'.$issueLink.'">εδώ</a>.' . '<br />';
-			$body .= 'Για κάθε ενέργεια του Δήμου σχετικά με το αίτημά σας θα λαμβάνετε ενημερωτικό email.' . '<br />';
-			$body .= '<br />Αν δε βλέπετε σωστά τον σύνδεσμο αντιγράψτε το παρακάτω στον περιηγητή σας:<br />' . $issueLink;
-			
-			$mail = JFactory::getMailer();
-			$mail->isHTML(true);
-			$mail->Encoding = 'base64';
-			$mail->addRecipient($issueRecipient);
-			$mail->setSender(array($mailfrom, $fromname));
-			$mail->setSubject($sitename.': '.$subject);
-			$mail->setBody($body);
-			$sent = $mail->Send();		
-			//also inform user at the frontend for the email that is about to receive
-			JFactory::getApplication()->enqueueMessage( 'Το αίτημα σας καταχωρήθηκε με επιτυχία. Θα λάβετε ενημερωτικό email.' );				
-		}
-		
-		return true;		
-
+		return true;
 	}
 	
 }
