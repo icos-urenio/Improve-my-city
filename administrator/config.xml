@@ -79,6 +79,14 @@
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>	
+			<field name="mailcategorychangeadmins" type="radio" default="1" label="On change category" description="ADMIN 2 ADMIN: If yes, the admins of the new category (as set on notes field) will receive an informative email">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>	
+			<field name="mailstatuschangeuser" type="radio" default="1" label="On change status" description="ADMIN 2 USER: If yes, the user who submitted the issue will receive an informative email">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>					
 	</fieldset>	
 
 	<fieldset name="loadscripts"
@@ -100,6 +108,15 @@
 		
 	</fieldset>
 	
+	<fieldset name="credits"
+		label="Credits"
+	>
+			<field name="credits" type="radio" default="1" label="Show credits" description="If yes, an information alert is displayed under the map">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>	
+	</fieldset>
+		
 	<fieldset name="permissions"
 		description="JCONFIG_PERMISSIONS_DESC"
 		label="JCONFIG_PERMISSIONS_LABEL"
