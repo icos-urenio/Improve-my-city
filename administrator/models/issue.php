@@ -91,15 +91,17 @@ class ImprovemycityModelIssue extends JModelAdmin
 		if ($item = parent::getItem($pk)) {
 			//Do any procesing on fields here if needed
 			if($item->votes == 0 || $item->votes == '')
-				$item->votes = 0;	/* changed temporarly from 1*/
+				$item->votes = 0;	
 				
 			//keep issue status to session so before saving to check for changes...
 			$session =& JFactory::getSession();
 			$session->set( 'previousIssueStatus', $item->currentstatus );
+			$session->set( 'previousCatid', $item->catid );
 		}
 		
 		return $item;
 	}
+
 
 	/**
 	 * Prepare and sanitise the table prior to saving.
@@ -161,49 +163,59 @@ class ImprovemycityModelIssue extends JModelAdmin
 
 		$session =& JFactory::getSession();
 		$prev 	 = $session->get( 'previousIssueStatus', -1 );		
+		$prevCatid = $session->get( 'previousCatid', -1 );		
+		
 		$current = $table->currentstatus;		
 		
-		/* (A) ****---   Send notification mail for status change to the user who submitted the issue */		
+		$app = JFactory::getApplication();
 		
-		$issueRecipient = $user->email;		
-		if($prev != -1 && $issueRecipient != ''){	//just in case anything wrong with session...
-			$subject = 'Αλλαγή κατάστασης αιτήματος';
+		// Load the parameters.
+		$settings = &JComponentHelper::getParams('com_improvemycity');
+		$mailCategoryChangeAdmins = $settings->get('mailcategorychangeadmins');		
+		$mailStatusChangeUser = $settings->get('mailstatuschangeuser');		
+		
+		/* (A) ****---  Send notification mail for status change to the user who submitted the issue */		
+		if($mailStatusChangeUser == 1) {
+			$issueRecipient = $user->email;		
+			if($prev != -1 && $issueRecipient != ''){	//just in case anything wrong with session...
+				$subject = JText::_('COM_IMPROVEMYCITY_MAIL_USER_STATUS_CHANGE_SUBJECT');
 
-			$mail = JFactory::getMailer();
-			$mail->isHTML(true);
-			$mailer->Encoding = 'base64';
-			$mail->addRecipient($issueRecipient);
-			$mail->setSender(array($mailfrom, $fromname));
-			$mail->setSubject($sitename.': '.$subject);
+				$mail = JFactory::getMailer();
+				$mail->isHTML(true);
+				$mailer->Encoding = 'base64';
+				$mail->addRecipient($issueRecipient);
+				$mail->setSender(array($mailfrom, $fromname));
+				$mail->setSubject($sitename.': '.$subject);
 
-			if($prev == 1 && $current == 2){	//open to ack
-				$body = '';
-				$body .= 'To αίτημα σας με τίτλο "'.$table->title.'" προωθήθηκε στην αρμόδια υπηρεσία του Δήμου.' . '<br />';
-				$body .= 'Μπορείτε να δείτε <a href="'.$issueLink.'">εδώ</a> τα σχετικά σχόλια (αν υπάρχουν).' . '<br />';
-				$body .= 'Μόλις το αίτημά σας διεκπεραιωθεί θα λάβετε ενημερωτικό email.' . '<br />';
-				$body .= '<br />' . $issueLink;
-				
-				$mail->setBody($body);
-				$sent = $mail->Send();			
-				
-				//inform admin with message than an email is sent to the user
-				JFactory::getApplication()->enqueueMessage( 'Η κατάσταση του αιτήματος άλλαξε. Ένα ενημερωτικό email στάλθηκε στον χρήστη: ' . $user->email . ' (' . $user->name .')' );				
+				if($prev == 1 && $current == 2){	//open to ack
+					
+					$body = sprintf(JText::_('COM_IMPROVEMYCITY_CHANGE_STATUS_BODY_ACK')
+							, $table->title
+							, $issueLink
+							, $issueLink );
+											
+					$mail->setBody($body);
+					$sent = $mail->Send();			
+					
+					//inform admin with message than an email is sent to the user
+					JFactory::getApplication()->enqueueMessage( sprintf(JText::_('COM_IMPROVEMYCITY_STATUS_CHANGE_INFO_MESSAGE_ACK'), $user->name, $user->email) );
+					
+				}
+				if( ($prev == 2 && $current == 3) || ($prev == 1 && $current == 3) ){	//ack to close or open to close
+					
+					$body = sprintf(JText::_('COM_IMPROVEMYCITY_CHANGE_STATUS_BODY_CLOSE')
+							, $table->title
+							, $issueLink
+							, $issueLink );					
+					
+					$mail->setBody($body);
+					$sent = $mail->Send();				
+					
+					//inform admin with message than an email is sent to the user
+					JFactory::getApplication()->enqueueMessage( sprintf(JText::_('COM_IMPROVEMYCITY_STATUS_CHANGE_INFO_MESSAGE_CLOSE'), $user->name, $user->email) );				
+				}
+
 			}
-			if( ($prev == 2 && $current == 3) || ($prev == 1 && $current == 3) ){	//ack to close or open to close
-				
-				$body = '';
-				$body .= 'To αίτημα σας με τίτλο "'.$table->title.'" διεκπεραιώθηκε από την αρμόδια υπηρεσία του Δήμου.' . '<br />';
-				$body .= 'Μπορείτε να δείτε <a href="'.$issueLink.'">εδώ</a> τα σχετικά σχόλια (αν υπάρχουν).' . '<br />';
-				$body .= '<br />' . $issueLink;
-				
-				$mail->setBody($body);
-				$sent = $mail->Send();				
-				
-				//inform admin with message than an email is sent to the user
-				JFactory::getApplication()->enqueueMessage( 'Το αίτημα διεκπεραιώθηκε. Ένα ενημερωτικό email στάλθηκε στον χρήστη: ' . $user->email . ' (' . $user->name .')' );				
-			}
-
-		}
-			
+		}//settings
 	}
 }
