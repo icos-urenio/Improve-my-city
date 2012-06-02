@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     1.0
+ * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
- * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
  * @author      URENIO Research Unit
  */
  

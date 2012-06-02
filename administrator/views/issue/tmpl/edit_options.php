@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		$Id: edit_options.php 21746 2011-07-06 09:07:36Z chdemko $
- * @package		Joomla.Administrator
- * @subpackage	com_categories
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @version     2.0
+ * @package     com_improvemycity
+ * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
+ * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
+ * @author      URENIO Research Unit
  */
 
 // No direct access.
