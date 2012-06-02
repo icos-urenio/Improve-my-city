@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset name="map"
-		label="Map"
+		label="Google Map"
 		description="Settings about Google Map"
 	>
 
@@ -21,7 +21,7 @@
 				name="zoom"
 				type="improvemycity"
 				label="Initial Map Zoom"
-				description="Set the initial google map zoom (default: 7)"
+				description="Set the initial google map zoom on new issue(default: 17)"
 			/>
 			<field
 				name="maplanguage"
@@ -45,20 +45,6 @@
 			
 	</fieldset>
 
-	<fieldset name="loadscripts"
-		label="Load Scripts"
-		description="Settings about jQuery and bootstrap"
-	>
-			<field name="loadjquery" type="radio" default="1" label="Load jQuery" description="If your template or other component loads jQuery you can select not to load jQuery again">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
-			</field>
-			<field name="loadbootstrap" type="radio" default="1" label="Load Bootstrap" description="If your template or other component loads Bootstrap you can select not to load Bootstrap again">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
-			</field>
-		
-	</fieldset>
 	<fieldset name="closestatus"
 		label="Issue Status"
 		description="Settings about closed issues"
@@ -94,6 +80,26 @@
 			  <option value="1">Yes</option>
 			</field>	
 	</fieldset>	
+
+	<fieldset name="loadscripts"
+		label="Advanced"
+		description="Settings about jQuery and Bootstrap"
+	>
+			<field name="loadjquery" type="radio" default="1" label="Load jQuery js" description="If your template or other component loads jQuery you can select not to load jQuery again">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>
+			<field name="loadbootstrap" type="radio" default="1" label="Load Bootstrap js" description="If your template or other component loads Bootstrap you can select not to load Bootstrap js again">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>
+			<field name="loadbootstrapcss" type="radio" default="1" label="Load Bootstrap css" description="If your template or other component loads Bootstrap CSS you can select not to load Bootstrap js again">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>
+		
+	</fieldset>
+	
 	<fieldset name="permissions"
 		description="JCONFIG_PERMISSIONS_DESC"
 		label="JCONFIG_PERMISSIONS_LABEL"
