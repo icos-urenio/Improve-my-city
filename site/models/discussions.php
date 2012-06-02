@@ -75,7 +75,7 @@ class ImprovemycityModelDiscussions extends JModelList
 
 		$query->from('`#__improvemycity_comments` AS a');
 		if($this->issue_id != null)
-			$query->where('a.state = 1 AND a.improvemycityid='.$this->issue_id);
+			$query->where('a.state = 1 AND a.improvemycityid='. (int) $this->issue_id);
 		else
 			$query->where('a.state = 1');
 
@@ -154,7 +154,7 @@ class ImprovemycityModelDiscussions extends JModelList
 			$query->select('a.catid, a.userid');
 			$query->from('`#__improvemycity` AS a');
 			
-			$query->where('a.id = ' . $pk);		
+			$query->where('a.id = ' . (int) $pk);		
 			$db->setQuery($query);
 			//$catid = $db->loadResult();
 			$row = $db->loadAssoc();
@@ -170,7 +170,7 @@ class ImprovemycityModelDiscussions extends JModelList
 			$query->select('a.note as note, a.title as title');
 			$query->from('`#__categories` AS a');
 			
-			$query->where('a.id = ' . $catid);		
+			$query->where('a.id = ' . (int) $catid);		
 			$db->setQuery($query);
 			//$result = $db->loadResult();
 			$row = $db->loadAssoc();
@@ -237,7 +237,7 @@ class ImprovemycityModelDiscussions extends JModelList
 
 		$db->setQuery(
 				'INSERT INTO #__improvemycity_comments ( improvemycityid, userid, description)' .
-				' VALUES ( '.(int) $pk.', '. (int) $userid.', "'.$description.'")'
+				' VALUES ( '.(int) $pk.', '. (int) $userid.', "'.$db->quote ($description) .'")'
 		);
 
 		if (!$db->query()) {

@@ -12,8 +12,6 @@ defined('_JEXEC') or die;
 
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/models/issue.php';
 
-
-
 /**
  * Model
  */
@@ -159,6 +157,24 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		
 		return true;		
 	}	 
+	
+	private function stringURLSafe($string)
+	{
+		//replace double byte whitespaces to single byte
+		$str = preg_replace('/\xE3\x80\x80/', ' ', $string);
+		// remove any '-' from the string as they will be used as concatenator.
+		$str = str_replace('-', ' ', $str);
+		//replace forbidden characters by whitespaces
+		//$str = preg_replace($forbidden,' ', $str);
+		$str = preg_replace( '#[:\#\*"@+=;!&%\\]\/\'\\\\|\[]#',"\x20", $str );
+		//delete all '?'
+		$str = str_replace('?', '', $str);
+		//trim white spaces at beginning and end of alias
+		$str = trim( $str );
+		// remove any duplicate whitespace and replace whitespaces by hyphens
+		$str =preg_replace('#\x20+#','-', $str);
+		return $str;
+	}	
 	 
 	/**
 	* Get file (photo) from POST and save it
@@ -170,8 +186,10 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
 		
 		if ($file) {
+			//Cannot use makeSafe with non-english characters (or better only ascii is supported)
 			//$filename = JFile::makeSafe($file['name']['photo']);
-			$filename = $file['name']['photo'];
+			//use custom makeSafe instead...
+			$filename = $this->stringURLSafe($file['name']['photo']);
 			
 			if($filename!=''){
 				if($file['type']['photo'] != 'image/jpeg' && $file['type']['photo'] != 'image/png'){
