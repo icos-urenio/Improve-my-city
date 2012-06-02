@@ -199,7 +199,7 @@ class ImprovemycityModelDiscussions extends JModelList
 		
 		$issueRecipient = $initialUser->email;
 		if($issueRecipient != ''){		//check just in case...
-			$subject = 'Νέο σχόλιο από χρήστη: ' . $user->name  .' (' . $user->email . ')';
+			$subject = 'Νέο σχόλιο στο αίτημα σας';
 			$body = '';
 			$body .= 'Ένα νέο σχόλιο που αφορά στο αίτημα σας καταχωρήθηκε στην εφαρμογή Βελτιώνω την πόλη μου' . '<br />';
 			$body .= 'Το περιεχόμενο του σχολίου είναι: <p>"'.$description.'"</p>' . '<br />';
