@@ -1,42 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<fieldset name="component"
-		label="COM_IMPROVEMYCITY_COMPONENT_LABEL"
-		description="COM_IMPROVEMYCITY_COMPONENT_DESC"
+	<fieldset name="map"
+		label="Map"
+		description="Settings about Google Map"
 	>
 
 			<field
 				name="latitude"
 				type="improvemycity"
-				label="Latitude"
-				description="Set the initial google map latitude (e.g. 40.54629751976399)"
+				label="Initial Latitude"
+				description="Set the initial google map latitude (default: 40.54629751976399)"
 			/>
 			<field
 				name="longitude"
 				type="improvemycity"
-				label="Longitude"
-				description="Set the initial google map longitude (e.g. 23.01861169311519)"
+				label="Initial Longitude"
+				description="Set the initial google map longitude (default: 23.01861169311519)"
+			/>
+			<field
+				name="zoom"
+				type="improvemycity"
+				label="Initial Map Zoom"
+				description="Set the initial google map zoom (default: 7)"
 			/>
 			<field
 				name="maplanguage"
 				type="improvemycity"
 				label="Map Language"
-				description="Setting the google map language so as to display addresses correctly (e.g. en)"
+				description="Setting the google map language so as to display addresses correctly (default: en)"
 			/>			
 			<field
 				name="mapregion"
 				type="improvemycity"
 				label="Map Region"
-				description="Setting the google map language so as to display addresses correctly (e.g. GR)"
+				description="Setting the google map language so as to display addresses correctly (default: GB)"
 			/>
 			<field
 				name="searchterm"
 				type="improvemycity"
 				label="Hidden search term"
-				description="Define a hidden term for reverse geocoding like the name of a Municipality or Post Office"
+				description="Define a hidden term for reverse geocoding like the name of a Municipality or PO"
 			/>
+				
+			
 	</fieldset>
 
+	<fieldset name="loadscripts"
+		label="Load Scripts"
+		description="Settings about jQuery and bootstrap"
+	>
+			<field name="loadjquery" type="radio" default="1" label="Load jQuery" description="If your template or other component loads jQuery you can select not to load jQuery again">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>
+			<field name="loadbootstrap" type="radio" default="1" label="Load Bootstrap" description="If your template or other component loads Bootstrap you can select not to load Bootstrap again">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>
+		
+	</fieldset>
+	<fieldset name="closestatus"
+		label="Issue Status"
+		description="Settings about closed issues"
+	>
+			<field name="allowcommentingonclose" type="radio" default="1" label="Comment on closed issues" description="If yes, comments are allowed on closed issues">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>					
+			<field name="allowvotingonclose" type="radio" default="1" label="Vote on closed issues" description="If yes, voting is allowed on closed issues">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>		
+	</fieldset>
+
+	<fieldset name="mailnotifications"
+		label="Mail Notifications"
+		description="Settings about mail notifications on users and administrators on new issues and new comments"
+	>
+			<field name="mailnewissueuser" type="radio" default="1" label="On new issue to user" description="If yes, an email will be send to user who submitted the issue">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>			
+			<field name="mailnewissueadmins" type="radio" default="1" label="On new issue to admins" description="If yes, the admins (as set on notes field on each specific category where the new issue belongs) will receive an informative email">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>			
+			<field name="mailnewcommentuser" type="radio" default="1" label="On new comment to user" description="If yes, an email will be send to user who initially submitted the issue">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>			
+			<field name="mailnewcommentadmins" type="radio" default="1" label="On new comment to admins" description="If yes, the admins (as set on notes field on each specific category where the comment belongs) will receive an informative email">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>	
+	</fieldset>	
 	<fieldset name="permissions"
 		description="JCONFIG_PERMISSIONS_DESC"
 		label="JCONFIG_PERMISSIONS_LABEL"
