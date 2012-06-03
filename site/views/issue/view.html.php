@@ -156,6 +156,8 @@ class ImprovemycityViewIssue extends JView
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui-1.8.18.custom.min.js');
 		}
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
+		if($this->loadbootstrap == 1)
+			$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');		
 		
 		//add google maps
 		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
