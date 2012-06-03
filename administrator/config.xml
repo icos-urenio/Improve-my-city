@@ -63,27 +63,27 @@
 		label="Mail Notifications"
 		description="Settings about mail notifications on users and administrators on new issues and new comments"
 	>
-			<field name="mailnewissueuser" type="radio" default="1" label="On new issue to user" description="If yes, an email will be send to user who submitted the issue">
+			<field name="mailnewissueuser" type="radio" default="0" label="On new issue to user" description="If yes, an email will be send to user who submitted the issue">
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>			
-			<field name="mailnewissueadmins" type="radio" default="1" label="On new issue to admins" description="If yes, the admins (as set on notes field on each specific category where the new issue belongs) will receive an informative email">
+			<field name="mailnewissueadmins" type="radio" default="0" label="On new issue to admins" description="If yes, the admins (as set on notes field on each specific category where the new issue belongs) will receive an informative email">
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>			
-			<field name="mailnewcommentuser" type="radio" default="1" label="On new comment to user" description="If yes, an email will be send to user who initially submitted the issue">
+			<field name="mailnewcommentuser" type="radio" default="0" label="On new comment to user" description="If yes, an email will be send to user who initially submitted the issue">
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>			
-			<field name="mailnewcommentadmins" type="radio" default="1" label="On new comment to admins" description="If yes, the admins (as set on notes field on each specific category where the comment belongs) will receive an informative email">
+			<field name="mailnewcommentadmins" type="radio" default="0" label="On new comment to admins" description="If yes, the admins (as set on notes field on each specific category where the comment belongs) will receive an informative email">
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>	
-			<field name="mailcategorychangeadmins" type="radio" default="1" label="On change category" description="ADMIN 2 ADMIN: If yes, the admins of the new category (as set on notes field) will receive an informative email">
+			<field name="mailcategorychangeadmins" type="radio" default="0" label="On change category" description="ADMIN 2 ADMIN: If yes, the admins of the new category (as set on notes field) will receive an informative email">
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>	
-			<field name="mailstatuschangeuser" type="radio" default="1" label="On change status" description="ADMIN 2 USER: If yes, the user who submitted the issue will receive an informative email">
+			<field name="mailstatuschangeuser" type="radio" default="0" label="On change status" description="ADMIN 2 USER: If yes, the user who submitted the issue will receive an informative email">
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>					
