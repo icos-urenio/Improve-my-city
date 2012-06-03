@@ -105,6 +105,10 @@
 			  <option value="0">No</option>
 			  <option value="1">Yes</option>
 			</field>
+			<field name="popupmodal" type="radio" default="0" label="Ajax modal class" description="If your template overrides the com_user and set behavior modal with ajax handler select Yes">
+			  <option value="0">No</option>
+			  <option value="1">Yes</option>
+			</field>			
 		
 	</fieldset>
 	

@@ -9,19 +9,9 @@
 
 // no direct access
 defined('_JEXEC') or die;
+if($this->popupmodal == 1)
+	JHTML::_('behavior.modal', 'a.modal', array('handler' => 'ajax')); /* fix */
 
-/*
-//smart way to prevent loading the model and setting the document again since it's already loaded (see controller for more details...)
-//finally, is not used since many changes are needed at view.print.php (specially with static map...)
-if($this->print){
-	echo $this->loadTemplate('print');
-	return;
-}
-*/
-
-//JHtml::_('behavior.modal');
-JHTML::_('behavior.modal', 'a.modal', array('handler' => 'ajax')); /* fix */
-//JHTML::_('behavior.modal', 'a.modal');
 JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT'); 
 ?>
 
@@ -178,7 +168,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 							<div class="alert alert-error">
 							<?php echo JText::_('ONLY_LOGGED_COMMENT');?>
 							<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
-							<a class="modal strong-link" rel="{size: {x: 320, y: 330}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+							<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
 							</div>
 					<?php endif;?>
 				</div>
@@ -193,7 +183,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 					<div class="alert alert-error">
 					<?php echo JText::_('ONLY_LOGGED_VOTE');?>
 					<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
-					<a class="modal strong-link" rel="{size: {x: 320, y: 330}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+					<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
 					</div>
 				<?php endif; ?>
 			<?php else : ?>

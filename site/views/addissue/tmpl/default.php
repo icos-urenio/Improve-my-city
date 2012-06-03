@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.keepalive');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
-JHTML::_('behavior.modal', 'a.modal', array('handler' => 'ajax')); /* fix */
+if($this->popupmodal == 1)
+	JHTML::_('behavior.modal', 'a.modal', array('handler' => 'ajax')); /* fix */
 ?>
 
 <div id="imc-wrapper" class="imc <?php echo $this->pageclass_sfx; ?>">
@@ -52,7 +53,7 @@ JHTML::_('behavior.modal', 'a.modal', array('handler' => 'ajax')); /* fix */
 					<div class="alert alert-error">
 					<?php echo JText::_('NOT_LOGGED_IN');?>
 					<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue')); ?>
-					<a class="modal strong-link" rel="{size: {x: 320, y: 330}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+					<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
 					</div>				
 				<?php endif;?>
 				

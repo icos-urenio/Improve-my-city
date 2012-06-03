@@ -34,6 +34,7 @@ class ImprovemycityViewAddissue extends JView
 	protected $loadjquery;
 	protected $loadbootstrap;
 	protected $loadbootstrapcss;
+	protected $popupmodal;
 	
 	function display($tpl = null)
 	{
@@ -68,6 +69,7 @@ class ImprovemycityViewAddissue extends JView
 		$this->loadjquery = $this->params->get('loadjquery');
 		$this->loadbootstrap = $this->params->get('loadbootstrap');
 		$this->loadbootstrapcss = $this->params->get('loadbootstrapcss');
+		$this->popupmodal = $this->params->get('popupmodal');
 		
 		$this->language = (empty($lang) ? "en" : $lang);
 		$this->region = (empty($region) ? "GB" : $region);
