@@ -212,15 +212,27 @@ class ImprovemycityViewIssue extends JView
 						parseFloat(jsonMarkers[i].lng)
 					);
 					
-					var icon = '" . JURI::root().$this->categoryIcon."';
-					var shadow = '" . JURI::root(true). "/components/com_improvemycity/images/shadow.png". "';
-					var marker = new google.maps.Marker({
-						map: map,
-						position: point,
-						title: name,
-						icon: icon,
-						shadow: shadow
-					});
+					var hasIcon = '" . $this->categoryIcon . "';
+					if(hasIcon != ''){
+						var icon = '" . JURI::root().$this->categoryIcon."';
+						var shadow = '" . JURI::root(true). "/components/com_improvemycity/images/shadow.png". "';
+						
+						var marker = new google.maps.Marker({
+							map: map,
+							position: point,
+							title: name,
+							icon: icon,
+							shadow: shadow
+						});
+					}else{
+						var marker = new google.maps.Marker({
+							map: map,
+							position: point,
+							title: name
+						});
+					}
+					
+					
 					
 					marker.catid = catid;
 					marker.id = id;
