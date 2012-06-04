@@ -20,12 +20,14 @@
 #imc-menu form{margin: 0;}
 #imc-menu .btn-group  {display:inline-block;/* float:left; */}
 #imc-menu {vertical-align: middle; line-height: 22px; height: 28px;}
+#imc-menu.issueslist {line-height: 40px; height: 40px;}
 #imc-menu h2.imc-title {
 	font-family: 'Open Sans Condensed', sans-serif; color: #790101; 
 	display: inline; padding:0; margin: 0;
 	line-height: 25px; height: 25px;
 	float: left;
 }
+#imc-menu .btn-large {font-weight: bold; font-size: 16px;}
 
 #loading img{margin-left: 10px;	margin-bottom: 5px;}
 .imc-left{float: left;}
