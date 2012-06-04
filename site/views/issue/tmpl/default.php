@@ -38,7 +38,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 			
 			<!-- New Issue -->
 			<div class="btn-group imc-right">
-				<a class="btn btn-danger" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue');?>"><i class="icon-edit icon-white"></i> <?php echo JText::_('REPORT_AN_ISSUE');?></a>
+				<a class="btn btn-primary" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue');?>"><i class="icon-plus icon-white"></i> <?php echo JText::_('REPORT_AN_ISSUE');?></a>
 			</div>
 
 			<!-- Vote +1 -->
