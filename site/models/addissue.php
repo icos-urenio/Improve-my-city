@@ -3,7 +3,7 @@
  * @version     2.0
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
- * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
  * @author      URENIO Research Unit
  */
 
@@ -69,7 +69,11 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	 
     private function notifyByEmail($id, $data)
 	{
-
+		// Load the parameters.
+		$app = JFactory::getApplication();
+		$par	= $app->getParams();
+		$this->mailNewIssueAdmins = $par->get('mailnewissueadmins');
+		$this->mailNewIssueUser = $par->get('mailnewissueuser');
 		
 		//get the link to the newly created issue
 		$issueLink = 'http://'. $_SERVER['HTTP_HOST'] . ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$id);
