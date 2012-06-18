@@ -51,13 +51,11 @@ $params = $this->form->getFieldsets('params');
 							?>
 						</li>
 					<?php endforeach; ?>
-					<li>
-						<?php 
-						//echo 'User: ';
-						//$user = &JFactory::getUser();
-						//echo $user->name;
-						?>
-					</li>
+					<li><?php echo $this->issuer->username; ?></li>
+					<li><?php echo $this->issuer->name; ?></li>
+					<li><?php echo $this->issuer->email; ?></li>
+					
+					
             </ul>
 		</fieldset>
 	</div>

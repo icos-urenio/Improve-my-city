@@ -26,6 +26,7 @@ class ImprovemycityViewIssue extends JView
 	protected $lat = '';
 	protected $lon = '';
 	protected $searchterm = '';
+	protected $issuer;
 	/**
 	 * Display the view
 	 */
@@ -46,11 +47,17 @@ class ImprovemycityViewIssue extends JView
 		$this->lat = (empty($lat) ? 40.54629751976399 : $lat);
 		$this->lon = (empty($lon) ? 23.01861169311519 : $lon);
 		$this->searchterm = (empty($term) ? "" : $term);
+
+		$this->issuer = &JFactory::getUser($this->item->userid);
+		
+
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
+
+
 
 		$this->addToolbar();
 		parent::display($tpl);
