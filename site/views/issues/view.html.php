@@ -202,16 +202,23 @@ class ImprovemycityViewIssues extends JView
 	{
 		$selected = $this->state->get('list.limit');
 		$html = '';
-		for($i=5;$i<=15;$i+=5){
-			if($selected == $i)
-				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$i.' <i class="icon-ok"></i></a></li>';
-			else
-				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$i.'</a></li>';
+		$values = array (10, 20, 100, 0);
+		foreach($values as $i){
+			$a = $i;
+			if($a == 0)
+				$a = JText::_('ALL');
+			if($selected == $i){
+				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$a.' <i class="icon-ok"></i></a></li>';
+			}
+			else {
+				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$a.'</a></li>';
+			}
 		}
 		return $html;
 	}	
-		
-	
+
+
+
 	
 	protected function createCustomMarkers($cats = array())
     {
