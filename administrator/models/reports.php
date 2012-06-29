@@ -100,11 +100,15 @@ class ImprovemycityModelReports extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.*'
+				'a.*, #__categories.title AS category,catid, #__users.name AS username'
 			)
 		);
-		$query->from('`#__improvemycity` AS a');
+		
+		$query->from('#__improvemycity AS a');
+		$query->leftJoin('#__categories on a.catid=#__categories.id');
+		$query->leftJoin('#__users on a.userid=#__users.id');
 		$query->where('a.state = 1');
+	
 
 		// Filter by search in title
 		$search = $this->getState('filter.search');
