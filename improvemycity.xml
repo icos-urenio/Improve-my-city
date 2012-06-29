@@ -52,8 +52,9 @@
 			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_categories&amp;view=categories&amp;extension=com_improvemycity" view="categories" alt="ImproveMyCity/Categories">COM_IMPROVEMYCITY_CATEGORIES</menu>
 			<!--
 			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_improvemycity&amp;view=comments" view="comments" alt="ImproveMyCity/Comments">COM_IMPROVEMYCITY_COMMENTS</menu>
-			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_improvemycity&amp;view=reports" view="reports" alt="ImproveMyCity/Reports">COM_IMPROVEMYCITY_REPORTS</menu>
 			-->
+			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_improvemycity&amp;view=reports" view="reports" alt="ImproveMyCity/Reports">COM_IMPROVEMYCITY_REPORTS</menu>
+			
 		</submenu>
 		<files folder="administrator">
 			<filename>access.xml</filename>
