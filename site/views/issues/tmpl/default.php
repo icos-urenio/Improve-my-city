@@ -42,7 +42,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				
 				<!-- Mega Menu -->
 				<ul id="mega-menu">
-					<li id="drop-1"><a id="btn-1" href="javascript:return false;" class="btn"><i class="icon-list-alt"></i> <?php echo JText::_('COM_IMPROVEMYCITY_FILTER_SELECTION')?></a>
+					<li id="drop-1"><a id="btn-1" href="javascript:void(0);" class="btn"><i class="icon-list-alt"></i> <?php echo JText::_('COM_IMPROVEMYCITY_FILTER_SELECTION')?></a>
 						<div class="megadrop dropdown_6columns">
 							<div class="col_6">
 								<h2><?php echo JText::_('COM_IMPROVEMYCITY_CATEGORIES')?></h2>
@@ -69,7 +69,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							</div>
 						</div>
 					</li>
-					<li id="drop-2"><a id="btn-2" href="javascript:return false;" class="btn"><i class="icon-signal"></i> <?php echo JText::_('COM_IMPROVEMYCITY_ORDERING')?></a>
+					<li id="drop-2"><a id="btn-2" href="javascript:void(0);" class="btn"><i class="icon-signal"></i> <?php echo JText::_('COM_IMPROVEMYCITY_ORDERING')?></a>
 						<div class="megadrop dropdown_2columns">
 							<div class="col_2">						
 								<ul>
@@ -81,7 +81,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 							</div>
 						</div>
 					</li>
-					<li id="drop-3"><a id="btn-3" href="javascript:return false;" class="btn"><i class="icon-check"></i> <?php echo JText::_('JGLOBAL_DISPLAY_NUM')?></a>
+					<li id="drop-3"><a id="btn-3" href="javascript:void(0);" class="btn"><i class="icon-check"></i> <?php echo JText::_('JGLOBAL_DISPLAY_NUM')?></a>
 						<div class="megadrop dropdown_1column">
 							<div class="col_1">						
 								<ul>
@@ -113,7 +113,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				</div>
 			<?php endif; ?>
 			<?php foreach($this->items as $item){ ?>
-				<div class="imc-issue-item" id="issueid-<?php echo $item->id;?>" onclick="location.href='<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$item->id);?>';return false;" >
+				<div class="imc-issue-item" id="issueid-<?php echo $item->id;?>" onclick="location.href='<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$item->id);?>';void(0);" >
 					<div class="imc-issue-content">
 						<div class="imc-issue-review">
 							<h2 class="imc-issue-title">
