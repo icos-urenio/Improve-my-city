@@ -9,7 +9,6 @@
 	<authorUrl>http://www.urenio.org/</authorUrl>
 	<version>2.0</version>
 	<description>ImproveMyCity - Report, vote and track non-emergency issues. ImproveMyCity was developed within the European project "PEOPLE: Pilot smart urban Ecosystems leveraging Open innovation for Promoting and enabLing future E- services" which is co-financed by the European Commission (THEME [CIP-ICT-PSP.2010.4.1]).</description>
-
 	<install>
     	<sql>
         	<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -50,11 +49,8 @@
 		<submenu>
 			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_improvemycity&amp;view=issues" view="issues" alt="ImproveMyCity/Issues">COM_IMPROVEMYCITY_ITEMS</menu>
 			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_categories&amp;view=categories&amp;extension=com_improvemycity" view="categories" alt="ImproveMyCity/Categories">COM_IMPROVEMYCITY_CATEGORIES</menu>
-			<!--
 			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_improvemycity&amp;view=comments" view="comments" alt="ImproveMyCity/Comments">COM_IMPROVEMYCITY_COMMENTS</menu>
-			-->
 			<menu img="../media/com_improvemycity/images/improvemycity-16x16.png" link="option=com_improvemycity&amp;view=reports" view="reports" alt="ImproveMyCity/Reports">COM_IMPROVEMYCITY_REPORTS</menu>
-			
 		</submenu>
 		<files folder="administrator">
 			<filename>access.xml</filename>

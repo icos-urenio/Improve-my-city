@@ -89,11 +89,7 @@ class ImprovemycityModelComment extends JModelAdmin
 	public function getItem($pk = null)
 	{
 		if ($item = parent::getItem($pk)) {
-
 			//Do any procesing on fields here if needed
-			if($item->votes == 0 || $item->votes == '')
-				$item->votes = 1;
-
 		}
 		
 		return $item;

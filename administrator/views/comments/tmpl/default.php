@@ -149,6 +149,13 @@ $saveOrder	= $listOrder == 'a.ordering';
 					
 				</td>
                 <?php } ?>		
+                <?php if (isset($this->items[0]->improvemycityid)) { ?>
+				<td>
+					<?php echo '<strong>'.$item->improvemycityid.'</strong>'; 
+					?>
+					
+				</td>
+                <?php } ?>		
 
 
 
