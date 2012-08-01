@@ -1,123 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset name="map"
-		label="Google Map"
-		description="Settings about Google Map"
+		label="COM_IMPROVEMYCITY_SETTINGS_GOOGLE_MAP_LABEL"
+		description="COM_IMPROVEMYCITY_SETTINGS_GOOGLE_MAP_DESC"
 	>
 
 			<field
 				name="latitude"
 				type="improvemycity"
-				label="Initial Latitude"
-				description="Set the initial google map latitude (default: 40.54629751976399)"
+				label="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LATITUDE_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LATITUDE_DESC"
 			/>
 			<field
 				name="longitude"
 				type="improvemycity"
-				label="Initial Longitude"
-				description="Set the initial google map longitude (default: 23.01861169311519)"
+				label="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LONGITUDE_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LONGITUDE_DESC"
 			/>
 			<field
 				name="zoom"
 				type="improvemycity"
-				label="Initial Map Zoom"
-				description="Set the initial google map zoom on new issue(default: 17)"
+				label="COM_IMPROVEMYCITY_SETTINGS_INITIAL_MAP_ZOOM_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_INITIAL_MAP_ZOOM_DESC"
 			/>
 			<field
 				name="maplanguage"
 				type="improvemycity"
-				label="Map Language"
-				description="Setting the google map language so as to display addresses correctly (default: en)"
+				label="COM_IMPROVEMYCITY_SETTINGS_MAP_LANGUAGE_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_MAP_LANGUAGE_DESC"
 			/>			
 			<field
 				name="mapregion"
 				type="improvemycity"
-				label="Map Region"
-				description="Setting the google map language so as to display addresses correctly (default: GB)"
+				label="COM_IMPROVEMYCITY_SETTINGS_MAP_REGION_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_MAP_REGION_DESC"
 			/>
 			<field
 				name="searchterm"
 				type="improvemycity"
-				label="Hidden search term"
-				description="Define a hidden term for reverse geocoding like the name of a Municipality or PO"
+				label="COM_IMPROVEMYCITY_SETTINGS_HIDDEN_SEARCH_TERM_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_HIDDEN_SEARCH_TERM_DESC"
 			/>
-				
-			
 	</fieldset>
 
-	<fieldset name="closestatus"
-		label="Issue Status"
-		description="Settings about closed issues"
+	<fieldset name="general"
+		label="COM_IMPROVEMYCITY_SETTINGS_GENERAL_SETTINGS_LABEL"
+		description="COM_IMPROVEMYCITY_SETTINGS_GENERAL_SETTINGS_DESC"
 	>
-			<field name="allowcommentingonclose" type="radio" default="1" label="Comment on closed issues" description="If yes, comments are allowed on closed issues">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="showcomments" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_SHOW_COMMENTS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_SHOW_COMMENTS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>		
+	
+			<field name="approveissue" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ISSUE_APPROVAL_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_ISSUE_APPROVAL_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>		
+	
+			<field name="allowcommentingonclose" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_COMMENT_ON_CLOSED_ISSUES_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_COMMENT_ON_CLOSED_ISSUES_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>					
-			<field name="allowvotingonclose" type="radio" default="1" label="Vote on closed issues" description="If yes, voting is allowed on closed issues">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="allowvotingonclose" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_VOTE_ON_CLOSED_ISSUES_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_VOTE_ON_CLOSED_ISSUES_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>		
 	</fieldset>
 
 	<fieldset name="mailnotifications"
-		label="Mail Notifications"
-		description="Settings about mail notifications on users and administrators on new issues and new comments"
+		label="COM_IMPROVEMYCITY_SETTINGS_MAIL_NOTIFICATIONS_LABEL"
+		description="COM_IMPROVEMYCITY_SETTINGS_MAIL_NOTIFICATIONS_DESC"
 	>
-			<field name="mailnewissueuser" type="radio" default="0" label="On new issue to user" description="If yes, an email will be send to user who submitted the issue">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="mailnewissueuser" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_ISSUE_TO_USER_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_ISSUE_TO_USER_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>			
-			<field name="mailnewissueadmins" type="radio" default="0" label="On new issue to admins" description="If yes, the admins (as set on notes field on each specific category where the new issue belongs) will receive an informative email">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="mailnewissueadmins" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_ISSUE_TO_ADMINS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_ISSUE_TO_ADMINS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>			
-			<field name="mailnewcommentuser" type="radio" default="0" label="On new comment to user" description="If yes, an email will be send to user who initially submitted the issue">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="mailnewcommentuser" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_COMMENT_TO_USER_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_COMMENT_TO_USER_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>			
-			<field name="mailnewcommentadmins" type="radio" default="0" label="On new comment to admins" description="If yes, the admins (as set on notes field on each specific category where the comment belongs) will receive an informative email">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="mailnewcommentadmins" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_COMMENT_TO_ADMINS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_ON_NEW_COMMENT_TO_ADMINS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>	
-			<field name="mailcategorychangeadmins" type="radio" default="0" label="On change category" description="ADMIN 2 ADMIN: If yes, the admins of the new category (as set on notes field) will receive an informative email">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="mailcategorychangeadmins" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ON_CHANGE_CATEGORY_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_ON_CHANGE_CATEGORY_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>	
-			<field name="mailstatuschangeuser" type="radio" default="0" label="On change status" description="ADMIN 2 USER: If yes, the user who submitted the issue will receive an informative email">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="mailstatuschangeuser" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ON_CHANGE_STATUS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_ON_CHANGE_STATUS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>					
 	</fieldset>	
 
 	<fieldset name="loadscripts"
-		label="Advanced"
-		description="Settings about jQuery and Bootstrap"
+		label="COM_IMPROVEMYCITY_SETTINGS_ADVANCED_LABEL"
+		description="COM_IMPROVEMYCITY_SETTINGS_ADVANCED_DESC"
 	>
-			<field name="loadjquery" type="radio" default="1" label="Load jQuery js" description="If your template or other component loads jQuery you can select not to load jQuery again">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="loadjquery" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_LOAD_JQUERY_JS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_LOAD_JQUERY_JS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>
-			<field name="loadbootstrap" type="radio" default="1" label="Load Bootstrap js" description="If your template or other component loads Bootstrap you can select not to load Bootstrap js again">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="loadjqueryui" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_LOAD_JQUERY_UI_JS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_LOAD_JQUERY_UI_JS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>
-			<field name="loadbootstrapcss" type="radio" default="1" label="Load Bootstrap css" description="If your template or other component loads Bootstrap CSS you can select not to load Bootstrap js again">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="loadbootstrap" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_LOAD_BOOTSTRAP_JS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_LOAD_BOOTSTRAP_JS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>
-			<field name="popupmodal" type="radio" default="0" label="Ajax modal class" description="If your template overrides the com_user and set behavior modal with ajax handler select Yes">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="loadbootstrapcss" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_LOAD_BOOTSTRAP_CSS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_LOAD_BOOTSTRAP_CSS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>
+			<field name="popupmodal" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_AJAX_MODAL_CLASS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_AJAX_MODAL_CLASS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>			
 		
 	</fieldset>
 	
 	<fieldset name="credits"
-		label="Credits"
+		label="COM_IMPROVEMYCITY_SETTINGS_CREDITS_LABEL"
 	>
-			<field name="credits" type="radio" default="1" label="Show credits" description="If yes, an information alert is displayed under the map">
-			  <option value="0">No</option>
-			  <option value="1">Yes</option>
+			<field name="credits" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
 			</field>	
 	</fieldset>
 		

@@ -1,4 +1,12 @@
 <?php
+/**
+ * @version     2.2
+ * @package     com_improvemycity
+ * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
+ * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
+ * @author      URENIO Research Unit
+ */
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
  
@@ -30,7 +38,7 @@ class com_improvemycityInstallerScript
 
 		// abort if the current Joomla release is older
 		if( version_compare( $jversion->getShortVersion(), $this->minimum_joomla_release, 'lt' ) ) {
-			Jerror::raiseWarning(null, 'Cannot install com_democompupdate in a Joomla release prior to '.$this->minimum_joomla_release);
+			Jerror::raiseWarning(null, 'Cannot install com_improvemycity in a Joomla release prior to '.$this->minimum_joomla_release);
 			return false;
 		}
  
@@ -82,8 +90,7 @@ class com_improvemycityInstallerScript
 	 */
 	function postflight( $type, $parent ) {
 		// always create or modify these parameters
-		//$params['version'] = 'ImproveMyCity version ' . $this->release;
-		//$params['my_param1'] = 'Another value';
+		$params['version'] = 'ImproveMyCity version ' . $this->release;
  
 		// define the following parameters only if it is an original install
 		if ( $type == 'install' ) {

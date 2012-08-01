@@ -31,13 +31,6 @@
 			cols="200"
 		/>		
 	
-		
-		
-
-		
-			
-		<field type="spacer" name="spacer2" hr="true" />
-		
 		<field
 			name="userid"
 			type="hidden"

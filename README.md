@@ -17,3 +17,5 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ## Changelog
 Version 2.0 contains many additions and bug fixes based on end-users comments and testing phase feedback
+Version 2.1 fixes some ACL features
+Version 2.2 introduces comments administration and suggestions and bug fixes based on JED and support group users
