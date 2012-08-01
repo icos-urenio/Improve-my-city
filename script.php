@@ -24,7 +24,7 @@ class com_improvemycityInstallerScript
 
 		// Show the essential information at the install/update back-end
 		echo '<p>Installing component manifest file version = ' . $this->release;
-		echo '<br />Current manifest cache commponent version = ' . $this->getParam('version');
+		echo '<br />Current manifest cache commponent version (if any) = ' . $this->getParam('version');
 		echo '<br />Installing component manifest file minimum Joomla version = ' . $this->minimum_joomla_release;
 		echo '<br />Current Joomla version = ' . $jversion->getShortVersion();
 
@@ -45,7 +45,7 @@ class com_improvemycityInstallerScript
 		}
 		else { $rel = $this->release; }
  
-		echo '<p>' . JText::_('COM_IMPROVEMYCITY_PREFLIGHT_' . $type . ' ' . $rel) . '</p>';
+		//echo '<p>' . JText::_('COM_IMPROVEMYCITY_PREFLIGHT_' . $type . ' ' . $rel) . '</p>';
 		
 	}
  
@@ -82,7 +82,7 @@ class com_improvemycityInstallerScript
 	 */
 	function postflight( $type, $parent ) {
 		// always create or modify these parameters
-		$params['version'] = 'ImproveMyCity version ' . $this->release;
+		//$params['version'] = 'ImproveMyCity version ' . $this->release;
 		//$params['my_param1'] = 'Another value';
  
 		// define the following parameters only if it is an original install
@@ -149,6 +149,7 @@ class com_improvemycityInstallerScript
 			}
 			// store the combined new and existing values back as a JSON string
 			$paramsString = json_encode( $params );
+			
 			$db->setQuery('UPDATE #__extensions SET params = ' .
 				$db->quote( $paramsString ) .
 				' WHERE name = "com_improvemycity"' );
