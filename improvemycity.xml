@@ -9,6 +9,7 @@
 	<authorUrl>http://www.urenio.org/</authorUrl>
 	<version>2.2</version>
 	<description>ImproveMyCity - Report, vote and track non-emergency issues. ImproveMyCity was developed within the European project "PEOPLE: Pilot smart urban Ecosystems leveraging Open innovation for Promoting and enabLing future E- services" which is co-financed by the European Commission (THEME [CIP-ICT-PSP.2010.4.1]).</description>
+	<scriptfile>script.php</scriptfile>
 	<install>
     	<sql>
         	<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
