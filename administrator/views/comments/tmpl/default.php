@@ -30,9 +30,6 @@ $saveOrder	= $listOrder == 'a.ordering';
 			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
-
-            
-
 		</div>
 	</fieldset>
 	<div class="clr"> </div>
@@ -68,17 +65,16 @@ $saveOrder	= $listOrder == 'a.ordering';
 					<?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.state', $listDirn, $listOrder); ?>
 				</th>
                 <?php } ?>
+                <?php if (isset($this->items[0]->improvemycityid)) { ?>
+                <th width="30%" class="nowrap">
+                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_IMPROVEMYCITYID', 'a.improvemycityid', $listDirn, $listOrder); ?>
+                </th>
+                <?php } ?>	                
                 <?php if (isset($this->items[0]->userid)) { ?>
                 <th width="30%" class="nowrap">
                     <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_USERID', 'a.userid', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>					
-                <?php if (isset($this->items[0]->improvemycityid)) { ?>
-                <th width="30%" class="nowrap">
-                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_IMPROVEMYCITYID', 'a.improvemycityid', $listDirn, $listOrder); ?>
-                </th>
-                <?php } ?>					
-				
 			</tr>
 		</thead>
 		<tfoot>
@@ -100,9 +96,6 @@ $saveOrder	= $listOrder == 'a.ordering';
 				<td class="center">
 					<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 				</td>
-
-
-
                 <?php if (isset($this->items[0]->ordering)) { ?>
 				    <td class="order">
 					    <?php if ($canChange) : ?>
@@ -141,27 +134,17 @@ $saveOrder	= $listOrder == 'a.ordering';
 					    <?php echo JHtml::_('jgrid.published', $item->state, $i, 'comments.', $canChange, 'cb'); ?>
 				    </td>
                 <?php } ?>		
-                <?php if (isset($this->items[0]->userid)) { ?>
-				<td>
-					<?php echo '<strong>'.$item->userid.'</strong>'; 
-						//if($item->path == '') echo ' -'; else echo ' ('.$item->path.')';
-					?>
-					
-				</td>
-                <?php } ?>		
                 <?php if (isset($this->items[0]->improvemycityid)) { ?>
 				<td>
-					<?php echo '<strong>'.$item->improvemycityid.'</strong>'; 
+					<?php echo '<strong>'.$item->issuetitle.' ('.$item->improvemycityid .')</strong>'; 
 					?>
-					
+				</td>
+                <?php } ?>	                
+                <?php if (isset($this->items[0]->user)) { ?>
+				<td>
+					<?php echo '<strong>'.$item->user.'</strong>';?>
 				</td>
                 <?php } ?>		
-
-
-
-
-
-
 			</tr>
 			<?php endforeach; ?>
 		</tbody>

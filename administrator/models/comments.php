@@ -100,14 +100,12 @@ class ImprovemycityModelComments extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.*'
+				'a.*, #__improvemycity.title as issuetitle, #__users.name as user'
 			)
 		);
 		$query->from('`#__improvemycity_comments` AS a');
-		
-
-
-
+		$query->leftJoin('#__improvemycity on improvemycityid=#__improvemycity.id');
+		$query->leftJoin('#__users on a.userid=#__users.id');
 
 		// Filter by search in title
 		$search = $this->getState('filter.search');
