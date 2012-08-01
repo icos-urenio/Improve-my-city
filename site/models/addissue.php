@@ -188,6 +188,12 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	{
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
+		$approval = JRequest::getVar('state');
+		$data['state'] = $approval;
+		if($approval == 0){
+			JFactory::getApplication()->enqueueMessage( JText::_('COM_IMPROVEMYCITY_APPROVAL_PENDING') );
+		}
+		
 		
 		if ($file) {
 			//Cannot use makeSafe with non-english characters (or better only ascii is supported)

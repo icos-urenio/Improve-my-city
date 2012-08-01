@@ -116,6 +116,11 @@ class com_improvemycityInstallerScript
 			$params['loadbootstrapcss'] = '1';
 			$params['popupmodal'] = '0';
 			$params['credits'] = '1';
+			
+			$params['showcomments'] = '1';
+			$params['approveissue'] = '0';
+			$params['loadjqueryui'] = '1';			
+			
 		}
  
 		$this->setParams( $params );

@@ -40,7 +40,10 @@ class ImprovemycityViewIssues extends JView
 	protected $loadbootstrapcss;
 	protected $credits;
 	protected $arCat;
-
+	protected $showcomments;
+	protected $approveissue;
+	protected $loadjqueryui;
+	
 	public $f = '';	
 	function display($tpl = null)
 	{
@@ -88,6 +91,9 @@ class ImprovemycityViewIssues extends JView
 		$this->loadbootstrap = $this->params->get('loadbootstrap');
 		$this->loadbootstrapcss = $this->params->get('loadbootstrapcss');
 		$this->credits = $this->params->get('credits');
+		$this->showcomments = $this->params->get('showcomments');
+		$this->approveissue = $this->params->get('approveissue');
+		$this->loadjqueryui = $this->params->get('loadjqueryui');		
 		
 		$this->language = (empty($lang) ? "en" : $lang);
 		$this->region = (empty($region) ? "GB" : $region);

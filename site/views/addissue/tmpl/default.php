@@ -84,6 +84,10 @@ if($this->popupmodal == 1)
 							<button class="btn btn-success disabled imc-right" disabled="disabled"><i class="icon-ok icon-white"></i> <?php echo JText::_('POST_ISSUE');?></button>
 						<?php }?>
 						
+						<?php if($this->approveissue == 1) : ?>
+						<input type="hidden" name="state" value="0" />
+						<?php endif;?>
+						
 						<input type="hidden" name="return" value="<?php echo $this->return_page;?>" />
 						<input type="hidden" name="task" value="" />
 						<?php echo JHtml::_('form.token'); ?>

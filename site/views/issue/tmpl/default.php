@@ -137,44 +137,48 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 					<p class="desc"><?php echo $this->item->description;?></p>
 				</div>
 				<div style="clear: both;"></div>
-
-				<div id="imc-comments-wrapper">
-				<?php if(!empty($this->discussion)):?>
-					<?php foreach ($this->discussion as $item) : ?>
-						<div class="imc-chat">
-							<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->username; ?></span>
-							<span class="imc-chat-desc"><?php echo $item->description;?></span>
-						</div>
-					<?php endforeach;?>
-				<?php endif;?>
-				</div>
 				
-				<?php if($this->item->currentstatus != 3 || $this->allowCommentingOnClose == 1) : ?> 
-				<div id="imc-new-comment-wrapper">
-					<?php if(!$this->guest) :?>
-					<form name="com_improvemycity_comments" id="com_improvemycity_comments" method="post" action="#">
-							<input type="hidden" name="option" value ="com_improvemycity" />
-							<input type="hidden" name="controller" value="improvemycity" />
-							<input type="hidden" name="task" value="addComment" />
-							<input type="hidden" name="format" value="json" />
-							<input type="hidden" name="issue_id" value="<?php echo $this->item->id; ?>" />
-							<input type="hidden" name="<?php echo JUtility::getToken(); ?>" value="1" />
-							<textarea id="imc-comment-area" name="description" style="max-height: 200px; min-height: 65px; max-width: 100%; min-width: 100%; width: 100%;"></textarea>
-							<a class="btn imc-right" href="javascript:comment();"><i class="icon-pencil"></i> <?php echo JText::_('ADD_COMMENT');?></a>
-							<?php //echo JUtility::getToken();?>
-						</form>
-					<?php else : //not logged?>
-						<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
-							<div class="alert alert-error">
-							<?php echo JText::_('ONLY_LOGGED_COMMENT');?>
-							<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
-							<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+				<?php if($this->showcomments == 1) : ?>
+					<div id="imc-comments-wrapper">
+					<?php if(!empty($this->discussion)):?>
+						<?php foreach ($this->discussion as $item) : ?>
+							<div class="imc-chat">
+								<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->username; ?></span>
+								<span class="imc-chat-desc"><?php echo $item->description;?></span>
 							</div>
+						<?php endforeach;?>
 					<?php endif;?>
-				</div>
-				<?php else : ?>
-					<div class="alert alert-error"><?php echo JText::_('CANNOT_COMMENT_ON_CLOSED');?></div>
+					</div>
+					
+					<?php if($this->item->currentstatus != 3 || $this->allowCommentingOnClose == 1) : ?> 
+					<div id="imc-new-comment-wrapper">
+						<?php if(!$this->guest) :?>
+						<form name="com_improvemycity_comments" id="com_improvemycity_comments" method="post" action="#">
+								<input type="hidden" name="option" value ="com_improvemycity" />
+								<input type="hidden" name="controller" value="improvemycity" />
+								<input type="hidden" name="task" value="addComment" />
+								<input type="hidden" name="format" value="json" />
+								<input type="hidden" name="issue_id" value="<?php echo $this->item->id; ?>" />
+								<input type="hidden" name="<?php echo JUtility::getToken(); ?>" value="1" />
+								<textarea id="imc-comment-area" name="description" style="max-height: 200px; min-height: 65px; max-width: 100%; min-width: 100%; width: 100%;"></textarea>
+								<a class="btn imc-right" href="javascript:comment();"><i class="icon-pencil"></i> <?php echo JText::_('ADD_COMMENT');?></a>
+								<?php //echo JUtility::getToken();?>
+							</form>
+						<?php else : //not logged?>
+							<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
+								<div class="alert alert-error">
+								<?php echo JText::_('ONLY_LOGGED_COMMENT');?>
+								<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
+								<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+								</div>
+						<?php endif;?>
+					</div>
+					<?php else : ?>
+						<div class="alert alert-error"><?php echo JText::_('CANNOT_COMMENT_ON_CLOSED');?></div>
+					<?php endif;?>	
 				<?php endif;?>	
+					
+				
 			</div>
 		</div>
 		<div id="imc-details-sidebar">			

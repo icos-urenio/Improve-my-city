@@ -38,7 +38,10 @@ class ImprovemycityViewIssue extends JView
 	protected $allowCommentingOnClose;
 	protected $allowVotingOnClose;
 	protected $popupmodal;
-	
+	protected $showcomments;
+	protected $approveissue;
+	protected $loadjqueryui;
+		
 	function display($tpl = null)
 	{
 		$app		= JFactory::getApplication();
@@ -63,6 +66,9 @@ class ImprovemycityViewIssue extends JView
 		$this->loadbootstrap = $this->params->get('loadbootstrap');
 		$this->loadbootstrapcss = $this->params->get('loadbootstrapcss');
 		$this->popupmodal = $this->params->get('popupmodal');
+		$this->showcomments = $this->params->get('showcomments');
+		$this->approveissue = $this->params->get('approveissue');
+		$this->loadjqueryui = $this->params->get('loadjqueryui');		
 		
 		$this->language = (empty($lang) ? "en" : $lang);
 		$this->region = (empty($region) ? "GB" : $region);
@@ -155,8 +161,12 @@ class ImprovemycityViewIssue extends JView
 		//add scripts
 		if($this->loadjquery == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
+		}
+		
+		if($this->loadjqueryui == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui-1.8.18.custom.min.js');
 		}
+		
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 		
 		//add google maps
