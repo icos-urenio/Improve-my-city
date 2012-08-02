@@ -161,7 +161,11 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 								<input type="hidden" name="issue_id" value="<?php echo $this->item->id; ?>" />
 								<input type="hidden" name="<?php echo JUtility::getToken(); ?>" value="1" />
 								<textarea id="imc-comment-area" name="description" style="max-height: 200px; min-height: 65px; max-width: 100%; min-width: 100%; width: 100%;"></textarea>
-								<a class="btn imc-right" href="javascript:comment();"><i class="icon-pencil"></i> <?php echo JText::_('ADD_COMMENT');?></a>
+								<div id="commentBtn">
+									<a class="btn imc-right" href="javascript:comment();"><i class="icon-pencil"></i> <?php echo JText::_('ADD_COMMENT');?></a>
+								</div>
+								<div id="commentIndicator" class="imc-right"></div>
+								
 								<?php //echo JUtility::getToken();?>
 							</form>
 						<?php else : //not logged?>

@@ -58,16 +58,20 @@ function comment(){
 		alert(Joomla.JText._('COM_IMPROVEMYCITY_WRITE_COMMENT')); 
 		return;
 	}
-	
+	var base = window.com_improvemycity.base;
 	var htmlStr = $('#imc-comment-area').val();
 	$('#imc-comment-area').val($('<div/>').text(htmlStr).html());
-
+	$('#commentBtn').hide();
+	$('#commentIndicator').append('<div id="ajaxBusy"><p><img src="'+base+'/components/com_improvemycity/images/ajax-loader.gif"></p></div>');
+	
 	$.ajax({
 		type : 'POST',
 		url : 'index.php',
 		datatype: 'json',
 		data: jQuery('#com_improvemycity_comments').serialize(),
 		success: function(data){
+			$('#commentIndicator').remove();
+			$('#commentBtn').show();
 			if (data.comments === undefined){
 				alert('Problem sending message (trying to send invalid characters like quotes?)');
 				donothing = 1;
@@ -79,6 +83,7 @@ function comment(){
 				$("#imc-comment-area").val('');
 				div.effect("highlight", {color: '#60FF05'}, 1500);
 			}
-		}		
+		}
+
 	});
 }

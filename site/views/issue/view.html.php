@@ -281,5 +281,11 @@ class ImprovemycityViewIssue extends JView
 		//add the javascript to the head of the html document
 		$document->addScriptDeclaration($googleMapInit);
 		
+		//also pass base so as to display comment image indicator
+		$js = "var com_improvemycity = {};\n";
+		$js.= "com_improvemycity.base = '".JURI::root(true)."';\n";
+		$document->addScriptDeclaration($js);
+		
+		
 	}
 }
