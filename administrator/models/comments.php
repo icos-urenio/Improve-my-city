@@ -31,7 +31,9 @@ class ImprovemycityModelComments extends JModelList
 				'id', 'a.id',
 				'description', 'a.description',      
 				'state', 'a.state',
-				'improvemycityid', 'a.improvemycityid'                
+				'improvemycityid', 'a.improvemycityid',                
+				'userid', 'a.userid',                
+				'created', 'a.created'                
             );
         }
 

@@ -66,9 +66,11 @@ class ImprovemycityViewComment extends JView
 			JToolBarHelper::apply('comment.apply', 'JTOOLBAR_APPLY');
 			JToolBarHelper::save('comment.save', 'JTOOLBAR_SAVE');
 		}
+		/*
 		if (!$checkedOut && ($canDo->get('core.create'))){
 			JToolBarHelper::custom('comment.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 		}
+		*/
 		// If an existing item, can save to a copy.
 		/*
 		if (!$isNew && $canDo->get('core.create')) {

@@ -55,8 +55,13 @@ $saveOrder	= $listOrder == 'a.ordering';
                     <?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>
+                <?php if (isset($this->items[0]->created)) { ?>
+                <th width="10%" class="nowrap">
+                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_DATE', 'a.created', $listDirn, $listOrder); ?>
+                </th>
+                <?php } ?>
                 <?php if (isset($this->items[0]->description)) { ?>
-                <th width="54%" class="nowrap">
+                <th width="35%" class="nowrap">
                     <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_TITLE', 'a.description', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>
@@ -65,8 +70,13 @@ $saveOrder	= $listOrder == 'a.ordering';
 					<?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.state', $listDirn, $listOrder); ?>
 				</th>
                 <?php } ?>
-                <?php if (isset($this->items[0]->improvemycityid)) { ?>
+                <?php if (isset($this->items[0]->issuetitle)) { ?>
                 <th width="30%" class="nowrap">
+                    <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_IMPROVEMYCITYISSUE', 'a.improvemycityid', $listDirn, $listOrder); ?>
+                </th>
+                <?php } ?>	                
+                <?php if (isset($this->items[0]->improvemycityid)) { ?>
+                <th width="5%" class="nowrap">
                     <?php echo JHtml::_('grid.sort',  'COM_IMPROVEMYCITY_IMPROVEMYCITY_HEADING_IMPROVEMYCITYID', 'a.improvemycityid', $listDirn, $listOrder); ?>
                 </th>
                 <?php } ?>	                
@@ -121,6 +131,12 @@ $saveOrder	= $listOrder == 'a.ordering';
 				</td>
                 <?php } ?>
 
+                <?php if (isset($this->items[0]->created)) { ?>
+				<td class="center">
+					<?php echo $item->created; ?>
+				</td>
+                <?php } ?>
+
                <?php if (isset($this->items[0]->description)) { ?>
 				<td>
 					<a href="<?php echo JRoute::_('index.php?option=com_improvemycity&task=comment.edit&id=' . $item->id); ?>">
@@ -136,7 +152,13 @@ $saveOrder	= $listOrder == 'a.ordering';
                 <?php } ?>		
                 <?php if (isset($this->items[0]->improvemycityid)) { ?>
 				<td>
-					<?php echo '<strong>'.$item->issuetitle.' ('.$item->improvemycityid .')</strong>'; 
+					<?php echo '<strong>'.$item->issuetitle.'</strong>'; 
+					?>
+				</td>
+                <?php } ?>	                
+                <?php if (isset($this->items[0]->improvemycityid)) { ?>
+				<td>
+					<?php echo '<strong>'.$item->improvemycityid .'</strong>'; 
 					?>
 				</td>
                 <?php } ?>	                
