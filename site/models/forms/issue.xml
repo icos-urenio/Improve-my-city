@@ -22,6 +22,7 @@
 			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_CATID_DESC"
 			required="true"
 			validate="catid"
+			published="1"
 		>
 		
 			<option value="0">JOPTION_SELECT_CATEGORY</option>
