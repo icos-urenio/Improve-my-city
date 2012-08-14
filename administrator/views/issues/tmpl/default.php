@@ -88,6 +88,7 @@ $saveOrder	= $listOrder == 'a.ordering';
 			<tr>
 				<td colspan="10">
 					<?php echo $this->pagination->getListFooter(); ?>
+					<?php echo $this->state->get('params')->get('version'); ?>
 				</td>
 			</tr>
 		</tfoot>
