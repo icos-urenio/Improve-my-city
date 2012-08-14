@@ -19,8 +19,12 @@
     	<sql>
         	<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
   		</sql>
-   </uninstall>
-
+    </uninstall>
+	<update> <!-- Runs on update; New in 2.5 -->
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
 	<files folder="site">
 		<filename>index.html</filename>
 		<filename>improvemycity.php</filename>
@@ -73,5 +77,8 @@
 			<language tag="el-GR">language/el-GR.com_improvemycity.sys.ini</language>
 		</languages>
 	</administration>
+	<updateservers>
+		<server type="extension" priority="1" name="ImproveMyCity Update Site">http://smartcitydemos.urenio.org/autoupdates-repo/improvemycity-update.xml</server>
+	</updateservers>	
 </extension>
 
