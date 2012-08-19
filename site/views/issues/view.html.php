@@ -159,6 +159,7 @@ class ImprovemycityViewIssues extends JView
 	
 	protected function createFiltersAsArray($cats)
 	{
+		$ar[] = null;
 		foreach($cats as $cat){
 			$this->filters = '';
 			$ar[] = $this->createFilters(array($cat));
