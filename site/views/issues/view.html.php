@@ -549,7 +549,8 @@ class ImprovemycityViewIssues extends JView
 
 		
 		$megamenu_js = "
-		window.addEvent('domready', function() {
+		
+		jQuery(document).ready(function() {
 		jQuery(\".imc-issue-item\").mouseenter(function(event)
 		{
 		jQuery(this).addClass(\"imc-highlight\");
