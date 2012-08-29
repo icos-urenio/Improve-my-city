@@ -214,10 +214,10 @@ class ImprovemycityViewIssues extends JView
 			if($a == 0)
 				$a = JText::_('ALL');
 			if($selected == $i){
-				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$a.' <i class="icon-ok"></i></a></li>';
+				$html .= '<li><a href="#" onclick="jQuery(\'input[name=limit]\').val('.$i.');jQuery(\'#adminForm\').submit();">'.$a.' <i class="icon-ok"></i></a></li>';
 			}
 			else {
-				$html .= '<li><a href="#" onclick="$(\'input[name=limit]\').val('.$i.');$(\'#adminForm\').submit();">'.$a.'</a></li>';
+				$html .= '<li><a href="#" onclick="jQuery(\'input[name=limit]\').val('.$i.');jQuery(\'#adminForm\').submit();">'.$a.'</a></li>';
 			}
 		}
 		return $html;
@@ -281,8 +281,10 @@ class ImprovemycityViewIssues extends JView
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/improvemycity.css');	
 
 		//add scripts
-		if($this->loadjquery == 1)
+		if($this->loadjquery == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
+			$document->addCustomTag( '<script type="text/javascript">jQuery.noConflict();</script>' );
+		}
 		if($this->loadbootstrap == 1)
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');
 
@@ -401,7 +403,7 @@ class ImprovemycityViewIssues extends JView
 				resetBounds();
 
 				
-				$(\"#loading\").hide();
+				jQuery(\"#loading\").hide();
 			}
 
 			function bindInfoWindow(marker, map, infoWindow, html) {
@@ -426,12 +428,12 @@ class ImprovemycityViewIssues extends JView
 				google.maps.event.addListener(marker, 'mouseover', function() {
 					infoBox.setContent(boxText);
 					infoBox.open(map, marker);
-					$(\"#issueid-\"+marker.id).addClass(\"imc-highlight\");
+					jQuery(\"#issueid-\"+marker.id).addClass(\"imc-highlight\");
 				});			  
 				
 				google.maps.event.addListener(marker, 'mouseout', function() {
 					infoBox.close();
-					$(\"#issueid-\"+marker.id).removeClass(\"imc-highlight\");
+					jQuery(\"#issueid-\"+marker.id).removeClass(\"imc-highlight\");
 				});			  
 			}			
 			
@@ -539,76 +541,79 @@ class ImprovemycityViewIssues extends JView
 
 			}			
 			
-			window.addEvent('domready', function() {
-				$(\".imc-issue-item\").mouseenter(function(event)
-				{
-					$(this).addClass(\"imc-highlight\");
-					markerhover($(this).attr('id').substring(8));
-				});
-
-				$(\".imc-issue-item\").mouseleave(function(event)
-				{
-					$(this).removeClass(\"imc-highlight\");
-					markerout($(this).attr('id').substring(8));
-				});	  
-
-				$(document).click(function(e) {
-					if( $('#drop-1').is('.hover')) { $('#drop-1').removeClass('hover');	}				   
-					if( $('#drop-2').is('.hover')) { $('#drop-2').removeClass('hover');	}				   
-					if( $('#drop-3').is('.hover')) { $('#drop-3').removeClass('hover');	}				   
-				});
-				
-				$('#btn-1').click(function(event)
-				{
-					if( $('#drop-2').is('.hover')) { $('#btn-2').click(); }
-					if( $('#drop-3').is('.hover')) { $('#btn-3').click(); }
-					
-					if( $('#drop-1').is('.hover')) {
-						$('#drop-1').removeClass('hover');
-					}
-					else{
-						$('#drop-1').addClass('hover');
-					}
-					event.stopPropagation();
-				});
-				
-				$('#btn-2').click(function(event)
-				{
-					if( $('#drop-1').is('.hover')) { $('#btn-1').click(); }
-					if( $('#drop-3').is('.hover')) { $('#btn-3').click(); }
-				
-					if( $('#drop-2').is('.hover')) {
-						$('#drop-2').removeClass('hover');
-					}
-					else{
-						$('#drop-2').addClass('hover');
-					}
-					event.stopPropagation();
-				});
-				$('#btn-3').click(function(event)
-				{
-					if( $('#drop-1').is('.hover')) { $('#btn-1').click(); }
-					if( $('#drop-2').is('.hover')) { $('#btn-2').click(); }
-				
-					if( $('#drop-3').is('.hover')) {
-						$('#drop-3').removeClass('hover');
-					}
-					else{
-						$('#drop-3').addClass('hover');
-					}
-					event.stopPropagation();
-				});
-				
-				$('.megadrop').click(function(event) { event.stopPropagation();	});
-				
-			});
-			
 			// Onload handler to fire off the app.
 			google.maps.event.addDomListener(window, 'load', initialize);
-			
 		";
 
+		
+		$megamenu_js = "
+		window.addEvent('domready', function() {
+		jQuery(\".imc-issue-item\").mouseenter(function(event)
+		{
+		jQuery(this).addClass(\"imc-highlight\");
+		markerhover(jQuery(this).attr('id').substring(8));
+		});
+		
+		jQuery(\".imc-issue-item\").mouseleave(function(event)
+		{
+		jQuery(this).removeClass(\"imc-highlight\");
+		markerout(jQuery(this).attr('id').substring(8));
+		});
+		
+		jQuery(document).click(function(e) {
+		if( jQuery('#drop-1').is('.hover')) { jQuery('#drop-1').removeClass('hover');	}
+		if( jQuery('#drop-2').is('.hover')) { jQuery('#drop-2').removeClass('hover');	}
+		if( jQuery('#drop-3').is('.hover')) { jQuery('#drop-3').removeClass('hover');	}
+		});
+			
+		jQuery('#btn-1').click(function(event)
+		{
+		if( jQuery('#drop-2').is('.hover')) { jQuery('#btn-2').click(); }
+		if( jQuery('#drop-3').is('.hover')) { jQuery('#btn-3').click(); }
+		
+		if( jQuery('#drop-1').is('.hover')) {
+		jQuery('#drop-1').removeClass('hover');
+		}
+		else{
+			jQuery('#drop-1').addClass('hover');
+		}
+		event.stopPropagation();
+		});
+			
+		jQuery('#btn-2').click(function(event)
+		{
+		if( jQuery('#drop-1').is('.hover')) { jQuery('#btn-1').click(); }
+		if( jQuery('#drop-3').is('.hover')) { jQuery('#btn-3').click(); }
+			
+		if( jQuery('#drop-2').is('.hover')) {
+			jQuery('#drop-2').removeClass('hover');
+		}
+		else{
+			jQuery('#drop-2').addClass('hover');
+		}
+		event.stopPropagation();
+		});
+		jQuery('#btn-3').click(function(event)
+		{
+		if( jQuery('#drop-1').is('.hover')) { jQuery('#btn-1').click(); }
+		if( jQuery('#drop-2').is('.hover')) { jQuery('#btn-2').click(); }
+			
+		if( jQuery('#drop-3').is('.hover')) {
+		jQuery('#drop-3').removeClass('hover');
+		}
+		else{
+		jQuery('#drop-3').addClass('hover');
+		}
+		event.stopPropagation();
+		});
+			
+		jQuery('.megadrop').click(function(event) { event.stopPropagation();	});
+			
+		});
+		";
+		
 		//add the javascript to the head of the html document
 		$document->addScriptDeclaration($googleMapInit);
+		$document->addScriptDeclaration($megamenu_js);
 	}
 }
