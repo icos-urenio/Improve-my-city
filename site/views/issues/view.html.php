@@ -215,10 +215,10 @@ class ImprovemycityViewIssues extends JView
 			if($a == 0)
 				$a = JText::_('ALL');
 			if($selected == $i){
-				$html .= '<li><a href="#" onclick="jQuery(\'input[name=limit]\').val('.$i.');jQuery(\'#adminForm\').submit();">'.$a.' <i class="icon-ok"></i></a></li>';
+				$html .= '<li><a href="#" onclick="jImc(\'input[name=limit]\').val('.$i.');jImc(\'#adminForm\').submit();">'.$a.' <i class="icon-ok"></i></a></li>';
 			}
 			else {
-				$html .= '<li><a href="#" onclick="jQuery(\'input[name=limit]\').val('.$i.');jQuery(\'#adminForm\').submit();">'.$a.'</a></li>';
+				$html .= '<li><a href="#" onclick="jImc(\'input[name=limit]\').val('.$i.');jImc(\'#adminForm\').submit();">'.$a.'</a></li>';
 			}
 		}
 		return $html;
@@ -285,7 +285,7 @@ class ImprovemycityViewIssues extends JView
 		if($this->loadjquery == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
 			//jquery noConflict
-			$document->addCustomTag( '<script type="text/javascript">jQuery.noConflict();</script>' );
+			$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );
 		}
 		if($this->loadbootstrap == 1)
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');
@@ -405,7 +405,7 @@ class ImprovemycityViewIssues extends JView
 				resetBounds();
 
 				
-				jQuery(\"#loading\").hide();
+				jImc(\"#loading\").hide();
 			}
 
 			function bindInfoWindow(marker, map, infoWindow, html) {
@@ -430,12 +430,12 @@ class ImprovemycityViewIssues extends JView
 				google.maps.event.addListener(marker, 'mouseover', function() {
 					infoBox.setContent(boxText);
 					infoBox.open(map, marker);
-					jQuery(\"#issueid-\"+marker.id).addClass(\"imc-highlight\");
+					jImc(\"#issueid-\"+marker.id).addClass(\"imc-highlight\");
 				});			  
 				
 				google.maps.event.addListener(marker, 'mouseout', function() {
 					infoBox.close();
-					jQuery(\"#issueid-\"+marker.id).removeClass(\"imc-highlight\");
+					jImc(\"#issueid-\"+marker.id).removeClass(\"imc-highlight\");
 				});			  
 			}			
 			
@@ -550,67 +550,67 @@ class ImprovemycityViewIssues extends JView
 		
 		$megamenu_js = "
 		
-		jQuery(document).ready(function() {
-		jQuery(\".imc-issue-item\").mouseenter(function(event)
+		jImc(document).ready(function() {
+		jImc(\".imc-issue-item\").mouseenter(function(event)
 		{
-		jQuery(this).addClass(\"imc-highlight\");
-		markerhover(jQuery(this).attr('id').substring(8));
+		jImc(this).addClass(\"imc-highlight\");
+		markerhover(jImc(this).attr('id').substring(8));
 		});
 		
-		jQuery(\".imc-issue-item\").mouseleave(function(event)
+		jImc(\".imc-issue-item\").mouseleave(function(event)
 		{
-		jQuery(this).removeClass(\"imc-highlight\");
-		markerout(jQuery(this).attr('id').substring(8));
+		jImc(this).removeClass(\"imc-highlight\");
+		markerout(jImc(this).attr('id').substring(8));
 		});
 		
-		jQuery(document).click(function(e) {
-		if( jQuery('#drop-1').is('.hover')) { jQuery('#drop-1').removeClass('hover');	}
-		if( jQuery('#drop-2').is('.hover')) { jQuery('#drop-2').removeClass('hover');	}
-		if( jQuery('#drop-3').is('.hover')) { jQuery('#drop-3').removeClass('hover');	}
+		jImc(document).click(function(e) {
+		if( jImc('#drop-1').is('.hover')) { jImc('#drop-1').removeClass('hover');	}
+		if( jImc('#drop-2').is('.hover')) { jImc('#drop-2').removeClass('hover');	}
+		if( jImc('#drop-3').is('.hover')) { jImc('#drop-3').removeClass('hover');	}
 		});
 			
-		jQuery('#btn-1').click(function(event)
+		jImc('#btn-1').click(function(event)
 		{
-		if( jQuery('#drop-2').is('.hover')) { jQuery('#btn-2').click(); }
-		if( jQuery('#drop-3').is('.hover')) { jQuery('#btn-3').click(); }
+		if( jImc('#drop-2').is('.hover')) { jImc('#btn-2').click(); }
+		if( jImc('#drop-3').is('.hover')) { jImc('#btn-3').click(); }
 		
-		if( jQuery('#drop-1').is('.hover')) {
-		jQuery('#drop-1').removeClass('hover');
+		if( jImc('#drop-1').is('.hover')) {
+			jImc('#drop-1').removeClass('hover');
 		}
 		else{
-			jQuery('#drop-1').addClass('hover');
+			jImc('#drop-1').addClass('hover');
 		}
 		event.stopPropagation();
 		});
 			
-		jQuery('#btn-2').click(function(event)
+		jImc('#btn-2').click(function(event)
 		{
-		if( jQuery('#drop-1').is('.hover')) { jQuery('#btn-1').click(); }
-		if( jQuery('#drop-3').is('.hover')) { jQuery('#btn-3').click(); }
+		if( jImc('#drop-1').is('.hover')) { jImc('#btn-1').click(); }
+		if( jImc('#drop-3').is('.hover')) { jImc('#btn-3').click(); }
 			
-		if( jQuery('#drop-2').is('.hover')) {
-			jQuery('#drop-2').removeClass('hover');
+		if( jImc('#drop-2').is('.hover')) {
+			jImc('#drop-2').removeClass('hover');
 		}
 		else{
-			jQuery('#drop-2').addClass('hover');
+			jImc('#drop-2').addClass('hover');
 		}
 		event.stopPropagation();
 		});
-		jQuery('#btn-3').click(function(event)
+		jImc('#btn-3').click(function(event)
 		{
-		if( jQuery('#drop-1').is('.hover')) { jQuery('#btn-1').click(); }
-		if( jQuery('#drop-2').is('.hover')) { jQuery('#btn-2').click(); }
+		if( jImc('#drop-1').is('.hover')) { jImc('#btn-1').click(); }
+		if( jImc('#drop-2').is('.hover')) { jImc('#btn-2').click(); }
 			
-		if( jQuery('#drop-3').is('.hover')) {
-		jQuery('#drop-3').removeClass('hover');
+		if( jImc('#drop-3').is('.hover')) {
+			jImc('#drop-3').removeClass('hover');
 		}
 		else{
-		jQuery('#drop-3').addClass('hover');
+			jImc('#drop-3').addClass('hover');
 		}
 		event.stopPropagation();
 		});
 			
-		jQuery('.megadrop').click(function(event) { event.stopPropagation();	});
+		jImc('.megadrop').click(function(event) { event.stopPropagation();	});
 			
 		});
 		";

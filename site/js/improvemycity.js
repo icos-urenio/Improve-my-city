@@ -1,6 +1,6 @@
 			
 function vote(issue_id, token){
-	jQuery.ajax({
+	jImc.ajax({
 		type : 'GET',
 		url : 'index.php',
 		datatype: 'json',
@@ -12,8 +12,8 @@ function vote(issue_id, token){
 			}
 			else{
 				//update the counter and flash it
-				jQuery(".imc-votes-counter").html(data.votes);
-				jQuery(".imc-flasher").effect("highlight", {color: '#60FF05'}, 1500);
+				jImc(".imc-votes-counter").html(data.votes);
+				jImc(".imc-flasher").effect("highlight", {color: '#60FF05'}, 1500);
 			}
 		}		
 	});
@@ -54,24 +54,24 @@ function htmlEscape(str) {
 }
 
 function comment(){
-	if(jQuery("#imc-comment-area").val() == ''){
+	if(jImc("#imc-comment-area").val() == ''){
 		alert(Joomla.JText._('COM_IMPROVEMYCITY_WRITE_COMMENT')); 
 		return;
 	}
 	var base = window.com_improvemycity.base;
-	var htmlStr = jQuery('#imc-comment-area').val();
-	jQuery('#imc-comment-area').val(jQuery('<div/>').text(htmlStr).html());
-	jQuery('#commentBtn').hide();
-	jQuery('#commentIndicator').append('<div id="ajaxBusy"><p><img src="'+base+'/components/com_improvemycity/images/ajax-loader.gif"></p></div>');
+	var htmlStr = jImc('#imc-comment-area').val();
+	jImc('#imc-comment-area').val(jImc('<div/>').text(htmlStr).html());
+	jImc('#commentBtn').hide();
+	jImc('#commentIndicator').append('<div id="ajaxBusy"><p><img src="'+base+'/components/com_improvemycity/images/ajax-loader.gif"></p></div>');
 	
-	jQuery.ajax({
+	jImc.ajax({
 		type : 'POST',
 		url : 'index.php',
 		datatype: 'json',
-		data: jQuery('#com_improvemycity_comments').serialize(),
+		data: jImc('#com_improvemycity_comments').serialize(),
 		success: function(data){
-			jQuery('#commentIndicator').remove();
-			jQuery('#commentBtn').show();
+			jImc('#commentIndicator').remove();
+			jImc('#commentBtn').show();
 			if (data.comments === undefined){
 				alert('Problem sending message (trying to send invalid characters like quotes?)');
 				donothing = 1;
@@ -79,8 +79,8 @@ function comment(){
 			else{
 				//create a container for the new comment
 				var content = '<div class="imc-chat"><span class="imc-chat-info">'+data.comments.textual_descr+'</span><span class=\"imc-chat-desc\">'+data.comments.description+'</span><div>';
-				div = jQuery(content).prependTo("#imc-comments-wrapper");
-				jQuery("#imc-comment-area").val('');
+				div = jImc(content).prependTo("#imc-comments-wrapper");
+				jImc("#imc-comment-area").val('');
 				div.effect("highlight", {color: '#60FF05'}, 1500);
 			}
 		}

@@ -117,7 +117,7 @@ class ImprovemycityViewAddissue extends JView
 		if($this->loadjquery == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
 			//jquery noConflict
-			$document->addCustomTag( '<script type="text/javascript">jQuery.noConflict();</script>' );
+			$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );
 		}
 		
 		if($this->loadjqueryui == 1){
@@ -143,7 +143,7 @@ class ImprovemycityViewAddissue extends JView
 			var marker;
 			
 			function blink() {
-				var moo = jQuery(\"#jform_address\").effect(\"highlight\", {color: '#60FF05'}, 2000);
+				var moo = jImc(\"#jform_address\").effect(\"highlight\", {color: '#60FF05'}, 2000);
 			}
 			
 			function zoomIn() {

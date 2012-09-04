@@ -162,7 +162,7 @@ class ImprovemycityViewIssue extends JView
 		if($this->loadjquery == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
 			//jquery noConflict
-			$document->addCustomTag( '<script type="text/javascript">jQuery.noConflict();</script>' );
+			$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );
 		}
 		
 		if($this->loadjqueryui == 1){
@@ -253,7 +253,7 @@ class ImprovemycityViewIssue extends JView
 				}
 
 				resetBounds();
-				jQuery(\"#loading\").hide();
+				jImc(\"#loading\").hide();
 			}
 
 			function resetBounds() {
