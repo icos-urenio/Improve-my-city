@@ -186,7 +186,9 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	*/	
 	public function save($data)
 	{
-		$data = JRequest::getVar('jform', array(), 'post', 'array');
+		
+		if(JRequest::getVar('jform') != '' )	//mobile version sends $data already filled
+			$data = JRequest::getVar('jform', array(), 'post', 'array');
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
 		$approval = JRequest::getVar('state');
 		$data['state'] = $approval;

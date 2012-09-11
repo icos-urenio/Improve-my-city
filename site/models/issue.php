@@ -85,10 +85,11 @@ class ImprovemycityModelIssue extends JModelItem
 				
 			}
 		}
-		
-		$this->_item->reported_rel = ImprovemycityHelper::getRelativeTime($this->_item->reported);
-		$this->_item->acknowledged_rel = ImprovemycityHelper::getRelativeTime($this->_item->acknowledged);
-		$this->_item->closed_rel = ImprovemycityHelper::getRelativeTime($this->_item->closed);
+		if ($this->_item != null){
+			$this->_item->reported_rel = ImprovemycityHelper::getRelativeTime($this->_item->reported);
+			$this->_item->acknowledged_rel = ImprovemycityHelper::getRelativeTime($this->_item->acknowledged);
+			$this->_item->closed_rel = ImprovemycityHelper::getRelativeTime($this->_item->closed);
+		}
 		return $this->_item;
 	}	
 	
