@@ -39,6 +39,8 @@ class ImprovemycityControllerMobile extends JController
 			if(!$showComments)
 				unset($item->discussion);
 		}
+		//$document = &JFactory::getDocument();
+		//$document->setMimeEncoding('text/xml');		
 		echo json_encode($items);
 		return;
 	}	
@@ -72,6 +74,19 @@ class ImprovemycityControllerMobile extends JController
 	}	
 	
 	
+	
+	public function getCategories()
+	{
+	
+		return;
+	}
+	
+	public function getTimestamp()
+	{
+	
+		return;
+	}	
+	
 	public function addIssue()
 	{
 		//get request
@@ -79,10 +94,13 @@ class ImprovemycityControllerMobile extends JController
 		$catid = JRequest::getVar('catid');
 		$address = JRequest::getVar('address');
 		$description = JRequest::getVar('description');
-		$userid = JRequest::getVar('userid');
 		$latitude = JRequest::getVar('latitude');
 		$longitude = JRequest::getVar('longitude');
-
+		$userid = JRequest::getVar('userid');
+		$token = JRequest::getVar('token'); //security token
+		
+		//TODO: AUTHENTICATION HERE
+		
 		//get model
 		$model = $this->getModel('addissue');
 
@@ -94,11 +112,26 @@ class ImprovemycityControllerMobile extends JController
 		$data['description'] = $description;
 		$data['userid'] = $userid;
 		
-		//TODO: AUTHENTICATION HERE
-		
 		$s = $model->save($data);
 		echo json_encode($s); //0 or 1
 		return;
 	}
+
+	public function voteIssue()
+	{
+		$issueId = JRequest::getInt('issueId');
+		$userid = JRequest::getVar('userid');
+		$token = JRequest::getVar('token'); //security token
+			
+		return;
+	}
 	
+	public function addComment()
+	{
+		$issueId = JRequest::getInt('issueId');
+		$userid = JRequest::getVar('userid');
+		$token = JRequest::getVar('token'); //security token
+
+		return;
+	}
 }
