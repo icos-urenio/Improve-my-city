@@ -73,11 +73,13 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}	
 	
-	
-	
 	public function getCategories()
 	{
-	
+		//get model and categories
+		$model = $this->getModel('issues');
+		$categories	= $model->getCategories();
+		
+		echo json_encode($categories);
 		return;
 	}
 	
