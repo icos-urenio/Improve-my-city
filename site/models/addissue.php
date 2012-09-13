@@ -357,10 +357,33 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		}
 		$this->setState($this->getName().'.new', $isNew);
 
+		//update timestamp
+		$this->updateTimestamp();
+		
 		//notify admins and user
 		$this->notifyByEmail($table->id, $data);	
 		
 		return true;
 	}
+	
+	/* since 2.4.1 
+	 * update timestamp on table timestamp to notify Android application for changes in DB
+	 * */
+	public function updateTimestamp()
+	{
+		$db = $this->getDbo();
+		$db->setQuery(
+				'UPDATE #__improvemycity_timestamp' .
+				' SET triggered = MD5(RAND())' .
+				' WHERE id = 1'
+		);
+			
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+	
+		return true;
+	}	
 	
 }

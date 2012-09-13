@@ -114,7 +114,7 @@ class ImprovemycityModelIssue extends JModelItem
 		return true;
 	}	
 	
-	public function vote($pk = 0)
+	public function vote($pk = 0, $userid = null)
 	{
 		
 		$pk = (!empty($pk)) ? $pk : (int) $id = $this->getState('improvemycity.id');
@@ -131,11 +131,14 @@ class ImprovemycityModelIssue extends JModelItem
 				return -1;
 		}
         
-		$user =& JFactory::getUser();
+		if($userid == null){
+			$user =& JFactory::getUser();
+			$userid = (int) $user->id;
+		} 
 		
 		$db->setQuery(
 				'INSERT INTO #__improvemycity_votes ( improvemycityid, userid)' .
-				' VALUES ( '.(int) $pk.', '. (int) $user->id.')'
+				' VALUES ( '.(int) $pk.', '. (int) $userid.')'
 		);
 
 		if (!$db->query()) {

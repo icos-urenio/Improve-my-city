@@ -224,6 +224,21 @@ class ImprovemycityModelIssues extends JModelList
 
 		return parent::getStoreId($id);
 	}
+
+	function getTimestamp()
+	{
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		
+		$query->select('a.*');
+		$query->from('`#__improvemycity_timestamp` AS a');
+		$query->where('a.id = 1');
+
+		$db->setQuery($query);
+		$result = $db->loadRow();		
+		
+		return $result;		
+	}
 }
 
 

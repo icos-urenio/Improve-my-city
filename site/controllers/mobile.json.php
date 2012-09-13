@@ -85,7 +85,11 @@ class ImprovemycityControllerMobile extends JController
 	
 	public function getTimestamp()
 	{
-	
+		//get model and timestamp
+		$model = $this->getModel('issues');
+		$timestamp = $model->getTimestamp();
+		
+		echo json_encode($timestamp);
 		return;
 	}	
 	
@@ -125,6 +129,11 @@ class ImprovemycityControllerMobile extends JController
 		$userid = JRequest::getVar('userid');
 		$token = JRequest::getVar('token'); //security token
 			
+		//get model
+		$model = $this->getModel('issue');
+		$newVotes = $model->vote($issueId, $userid);		
+		
+		echo json_encode($newVotes); //number of votes after voting or 0 if fail
 		return;
 	}
 	
