@@ -154,16 +154,21 @@ class ImprovemycityModelIssue extends JModelItem
 		return $votes;
 	}	
 
-	public function getHasVoted($pk = 0)
+	public function getHasVoted($pk = 0, $userid = null)
 	{
-		$user =& JFactory::getUser();
+		
 		$pk = (!empty($pk)) ? $pk : (int) $id = $this->getState('improvemycity.id');
 		$db = $this->getDbo();	
 		
+		if($userid == null){
+			$user =& JFactory::getUser();
+			$userid = (int) $user->id;
+		}
+				
 		$query	= $db->getQuery(true);
 		$query->select('COUNT(*)');
 		$query->from('`#__improvemycity_votes` AS a');		
-		$query->where('a.userid = '.(int) $user->id.' AND a.improvemycityid='.(int) $pk);
+		$query->where('a.userid = '.(int) $userid.' AND a.improvemycityid='.(int) $pk);
 		$db->setQuery( $query );
 		$results = $db->loadResult();
 	

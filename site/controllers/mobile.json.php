@@ -97,9 +97,16 @@ class ImprovemycityControllerMobile extends JController
 	{
 		//get request
 		$title = JRequest::getVar('title');
+		$title = strip_tags($title);
+		
 		$catid = JRequest::getVar('catid');
+
 		$address = JRequest::getVar('address');
+		$address = strip_tags($address);
+				
 		$description = JRequest::getVar('description');
+		$description = strip_tags($description);
+		
 		$latitude = JRequest::getVar('latitude');
 		$longitude = JRequest::getVar('longitude');
 		$userid = JRequest::getVar('userid');
@@ -123,6 +130,9 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}
 
+	/*
+	 * return number of votes after voting, 0 if fail, -1 if already voted
+	 */
 	public function voteIssue()
 	{
 		$issueId = JRequest::getInt('issueId');
@@ -131,8 +141,16 @@ class ImprovemycityControllerMobile extends JController
 			
 		//get model
 		$model = $this->getModel('issue');
-		$newVotes = $model->vote($issueId, $userid);		
 		
+		//check if user has already voted for the issue
+		$hasVoted = $model->getHasVoted($issueId, $userid);
+		if($hasVoted){
+			echo json_encode("-1");
+			return;
+		}	
+		
+		//do the voting
+		$newVotes = $model->vote($issueId, $userid);		
 		echo json_encode($newVotes); //number of votes after voting or 0 if fail
 		return;
 	}
@@ -143,6 +161,14 @@ class ImprovemycityControllerMobile extends JController
 		$userid = JRequest::getVar('userid');
 		$token = JRequest::getVar('token'); //security token
 
+		$description = JRequest::getVar('description');
+		$description = strip_tags($description);
+		
+		//get model 
+		$model = $this->getModel('discussions');
+		$lastComment = $model->comment($issueId, $userid, $description);
+		
+		echo json_encode($lastComment);
 		return;
 	}
 }
