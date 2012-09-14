@@ -23,16 +23,34 @@ class ImprovemycityControllerMobile extends JController
 	/* arguments: 
 	 * limit=0 : get ALL issues, limit=5 get recent 5 issues
 	 * showComments=1: includes issue's discussion, showComments=0 (default) discussion is not included
+	 * x0up: longitude < x0up
+	 * x0down: longitude > x0down
+	 * y0up: latitude < y0up
+	 * y0down: latitude > y0down
 	 * */
 	public function getIssues()
 	{
 		//get request
 		$showComments = JRequest::getInt('showComments');
 		
-		//get model and items
-		$model = $this->getModel('issues');
-		$items	= $model->getItems();
+		//get boundaries
+		$x0up 	= JRequest::getFloat('x0up');		
+		$x0down	= JRequest::getFloat('x0down');
+		$y0up 	= JRequest::getFloat('y0up');
+		$y0down	= JRequest::getFloat('y0down');		
 		
+		//get model and items
+		$items = array();
+		if( !empty($x0up) && !empty($x0down) && !empty($y0up) && !empty($y0down)){
+			$model = $this->getModel('issues');
+			$items	= $model->getItemsInBoundaries($x0up, $x0down, $y0up, $y0down);
+		}
+		else {
+			$model = $this->getModel('issues');
+			$items	= $model->getItems();
+		}
+		
+				
 		//clean up and prepare for json
 		foreach($items as $item){
 			unset($item->params);
@@ -77,7 +95,7 @@ class ImprovemycityControllerMobile extends JController
 	{
 		//get model and categories
 		$model = $this->getModel('issues');
-		$categories	= $model->getCategories();
+		$categories	= $model->getSimpleCategories();
 		
 		echo json_encode($categories);
 		return;

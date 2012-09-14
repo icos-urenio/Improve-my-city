@@ -243,6 +243,69 @@ class ImprovemycityModelIssues extends JModelList
 		
 		return $result;		
 	}
+	
+	
+	function getItemsInBoundaries($x0up = 0, $x0down = 0, $y0up = 0, $y0down = 0)
+	{
+		// Create a new query object.
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+				
+		$query->select(
+				$this->getState(
+						'list.select',
+						'a.*, #__categories.title as category, catid, #__categories.path, #__categories.parent_id'
+				)
+		);
+		$query->from('`#__improvemycity` AS a');
+		$query->leftJoin('#__categories on catid=#__categories.id');
+		$query->where('a.state = 1');
+		$query->where('a.latitude >= '.$y0down);
+		$query->where('a.latitude <= '.$y0up);
+		$query->where('a.longitude >= '.$x0down);
+		$query->where('a.longitude <= '.$x0up);
+		
+		// Join on user table.
+		$query->select('u.name AS fullname');
+		$query->join('LEFT', '#__users AS u on u.id = a.userid');
+		
+		//consider filtering...
+		$filter_status = $this->getState('filter_status');
+		if(!empty($filter_status)){
+			$filter_status = implode(',', $filter_status);
+			$query->where('a.currentstatus IN ('.$filter_status.')');
+		}
+		
+		$filter_category = $this->getState('filter_category');
+		if(!empty($filter_category)){
+			$filter_category = implode(',', $filter_category);
+			$query->where('a.catid IN ('.$filter_category.')');
+		}
+		
+		// Add the list ordering clause.
+		$query->order($this->getState('list.ordering', 'a.ordering').' '.$this->getState('list.direction', 'ASC'));
+	
+		$db->setQuery($query);
+		$result = $db->loadRowList();
+		
+		return $result;
+	}	
+	
+	function getSimpleCategories()
+	{
+		// Create a new query object.
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		
+		$query->select('c.id, c.title, c.level, c.parent_id, c.params');
+		$query->from('`#__categories` AS c');
+		$query->where('c.extension = "com_improvemycity"');
+
+		$db->setQuery($query);
+		$result = $db->loadRowList();
+		
+		return $result;
+	}
 }
 
 

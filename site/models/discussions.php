@@ -71,7 +71,6 @@ class ImprovemycityModelDiscussions extends JModelList
 				'a.*'
 			)
 		);
-		
 
 		$query->from('`#__improvemycity_comments` AS a');
 		if($this->issue_id != null)
