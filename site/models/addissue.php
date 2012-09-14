@@ -187,7 +187,7 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	public function save($data)
 	{
 		
-		if(JRequest::getVar('jform') != '' )	//mobile version sends $data already filled
+		if(empty($data) )	//mobile version sends $data already filled
 			$data = JRequest::getVar('jform', array(), 'post', 'array');
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
 		
@@ -200,7 +200,6 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		if($approval == 1){
 			JFactory::getApplication()->enqueueMessage( JText::_('COM_IMPROVEMYCITY_APPROVAL_PENDING') );
 		}
-		
 		
 		if ($file) {
 			//Cannot use makeSafe with non-english characters (or better only ascii is supported)
