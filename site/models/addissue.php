@@ -190,9 +190,14 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		if(JRequest::getVar('jform') != '' )	//mobile version sends $data already filled
 			$data = JRequest::getVar('jform', array(), 'post', 'array');
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
-		$approval = JRequest::getVar('state');
-		$data['state'] = $approval;
-		if($approval == 0){
+		
+		$app		= JFactory::getApplication();
+		$params		= $app->getParams();
+		$approval = $params->get('approveissue');
+
+		$data['state'] = !$approval;
+		
+		if($approval == 1){
 			JFactory::getApplication()->enqueueMessage( JText::_('COM_IMPROVEMYCITY_APPROVAL_PENDING') );
 		}
 		
