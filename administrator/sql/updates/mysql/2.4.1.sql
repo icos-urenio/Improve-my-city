@@ -3,7 +3,7 @@
 CREATE TABLE IF NOT EXISTS `#__improvemycity_timestamp` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `triggered` varchar(255)
+  `triggered` varchar(255),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT COLLATE=utf8_general_ci;
 
