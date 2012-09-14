@@ -113,7 +113,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 				<div id="imc-issue-general-info">
 					<span class="strong"><?php echo JText::_('CATEGORY');?></span><span class="desc"><?php echo $this->item->catname;?></span><br />
 					<span class="strong"><?php echo JText::_('ADDRESS');?></span><span class="desc"><?php echo $this->item->address;?></span><br />
-					<span class="strong"><?php echo JText::_('REPORTED_BY');?></span><span class="desc"><?php echo $this->item->username . ' ' . $this->item->reported_rel;?></span><br />
+					<span class="strong"><?php echo JText::_('REPORTED_BY');?></span><span class="desc"><?php echo $this->item->fullname . ' ' . $this->item->reported_rel;?></span><br />
 					<span class="strong"><?php echo JText::_('VIEWED');?></span><span class="desc"><?php echo $this->item->hits;?></span><br />
 					<span class="strong"><?php echo JText::_('ISSUE_STATUS');?></span><span class="status-<?php echo $status;?>"><?php echo JText::_($status);?></span>						
 					<p>
@@ -143,7 +143,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 					<?php if(!empty($this->discussion)):?>
 						<?php foreach ($this->discussion as $item) : ?>
 							<div class="imc-chat">
-								<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->username; ?></span>
+								<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->fullname; ?></span>
 								<span class="imc-chat-desc"><?php echo $item->description;?></span>
 							</div>
 						<?php endforeach;?>

@@ -67,7 +67,7 @@ class ImprovemycityModelIssue extends JModelItem
 				$query->where('a.id = ' . (int) $id);
 
 				// Join on user table.
-				$query->select('u.name AS username');
+				$query->select('u.name AS fullname');
 				$query->join('LEFT', '#__users AS u on u.id = a.userid');	
 
 				// Join on catid table.

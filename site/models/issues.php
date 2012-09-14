@@ -193,6 +193,10 @@ class ImprovemycityModelIssues extends JModelList
 		$query->leftJoin('#__categories on catid=#__categories.id');		
 		$query->where('a.state = 1');
 		
+		// Join on user table.
+		$query->select('u.name AS fullname');
+		$query->join('LEFT', '#__users AS u on u.id = a.userid');
+				
 		//consider filtering...
 		$filter_status = $this->getState('filter_status');
 		if(!empty($filter_status)){
