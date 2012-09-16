@@ -28,3 +28,15 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 * Version 2.3 fixes the conflict between mootools/jquery which caused megamenu or/and google map not to work when certain templates are used.
 * Version 2.4.0 is just a numbering convension to 3 level versioning
 * Version 2.5.0 brings complete support for mobile versions (Android, iOS, REST services) of Improve my city by third parties
+Mobile json wrapping is supported by Live+Gov European Research Programme:
+    - Encrypt / Decrypt functionality
+    - Timestamp on DB changes
+    - Introduces geo-boundaries queries
+Also v2.5.0 brings:
+    - New settings for displaying relative dates or plain dates with custom date format
+    - New settings to enable/disable json support for the new mobile-oriented controller
+    - Secret key on settings to be used for password encryption over http (It is highly recommended to use HTTPS)
+    - Remove login link on add new issue and add new comment
+    - Mega-menu css enhancements
+    - Fix administration approval issues (you can set on settings if you want to publish directly new issues or the administrator must first approve)
+ 
