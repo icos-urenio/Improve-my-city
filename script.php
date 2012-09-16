@@ -119,7 +119,10 @@ class com_improvemycityInstallerScript
 			
 			$params['showcomments'] = '1';
 			$params['approveissue'] = '0';
-			$params['loadjqueryui'] = '1';			
+			$params['loadjqueryui'] = '1';	
+					
+			$params['showrelativedates'] = '1';			
+			$params['dateformat'] = 'm/d/Y';			
 			
 		}
  

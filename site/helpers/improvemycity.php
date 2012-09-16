@@ -23,6 +23,17 @@ abstract class ImprovemycityHelper
 		if(strtotime($time) <= 0)
 			return '';
 		
+		// Load the parameters.
+		$app = JFactory::getApplication();
+		$params	= $app->getParams();
+		$showrelativedates = $params->get('showrelativedates');		
+		$dateformat = $params->get('dateformat');		
+		
+		if(!$showrelativedates){
+			//$item->reported_rel = date("d/m/Y",strtotime($item->reported));
+			return date($dateformat,strtotime($time));
+		}
+		
 		$SECOND = 1;
 		$MINUTE = 60 * $SECOND;
 		$HOUR = 60 * $MINUTE;

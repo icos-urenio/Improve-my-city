@@ -7,37 +7,37 @@
 
 			<field
 				name="latitude"
-				type="improvemycity"
+				type="text"
 				label="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LATITUDE_LABEL"
 				description="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LATITUDE_DESC"
 			/>
 			<field
 				name="longitude"
-				type="improvemycity"
+				type="text"
 				label="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LONGITUDE_LABEL"
 				description="COM_IMPROVEMYCITY_SETTINGS_INITIAL_LONGITUDE_DESC"
 			/>
 			<field
 				name="zoom"
-				type="improvemycity"
+				type="text"
 				label="COM_IMPROVEMYCITY_SETTINGS_INITIAL_MAP_ZOOM_LABEL"
 				description="COM_IMPROVEMYCITY_SETTINGS_INITIAL_MAP_ZOOM_DESC"
 			/>
 			<field
 				name="maplanguage"
-				type="improvemycity"
+				type="text"
 				label="COM_IMPROVEMYCITY_SETTINGS_MAP_LANGUAGE_LABEL"
 				description="COM_IMPROVEMYCITY_SETTINGS_MAP_LANGUAGE_DESC"
 			/>			
 			<field
 				name="mapregion"
-				type="improvemycity"
+				type="text"
 				label="COM_IMPROVEMYCITY_SETTINGS_MAP_REGION_LABEL"
 				description="COM_IMPROVEMYCITY_SETTINGS_MAP_REGION_DESC"
 			/>
 			<field
 				name="searchterm"
-				type="improvemycity"
+				type="text"
 				label="COM_IMPROVEMYCITY_SETTINGS_HIDDEN_SEARCH_TERM_LABEL"
 				description="COM_IMPROVEMYCITY_SETTINGS_HIDDEN_SEARCH_TERM_DESC"
 			/>
@@ -64,7 +64,18 @@
 			<field name="allowvotingonclose" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_VOTE_ON_CLOSED_ISSUES_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_VOTE_ON_CLOSED_ISSUES_DESC">
 			  <option value="0">JNO</option>
 			  <option value="1">JYES</option>
-			</field>		
+			</field>	
+			
+			<field name="showrelativedates" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_SHOW_RELATIVE_DATES_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_SHOW_RELATIVE_DATES_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>	
+			<field name="dateformat" type="text"
+				label="COM_IMPROVEMYCITY_SETTINGS_DATE_FORMAT_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_DATE_FORMAT_DESC"
+				default="m/d/Y"
+			/>			
+				
 	</fieldset>
 
 	<fieldset name="mailnotifications"
