@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     2.3
+ * @version     2.5.x
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
@@ -46,7 +46,7 @@ class com_improvemycityInstallerScript
 		if ( $type == 'update' ) {
 			$oldRelease = $this->getParam('version');
 			$rel = $oldRelease . ' to ' . $this->release;
-			if ( version_compare( $this->release, $oldRelease, 'le' ) ) {
+			if ( version_compare( $this->release, $oldRelease, 'lt' ) ) {
 				Jerror::raiseWarning(null, 'Incorrect version sequence. Cannot upgrade ' . $rel);
 				return false;
 			}
@@ -119,7 +119,13 @@ class com_improvemycityInstallerScript
 			
 			$params['showcomments'] = '1';
 			$params['approveissue'] = '0';
-			$params['loadjqueryui'] = '1';			
+			$params['loadjqueryui'] = '1';	
+					
+			$params['showrelativedates'] = '1';			
+			$params['dateformat'] = 'm/d/Y h:i:s';
+						
+			$params['enablejsoncontroller'] = '0';			
+			$params['secretkey'] = 'I am your secret key';			
 			
 		}
  

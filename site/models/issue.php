@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     2.3
+ * @version     2.5.x
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
@@ -67,7 +67,7 @@ class ImprovemycityModelIssue extends JModelItem
 				$query->where('a.id = ' . (int) $id);
 
 				// Join on user table.
-				$query->select('u.name AS username');
+				$query->select('u.name AS fullname');
 				$query->join('LEFT', '#__users AS u on u.id = a.userid');	
 
 				// Join on catid table.
@@ -114,7 +114,7 @@ class ImprovemycityModelIssue extends JModelItem
 		return true;
 	}	
 	
-	public function vote($pk = 0)
+	public function vote($pk = 0, $userid = null)
 	{
 		
 		$pk = (!empty($pk)) ? $pk : (int) $id = $this->getState('improvemycity.id');
@@ -131,11 +131,14 @@ class ImprovemycityModelIssue extends JModelItem
 				return -1;
 		}
         
-		$user =& JFactory::getUser();
+		if($userid == null){
+			$user =& JFactory::getUser();
+			$userid = (int) $user->id;
+		} 
 		
 		$db->setQuery(
 				'INSERT INTO #__improvemycity_votes ( improvemycityid, userid)' .
-				' VALUES ( '.(int) $pk.', '. (int) $user->id.')'
+				' VALUES ( '.(int) $pk.', '. (int) $userid.')'
 		);
 
 		if (!$db->query()) {
@@ -151,16 +154,21 @@ class ImprovemycityModelIssue extends JModelItem
 		return $votes;
 	}	
 
-	public function getHasVoted($pk = 0)
+	public function getHasVoted($pk = 0, $userid = null)
 	{
-		$user =& JFactory::getUser();
+		
 		$pk = (!empty($pk)) ? $pk : (int) $id = $this->getState('improvemycity.id');
 		$db = $this->getDbo();	
 		
+		if($userid == null){
+			$user =& JFactory::getUser();
+			$userid = (int) $user->id;
+		}
+				
 		$query	= $db->getQuery(true);
 		$query->select('COUNT(*)');
 		$query->from('`#__improvemycity_votes` AS a');		
-		$query->where('a.userid = '.(int) $user->id.' AND a.improvemycityid='.(int) $pk);
+		$query->where('a.userid = '.(int) $userid.' AND a.improvemycityid='.(int) $pk);
 		$db->setQuery( $query );
 		$results = $db->loadResult();
 	

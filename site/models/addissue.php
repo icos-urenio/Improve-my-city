@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     2.3
+ * @version     2.5.x
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -187,15 +187,19 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	public function save($data)
 	{
 		
-		if(JRequest::getVar('jform') != '' )	//mobile version sends $data already filled
+		if(empty($data) )	//mobile version sends $data already filled
 			$data = JRequest::getVar('jform', array(), 'post', 'array');
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
-		$approval = JRequest::getVar('state');
-		$data['state'] = $approval;
-		if($approval == 0){
+		
+		$app		= JFactory::getApplication();
+		$params		= $app->getParams();
+		$approval = $params->get('approveissue');
+
+		$data['state'] = !$approval;
+		
+		if($approval == 1){
 			JFactory::getApplication()->enqueueMessage( JText::_('COM_IMPROVEMYCITY_APPROVAL_PENDING') );
 		}
-		
 		
 		if ($file) {
 			//Cannot use makeSafe with non-english characters (or better only ascii is supported)
@@ -357,10 +361,33 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		}
 		$this->setState($this->getName().'.new', $isNew);
 
+		//update timestamp
+		$this->updateTimestamp();
+		
 		//notify admins and user
 		$this->notifyByEmail($table->id, $data);	
 		
 		return true;
 	}
+	
+	/* since 2.4.1 
+	 * update timestamp on table timestamp to notify Android application for changes in DB
+	 * */
+	public function updateTimestamp()
+	{
+		$db = $this->getDbo();
+		$db->setQuery(
+				'UPDATE #__improvemycity_timestamp' .
+				' SET triggered = MD5(RAND())' .
+				' WHERE id = 1'
+		);
+			
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+	
+		return true;
+	}	
 	
 }

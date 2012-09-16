@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade">
 	<name>com_improvemycity</name>
-	<creationDate>04 September 2012</creationDate>
+	<creationDate>16 September 2012</creationDate>
 	<copyright>Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.</copyright>
 	<license>GNU Affero General Public License version 3 or later; see LICENSE.txt</license>
     <author>URENIO</author>
 	<authorEmail>info@urenio.org</authorEmail>
 	<authorUrl>http://www.urenio.org/</authorUrl>
-	<version>2.4.0</version>
+	<version>2.5.0</version>
 	<description>ImproveMyCity - Report, vote and track non-emergency issues. ImproveMyCity was developed within the European project "PEOPLE: Pilot smart urban Ecosystems leveraging Open innovation for Promoting and enabLing future E- services" which is co-financed by the European Commission (THEME [CIP-ICT-PSP.2010.4.1]).</description>
 	<scriptfile>script.php</scriptfile>
 	<install>

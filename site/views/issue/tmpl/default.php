@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     2.3
+ * @version     2.5.x
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
@@ -113,7 +113,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 				<div id="imc-issue-general-info">
 					<span class="strong"><?php echo JText::_('CATEGORY');?></span><span class="desc"><?php echo $this->item->catname;?></span><br />
 					<span class="strong"><?php echo JText::_('ADDRESS');?></span><span class="desc"><?php echo $this->item->address;?></span><br />
-					<span class="strong"><?php echo JText::_('REPORTED_BY');?></span><span class="desc"><?php echo $this->item->username . ' ' . $this->item->reported_rel;?></span><br />
+					<span class="strong"><?php echo JText::_('REPORTED_BY');?></span><span class="desc"><?php echo $this->item->fullname . ' ' . $this->item->reported_rel;?></span><br />
 					<span class="strong"><?php echo JText::_('VIEWED');?></span><span class="desc"><?php echo $this->item->hits;?></span><br />
 					<span class="strong"><?php echo JText::_('ISSUE_STATUS');?></span><span class="status-<?php echo $status;?>"><?php echo JText::_($status);?></span>						
 					<p>
@@ -143,7 +143,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 					<?php if(!empty($this->discussion)):?>
 						<?php foreach ($this->discussion as $item) : ?>
 							<div class="imc-chat">
-								<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->username; ?></span>
+								<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->fullname; ?></span>
 								<span class="imc-chat-desc"><?php echo $item->description;?></span>
 							</div>
 						<?php endforeach;?>
@@ -172,8 +172,11 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 							<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
 								<div class="alert alert-error">
 								<?php echo JText::_('ONLY_LOGGED_COMMENT');?>
+								<?php echo JText::_('PLEASE_LOG');?>
+								<?php /* UNCOMMENT IF YOU WANT login link 
 								<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
 								<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+								*/ ?>
 								</div>
 						<?php endif;?>
 					</div>

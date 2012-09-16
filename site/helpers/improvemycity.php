@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     2.3
+ * @version     2.5.x
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
@@ -22,6 +22,17 @@ abstract class ImprovemycityHelper
 	{
 		if(strtotime($time) <= 0)
 			return '';
+		
+		// Load the parameters.
+		$app = JFactory::getApplication();
+		$params	= $app->getParams();
+		$showrelativedates = $params->get('showrelativedates');		
+		$dateformat = $params->get('dateformat');		
+		
+		if(!$showrelativedates){
+			//$item->reported_rel = date("d/m/Y",strtotime($item->reported));
+			return date($dateformat,strtotime($time));
+		}
 		
 		$SECOND = 1;
 		$MINUTE = 60 * $SECOND;

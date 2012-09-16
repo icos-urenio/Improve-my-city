@@ -11,6 +11,11 @@ Based on http://net.tutsplus.com/tutorials/html-css-techniques/how-to-build-a-ki
  	margin-right:8px;
  	border:none;
 }
+ul#mega-menu li {
+	overflow: visible !important;
+	background: none !important;
+}
+
 #mega-menu li.hover{ z-index: 10;}
 #mega-menu li a { display:block; }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     2.3
+ * @version     2.5.x
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
@@ -71,7 +71,6 @@ class ImprovemycityModelDiscussions extends JModelList
 				'a.*'
 			)
 		);
-		
 
 		$query->from('`#__improvemycity_comments` AS a');
 		if($this->issue_id != null)
@@ -80,7 +79,7 @@ class ImprovemycityModelDiscussions extends JModelList
 			$query->where('a.state = 1');
 
 		// Join on user table.
-		$query->select('u.name AS username');
+		$query->select('u.name AS fullname');
 		$query->join('LEFT', '#__users AS u on u.id = a.userid');			
 
 		$query->order('a.created desc');
