@@ -7,9 +7,9 @@
  * @author      URENIO Research Unit
  * 
  * **** WARNING *****
- * MOBILE JSON FUNCTIONALITY (THIS FILE:mobile.json.php) IS CURRENTLY ON ALPHA VERSION 
- * NOT TO BE USED ON PRODUCTION SITES
- *   
+ * DURING JSON REQUESTS, USERNAME AND PASSWORD ARE ACTUALLY TRANSMITTED IN PLAIN TEXT AND CAN EASILY BE STOLEN BY SNIFFERS  
+ * YOU ARE ADVISED TO USE THIS CONTROLLER ON SSL (HTTPS) SERVERS ONLY
+ * THIS CONTROLLER IS DISABLED BY DEFAULT. YOU CAN ENABLE IT ON COMPONENT'S SETTINGS UNDER THE 'ADVANCED' TAB  
  */
 
 // No direct access.
@@ -19,6 +19,17 @@ jimport('joomla.application.controller');
 
 class ImprovemycityControllerMobile extends JController
 {
+	private $enablejsoncontroller = 0;
+	function __construct()
+	{
+		// Load the parameters.
+		$app = JFactory::getApplication();
+		$params	= $app->getParams();
+		$this->enablejsoncontroller = $params->get('enablejsoncontroller');
+		if(!$this->enablejsoncontroller)
+			die('CONTROLLER MOBILE.JSON IS DISABLED');		
+		parent::__construct();
+	}
 	
 	/* arguments: 
 	 * limit=0 : get ALL issues, limit=5 get recent 5 issues
@@ -49,7 +60,6 @@ class ImprovemycityControllerMobile extends JController
 			$model = $this->getModel('issues');
 			$items	= $model->getItems();
 		}
-		
 				
 		//clean up and prepare for json
 		foreach($items as $item){
@@ -111,26 +121,30 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}	
 	
+	
+	/* BELOW FUNCTIONS NEED valid username/password */ 
+	
 	public function addIssue()
 	{
-		//get request
+		$username = JRequest::getVar('username');
+		$password = JRequest::getVar('password');
+		//Check authentication
+		$auth = $this->authenticate($username, $password);
+		if(!empty($auth['error_message'])){
+			echo json_encode("Authentication failed");
+			return;
+		}
+		
+		$userid = $auth['id'];		
 		$title = JRequest::getVar('title');
 		$title = strip_tags($title);
-		
 		$catid = JRequest::getVar('catid');
-
 		$address = JRequest::getVar('address');
 		$address = strip_tags($address);
-				
 		$description = JRequest::getVar('description');
 		$description = strip_tags($description);
-		
 		$latitude = JRequest::getVar('latitude');
 		$longitude = JRequest::getVar('longitude');
-		$userid = JRequest::getVar('userid');
-		$token = JRequest::getVar('token'); //security token
-		
-		//TODO: AUTHENTICATION HERE
 		
 		//get model
 		$model = $this->getModel('addissue');
@@ -153,10 +167,18 @@ class ImprovemycityControllerMobile extends JController
 	 */
 	public function voteIssue()
 	{
+		$username = JRequest::getVar('username');
+		$password = JRequest::getVar('password');
+		//Check authentication
+		$auth = $this->authenticate($username, $password);
+		if(!empty($auth['error_message'])){
+			echo json_encode("Authentication failed");
+			return;
+		}
+		
+		$userid = $auth['id'];		
 		$issueId = JRequest::getInt('issueId');
-		$userid = JRequest::getVar('userid');
-		$token = JRequest::getVar('token'); //security token
-			
+				
 		//get model
 		$model = $this->getModel('issue');
 		
@@ -175,10 +197,17 @@ class ImprovemycityControllerMobile extends JController
 	
 	public function addComment()
 	{
+		$username = JRequest::getVar('username');
+		$password = JRequest::getVar('password');
+		//Check authentication
+		$auth = $this->authenticate($username, $password);
+		if(!empty($auth['error_message'])){
+			echo json_encode("Authentication failed");
+			return;
+		}
+		
+		$userid = $auth['id'];
 		$issueId = JRequest::getInt('issueId');
-		$userid = JRequest::getVar('userid');
-		$token = JRequest::getVar('token'); //security token
-
 		$description = JRequest::getVar('description');
 		$description = strip_tags($description);
 		
@@ -188,5 +217,13 @@ class ImprovemycityControllerMobile extends JController
 		
 		echo json_encode($lastComment);
 		return;
+	}
+	
+	private function authenticate($username, $password)
+	{
+		//get model
+		$model = $this->getModel('users');
+		$response = $model->authenticateUser($username, $password);
+		return $response;
 	}
 }

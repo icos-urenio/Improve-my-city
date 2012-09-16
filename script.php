@@ -46,7 +46,7 @@ class com_improvemycityInstallerScript
 		if ( $type == 'update' ) {
 			$oldRelease = $this->getParam('version');
 			$rel = $oldRelease . ' to ' . $this->release;
-			if ( version_compare( $this->release, $oldRelease, 'le' ) ) {
+			if ( version_compare( $this->release, $oldRelease, 'lt' ) ) {
 				Jerror::raiseWarning(null, 'Incorrect version sequence. Cannot upgrade ' . $rel);
 				return false;
 			}
@@ -122,7 +122,9 @@ class com_improvemycityInstallerScript
 			$params['loadjqueryui'] = '1';	
 					
 			$params['showrelativedates'] = '1';			
-			$params['dateformat'] = 'm/d/Y';			
+			$params['dateformat'] = 'm/d/Y h:i:s';
+						
+			$params['enablejsoncontroller'] = '0';			
 			
 		}
  
