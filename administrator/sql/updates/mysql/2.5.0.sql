@@ -1,4 +1,4 @@
-#version 2.4.1 introduces timestamp table to be used by native android application
+#2.5.0
  
 CREATE TABLE IF NOT EXISTS `#__improvemycity_timestamp` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
