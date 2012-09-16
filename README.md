@@ -41,7 +41,7 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 * Just a numbering convension to 3 level versioning
 
 ### Version 2.5.0 
-Brings complete support for mobile versions (Android, iOS, REST services) of Improve-My-City, by third parties.
+Brings complete support for mobile versions (Android, iOS, REST services) of ImproveMyCity, by third parties.
 
 Mobile json wrapping is supported by Live+Gov European Research Programme
 
