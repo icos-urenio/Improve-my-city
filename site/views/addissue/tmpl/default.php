@@ -52,8 +52,11 @@ if($this->popupmodal == 1)
 				<?php if($this->guest) :?>			
 					<div class="alert alert-error">
 					<?php echo JText::_('NOT_LOGGED_IN');?>
-					<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue')); ?>
-					<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+					<?php echo JText::_('PLEASE_LOG');?>
+					<?php /* UNCOMMENT IF YOU WANT login link 
+						<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue')); ?>
+						<a class="modal strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+					*/?>
 					</div>				
 				<?php endif;?>
 				
