@@ -26,3 +26,5 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 * Version 2.2 introduces comments administration and suggestions and bug fixes based on JED and support group users. Also, new settings are added like: Show/Hide comments, Publish new issue on admin approval and more. Settings are now fully translated. Comment submit button is disabled during ajax call to avoid duplicate comments.
 * Version 2.2.1 introduces automatic updates and also improves comments administration and fixes dropdown categories bug concerning unpublished items
 * Version 2.3 fixes the conflict between mootools/jquery which caused megamenu or/and google map not to work when certain templates are used.
+* Version 2.4.0 is just a numbering convension to 3 level versioning
+* Version 2.5.0 brings complete support for mobile versions (Android, iOS, REST services) of Improve my city by third parties
