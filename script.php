@@ -125,6 +125,7 @@ class com_improvemycityInstallerScript
 			$params['dateformat'] = 'm/d/Y h:i:s';
 						
 			$params['enablejsoncontroller'] = '0';			
+			$params['secretkey'] = 'I am your secret key';			
 			
 		}
  

@@ -18,6 +18,7 @@ class ImprovemycityModelUsers extends JModel
 	
 	function authenticateUser($username, $password)
 	{
+
 		$response = array();
 		
 		// Joomla does not like blank passwords

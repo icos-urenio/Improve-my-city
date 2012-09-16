@@ -136,6 +136,11 @@
 			  <option value="0">JNO</option>
 			  <option value="1">JYES</option>
 			</field>		
+			<field name="secretkey" type="text"
+				label="COM_IMPROVEMYCITY_SETTINGS_SECRET_KEY_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_SECRET_KEY_DESC"
+				default="I am your secret key"
+			/>			
 	</fieldset>
 	
 	<fieldset name="credits"

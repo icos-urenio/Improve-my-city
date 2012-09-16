@@ -7,9 +7,15 @@
  * @author      URENIO Research Unit
  * 
  * **** WARNING *****
- * DURING JSON REQUESTS, USERNAME AND PASSWORD ARE ACTUALLY TRANSMITTED IN PLAIN TEXT AND CAN EASILY BE STOLEN BY SNIFFERS  
- * YOU ARE ADVISED TO USE THIS CONTROLLER ON SSL (HTTPS) SERVERS ONLY
- * THIS CONTROLLER IS DISABLED BY DEFAULT. YOU CAN ENABLE IT ON COMPONENT'S SETTINGS UNDER THE 'ADVANCED' TAB  
+ * DURING JSON REQUESTS, USERNAME AND PASSWORD ALTHOUGH TRANSMITTED ENCRYPTED, MIGHT BE STOLEN BY SNIFFERS AND USED AS IS. 
+ * FOR MAXIMUM PROTECTION YOU ARE ADVISED TO USE THIS CONTROLLER ON SSL (HTTPS) SERVERS ONLY
+ * THIS CONTROLLER IS DISABLED BY DEFAULT. YOU CAN ENABLE IT ON COMPONENT'S SETTINGS UNDER THE 'ADVANCED' TAB
+ * YOU SHOULD ALWAYS SEND PASSWORD DECRYPTED LIKE THIS:
+	
+	-- HOW TO ENCRYPT THE PASSWORD BEFORE CALLING THE MOBILE.JSON CONTROLLER
+	$key = 'secret key'; //the secret key as set on component's setting under advanced tab (MUST MATCH THE ONE ON JOOMLA SERVER)
+	$password = ' the actual user password '; // *Important* note the spaces *Important*
+    $encrypted_password = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $password, MCRYPT_MODE_CBC, md5(md5($key))));
  */
 
 // No direct access.
@@ -20,6 +26,7 @@ jimport('joomla.application.controller');
 class ImprovemycityControllerMobile extends JController
 {
 	private $enablejsoncontroller = 0;
+	private $key = null;
 	function __construct()
 	{
 		// Load the parameters.
@@ -28,6 +35,7 @@ class ImprovemycityControllerMobile extends JController
 		$this->enablejsoncontroller = $params->get('enablejsoncontroller');
 		if(!$this->enablejsoncontroller)
 			die('CONTROLLER MOBILE.JSON IS DISABLED');		
+		$this->key = $params->get('secretkey');
 		parent::__construct();
 	}
 	
@@ -122,7 +130,7 @@ class ImprovemycityControllerMobile extends JController
 	}	
 	
 	
-	/* BELOW FUNCTIONS NEED valid username/password */ 
+	/* BELOW FUNCTIONS NEED valid username and encrypted_password */ 
 	
 	public function addIssue()
 	{
@@ -219,11 +227,21 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}
 	
-	private function authenticate($username, $password)
+	private function authenticate($username, $encrypted_password)
 	{
+		//make sure GET is correct (according to RFC 2396 plus sign is %2B)
+		$encrypted_password = urlencode($encrypted_password);
+		$encrypted_password = str_replace("+", "%2B",$encrypted_password);
+		$encrypted_password = urldecode($encrypted_password);		
+		
+		$decrypted_password = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($this->key), base64_decode($encrypted_password), MCRYPT_MODE_CBC, md5(md5($this->key))), "\0");
+		$decrypted_password = trim($decrypted_password);
+		//echo $decrypted_password;die;
+		//echo $this->key;die;
+		
 		//get model
 		$model = $this->getModel('users');
-		$response = $model->authenticateUser($username, $password);
+		$response = $model->authenticateUser($username, $decrypted_password);
 		return $response;
 	}
 }
