@@ -13,9 +13,8 @@
  * YOU SHOULD ALWAYS SEND PASSWORD DECRYPTED LIKE THIS:
 	
 	-- HOW TO ENCRYPT THE PASSWORD BEFORE CALLING THE MOBILE.JSON CONTROLLER
-	$key = 'secret key'; //the secret key as set on component's menu "Secret Key" (Keys on client and server should MATCH )
+	$key = 'secret key'; //the secret key as set on component's menu "API KEY" (Keys on client and server should MATCH )
 	Follow the instructions on: http://www.androidsnippets.com/encrypt-decrypt-between-android-and-php
-	
 	Important: Key length must be 16 characters
 	--
  */
@@ -37,9 +36,15 @@ class ImprovemycityControllerMobile extends JController
 		$this->enablejsoncontroller = $params->get('enablejsoncontroller');
 		if(!$this->enablejsoncontroller)
 			die('CONTROLLER MOBILE.JSON IS DISABLED');		
-		$this->key = $params->get('secretkey');
 		parent::__construct();
+
+		//populate key from DB
+		$model = $this->getModel('keys');
+		$key = $model->getSecretKey();
+		$this->key = $key;
+		
 	}
+	
 	
 	/* arguments: 
 	 * limit=0 : get ALL issues, limit=5 get recent 5 issues
