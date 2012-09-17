@@ -4,7 +4,7 @@
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
- * @author      URENIO Research Unit
+ * @author      Ioannis Tsampoulatidis for the URENIO Research Unit
  * 
  * **** WARNING *****
  * DURING JSON REQUESTS, USERNAME AND PASSWORD ALTHOUGH TRANSMITTED ENCRYPTED, MIGHT BE STOLEN BY SNIFFERS AND USED AS IS. 
@@ -13,9 +13,12 @@
  * YOU SHOULD ALWAYS SEND PASSWORD DECRYPTED LIKE THIS:
 	
 	-- HOW TO ENCRYPT THE PASSWORD BEFORE CALLING THE MOBILE.JSON CONTROLLER
+
 	$key = 'secret key'; //the secret key as set on component's setting under advanced tab (MUST MATCH THE ONE ON JOOMLA SERVER)
-	$password = ' the actual user password '; // *Important* note the spaces *Important*
-    $encrypted_password = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $password, MCRYPT_MODE_CBC, md5(md5($key))));
+	$password = ' the actual user password '; // *Important* note the spaces
+	$encrypted_password = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $password, MCRYPT_MODE_CBC, $key));
+	 
+	--
  */
 
 // No direct access.
@@ -234,7 +237,7 @@ class ImprovemycityControllerMobile extends JController
 		$encrypted_password = str_replace("+", "%2B",$encrypted_password);
 		$encrypted_password = urldecode($encrypted_password);		
 		
-		$decrypted_password = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($this->key), base64_decode($encrypted_password), MCRYPT_MODE_CBC, md5(md5($this->key))), "\0");
+		$decrypted_password = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $this->key, base64_decode($encrypted_password), MCRYPT_MODE_CBC, $this->key), "\0");
 		$decrypted_password = trim($decrypted_password);
 		//echo $decrypted_password;die;
 		//echo $this->key;die;
