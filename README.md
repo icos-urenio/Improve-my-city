@@ -57,3 +57,8 @@ Also v2.5.0 brings the following:
 - Mega-menu css enhancements
 - Fix administration approval issues (you can set on settings if you want to publish directly new issues or the administrator must first approve)
  
+### Version 2.5.1 security update
+* Security update concerning encryption/decryption. The method is now Android compatible
+* Secret key is now stored on DB instead of component's parameters
+* Administrator various fixes and submenus added
+* Updated mobile.json controller according to this [snippet](http://www.androidsnippets.com/encrypt-decrypt-between-android-and-php)
