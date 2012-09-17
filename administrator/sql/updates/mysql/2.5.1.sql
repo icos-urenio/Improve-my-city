@@ -6,4 +6,4 @@ CREATE TABLE `#__improvemycity_keys` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 
-INSERT INTO `#__improvemycity_keys` (`skey`) VALUES (`1234567890123456`);
+INSERT INTO `#__improvemycity_keys` (`skey`) VALUES ('1234567890123456');

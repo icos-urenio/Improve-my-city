@@ -26,8 +26,27 @@ class ImprovemycityHelper
 			'index.php?option=com_improvemycity&view=issues',
 			$vName == 'issues'
 		);
-		JSubMenuHelper::addEntry(JText::_('COM_IMPROVEMYCITY_SUBMENU_CATEGORIES'), 'index.php?option=com_categories&view=categories&extension=com_improvemycity', $vName == 'categories');
-		
+		JSubMenuHelper::addEntry(
+			JText::_('COM_IMPROVEMYCITY_SUBMENU_CATEGORIES'), 
+			'index.php?option=com_categories&view=categories&extension=com_improvemycity', 
+			$vName == 'categories'
+		);
+		JSubMenuHelper::addEntry(
+				JText::_('COM_IMPROVEMYCITY_SUBMENU_COMMENTS'),
+				'index.php?option=com_improvemycity&view=comments',
+				$vName == 'comments'
+		);
+		JSubMenuHelper::addEntry(
+				JText::_('COM_IMPROVEMYCITY_SUBMENU_REPORTS'),
+				'index.php?option=com_improvemycity&view=reports',
+				$vName == 'reports'
+		);
+		JSubMenuHelper::addEntry(
+				JText::_('COM_IMPROVEMYCITY_SUBMENU_KEYS'),
+				'index.php?option=com_improvemycity&view=keys',
+				$vName == 'keys'
+		);		
+				
 		// set some global property
 		$document = JFactory::getDocument();
 		$document->addStyleDeclaration('.icon-48-item {background-image: url(../media/com_improvemycity/images/improvemycity-48x48.png);}');

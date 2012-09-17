@@ -32,7 +32,7 @@ class ImprovemycityController extends JController
 		$view = JRequest::getCmd('view', 'issues');
         
 		JRequest::setVar('view', $view);
-
+		
 		parent::display();
 
 		return $this;
