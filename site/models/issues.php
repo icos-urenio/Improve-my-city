@@ -153,6 +153,7 @@ class ImprovemycityModelIssues extends JModelList
 		
 		
 		// Convert the params field into an object, saving original in _params
+		$model_discussions = JModel::getInstance('Discussions', 'ImprovemycityModel');
 		for ($i = 0, $n = count($items); $i < $n; $i++) {
 			$item = &$items[$i];
 			
@@ -161,7 +162,7 @@ class ImprovemycityModelIssues extends JModelList
 			$item->acknowledged_rel = ImprovemycityHelper::getRelativeTime($item->acknowledged);
 			$item->closed_rel = ImprovemycityHelper::getRelativeTime($item->closed);
 			
-			$model_discussions = JModel::getInstance('Discussions', 'ImprovemycityModel'); //TODO: outside of for
+			//TODO: Important: Get this outside for loop and set it to main query. It causes lots of queries (overhead)
 			$item->discussion = $model_discussions->getItems($item->id);
 			
 			if (!isset($this->_params)) {

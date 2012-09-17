@@ -86,6 +86,10 @@ class ImprovemycityModelIssue extends JModelItem
 			}
 		}
 		if ($this->_item != null){
+			//also get the discussion for that record as well
+			$model_discussions = JModel::getInstance('Discussions', 'ImprovemycityModel');
+			$this->_item->discussion = $model_discussions->getItems($this->_item->id);
+				
 			$this->_item->reported_rel = ImprovemycityHelper::getRelativeTime($this->_item->reported);
 			$this->_item->acknowledged_rel = ImprovemycityHelper::getRelativeTime($this->_item->acknowledged);
 			$this->_item->closed_rel = ImprovemycityHelper::getRelativeTime($this->_item->closed);
