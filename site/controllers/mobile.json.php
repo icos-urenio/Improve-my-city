@@ -13,11 +13,10 @@
  * YOU SHOULD ALWAYS SEND PASSWORD DECRYPTED LIKE THIS:
 	
 	-- HOW TO ENCRYPT THE PASSWORD BEFORE CALLING THE MOBILE.JSON CONTROLLER
-
-	$key = 'secret key'; //the secret key as set on component's setting under advanced tab (MUST MATCH THE ONE ON JOOMLA SERVER)
-	$password = ' the actual user password '; // *Important* note the spaces
-	$encrypted_password = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $password, MCRYPT_MODE_CBC, $key));
-	 
+	$key = 'secret key'; //the secret key as set on component's menu "Secret Key" (Keys on client and server should MATCH )
+	Follow the instructions on: http://www.androidsnippets.com/encrypt-decrypt-between-android-and-php
+	
+	Important: Key length must be 16 characters
 	--
  */
 
@@ -232,16 +231,21 @@ class ImprovemycityControllerMobile extends JController
 	
 	private function authenticate($username, $encrypted_password)
 	{
-		//make sure GET is correct (according to RFC 2396 plus sign is %2B)
-		$encrypted_password = urlencode($encrypted_password);
-		$encrypted_password = str_replace("+", "%2B",$encrypted_password);
-		$encrypted_password = urldecode($encrypted_password);		
+		$code = "";
+		for ($i = 0; $i < strlen($encrypted_password); $i += 2) {
+			$code .= chr(hexdec(substr($encrypted_password, $i, 2)));
+		}
 		
-		$decrypted_password = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $this->key, base64_decode($encrypted_password), MCRYPT_MODE_CBC, $this->key), "\0");
-		$decrypted_password = trim($decrypted_password);
-		//echo $decrypted_password;die;
-		//echo $this->key;die;
+		$iv = $this->key; //Initialization vector same as key
+		$key= $this->key;
 		
+		$td = mcrypt_module_open('rijndael-128', '', 'cbc', $iv);
+		mcrypt_generic_init($td, $key, $iv);
+		$decrypted_password = mdecrypt_generic($td, $code);
+		mcrypt_generic_deinit($td);
+		mcrypt_module_close($td);
+		$decrypted_password = utf8_encode(trim($decrypted_password ));
+				
 		//get model
 		$model = $this->getModel('users');
 		$response = $model->authenticateUser($username, $decrypted_password);
