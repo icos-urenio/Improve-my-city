@@ -78,7 +78,7 @@ class com_improvemycityInstallerScript
 	 */
 	function update( $parent ) {
 		//echo '<p>' . JText::_('COM_IMPROVEMYCITY_UPDATE_ to ' . $this->release) . '</p>';
-		
+		$params['version'] = 'ImproveMyCity version ' . $this->release;
 		// You can have the backend jump directly to the newly updated component configuration page
 		// $parent->getParent()->setRedirectURL('index.php?option=com_improvemycity');
 	}

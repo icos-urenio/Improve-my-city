@@ -143,13 +143,12 @@
 			/>			
 	</fieldset>
 	
-	<fieldset name="credits"
-		label="COM_IMPROVEMYCITY_SETTINGS_CREDITS_LABEL"
-	>
+	<fieldset name="credits" label="COM_IMPROVEMYCITY_SETTINGS_CREDITS_LABEL">
 			<field name="credits" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_DESC">
 			  <option value="0">JNO</option>
 			  <option value="1">JYES</option>
 			</field>	
+			<field name="version" label="Version" type="text" default="ImproveMyCity" readonly="true" />			
 	</fieldset>
 		
 	<fieldset
