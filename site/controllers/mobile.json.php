@@ -234,6 +234,16 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}
 	
+	public function getUserInfo()
+	{
+		$username = JRequest::getVar('username');
+		$password = JRequest::getVar('password');
+		//Check authentication
+		$auth = $this->authenticate($username, $password);
+		echo json_encode($auth);
+		return;
+	}	
+	
 	private function authenticate($username, $encrypted_password)
 	{
 		$code = "";
