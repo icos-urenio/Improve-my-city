@@ -43,9 +43,9 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 ### Version 2.5.0 
 Brings complete support for mobile versions (Android, iOS, REST services) of ImproveMyCity, for third parties, by introducing a complete json wrapper. All gathered together through a common controller interface which administrators can activate/deactivate on demand.
 
-Mobile json wrapping is supported by Live+Gov European Research Programme and among others it supports:
+Mobile json wrapping supports:
 
-- Encrypt / Decrypt functionality
+- Encryption / Decryption functionality with secret key defined on server side
 - Timestamp on DB changes
 - Introduces geo-boundaries queries
  
