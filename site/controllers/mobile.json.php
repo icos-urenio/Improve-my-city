@@ -244,6 +244,33 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}	
 	
+	public function getUserVotes()
+	{
+		$username = JRequest::getVar('username');
+		$password = JRequest::getVar('password');
+		//Check authentication
+		$auth = $this->authenticate($username, $password);
+		if(!empty($auth['error_message'])){
+			echo json_encode("Authentication failed");
+			return;
+		}
+	
+		$userid = $auth['id'];
+	
+		//get model and items
+		$model = $this->getModel('users');
+	
+		$item = $model->getUserVotes($userid);
+		if($item == null){
+			echo json_encode('0');
+			return;
+		}
+	
+		//prepare for json
+		echo json_encode($item);
+		return;
+	}
+		
 	private function authenticate($username, $encrypted_password)
 	{
 		$code = "";

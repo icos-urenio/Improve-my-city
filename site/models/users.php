@@ -64,4 +64,22 @@ class ImprovemycityModelUsers extends JModel
 		}
 		return $response;
 	}
+	
+	
+	function getUserVotes($userid)
+	{
+		// Create a new query object.
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+
+		$query->select('a.id, a.improvemycityid, a.votingdate');
+		$query->from('`#__improvemycity_votes` AS a');
+		$query->where('a.userid = ' . $userid);
+		
+		$db->setQuery($query);
+		$result = $db->loadRowList();
+		
+		return $result;		
+	}
+	
 }
