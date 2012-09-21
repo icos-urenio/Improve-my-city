@@ -186,9 +186,14 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 	*/	
 	public function save($data)
 	{
-		
-		if(empty($data) )	//mobile version sends $data already filled
+		if(empty($data['userid']) ){	
+			//that means NON mobile.json version (mobile.json sends uid already filled)
 			$data = JRequest::getVar('jform', array(), 'post', 'array');
+			$uidPath = JFactory::getUser()->get('id');
+		} else {
+			$uidPath = $data['userid'];
+		}
+
 		$file = JRequest::getVar('jform', array(), 'files', 'array');
 		
 		$app		= JFactory::getApplication();
@@ -214,8 +219,8 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 				}
 		
 				$src = $file['tmp_name']['photo'];
-				$dest =  JPATH_SITE. DS ."images". DS . "improvemycity" . DS . JFactory::getUser()->get('id') . DS . "images" . DS . $filename;
-				$thumb_dest =  JPATH_SITE. DS ."images". DS . "improvemycity" . DS . JFactory::getUser()->get('id') . DS . "images" . DS . "thumbs" . DS . $filename;
+				$dest =  JPATH_SITE. DS ."images". DS . "improvemycity" . DS . $uidPath . DS . "images" . DS . $filename;
+				$thumb_dest =  JPATH_SITE. DS ."images". DS . "improvemycity" . DS . $uidPath . DS . "images" . DS . "thumbs" . DS . $filename;
 
 				//resize image here
 				include_once(JPATH_COMPONENT.'/helpers/simpleimage.php');
@@ -257,7 +262,6 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 				}
 				 
 				//always use constants when making file paths, to avoid the possibilty of remote file inclusion
-				
 				if(!JFile::upload($src, $dest)) 
 				{
 					echo JText::_( 'ERROR MOVING FILE' );
@@ -269,8 +273,8 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 					JPath::setPermissions($dest);
 					//CREATE THUMBNAIL HERE
 					$image->load($dest);
-					$image->resize(80,60);
-					$pathToThumb = JPATH_SITE.DS.'images'.DS.'improvemycity'.DS.JFactory::getUser()->get('id').DS.'images'.DS.'thumbs';
+					$image->resize(80,60);	//TODO: GET FROM PARAMETERS
+					$pathToThumb = JPATH_SITE.DS.'images'.DS.'improvemycity'.DS.$uidPath.DS.'images'.DS.'thumbs';
 					if (!JFolder::exists($pathToThumb)){
 						JFolder::create($pathToThumb);
 					}
@@ -280,15 +284,15 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 					JPath::setPermissions($thumb_dest);
 					
 					//update data with photo path
-					$data['photo'] = 'images/improvemycity/'.JFactory::getUser()->get('id').'/images/thumbs/'.$filename;
-					//$data['thumb'] = 'images/improvemycity/'.JFactory::getUser()->get('id').'/images/thumbs/'.$filename;
-					//$data['photo'] = 'images'.'/'.'improvemycity'.'/'.JFactory::getUser()->get('id').'/'.'images'.'/'.$fileName;
+					$data['photo'] = 'images/improvemycity/'.$uidPath.'/images/thumbs/'.$filename;
+					//$data['thumb'] = 'images/improvemycity/'.J$uidPath.'/images/thumbs/'.$filename;
+					//$data['photo'] = 'images'.'/'.'improvemycity'.'/'.$uidPath.'/'.'images'.'/'.$fileName;
 				}					
 					
 				/*
 				if (JFile::upload($src, $dest, false) ){
 					//update data with photo path
-					$data['photo'] = 'images/improvemycity/'.JFactory::getUser()->get('id').'/images/'.$filename;
+					$data['photo'] = 'images/improvemycity/'.$uidPath.'/images/'.$filename;
 				} 
 				*/
 			}    

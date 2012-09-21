@@ -8,7 +8,7 @@
  * 
  * **** WARNING *****
  * DURING JSON REQUESTS, USERNAME AND PASSWORD ALTHOUGH TRANSMITTED ENCRYPTED, MIGHT BE STOLEN BY SNIFFERS AND USED AS IS. 
- * FOR MAXIMUM PROTECTION YOU ARE ADVISED TO USE THIS CONTROLLER ON SSL (HTTPS) SERVERS ONLY.
+ * FOR MAXIMUM PROTECTION YOU ARE ADVISED TO --USE THIS CONTROLLER ON SSL--- (HTTPS) WEB-SERVERS ONLY.
  * THIS CONTROLLER IS DISABLED BY DEFAULT. YOU CAN ENABLE IT ON COMPONENT'S SETTINGS UNDER THE 'ADVANCED' TAB
  * YOU SHOULD ALWAYS SEND PASSWORD DECRYPTED LIKE THIS:
 	
@@ -259,8 +259,8 @@ class ImprovemycityControllerMobile extends JController
 		$decrypted_password = mdecrypt_generic($td, $code);
 		mcrypt_generic_deinit($td);
 		mcrypt_module_close($td);
-		$decrypted_password = utf8_encode(trim($decrypted_password ));
-				
+		$decrypted_password = utf8_encode(trim(substr($decrypted_password,0,16)));
+		
 		//get model
 		$model = $this->getModel('users');
 		$response = $model->authenticateUser($username, $decrypted_password);
