@@ -64,5 +64,5 @@ Also v2.5.0 brings the following:
 * Updated mobile.json controller according to this [snippet](http://www.androidsnippets.com/encrypt-decrypt-between-android-and-php)
 
 ### Version 2.5.2
-* Fixing upload file server path wher adding new issue from mobile.json
+* Fixing upload photo server-path when adding new issue from mobile.json
 * Added getUserVotes() in mobile.json
