@@ -246,7 +246,7 @@ class ImprovemycityModelIssues extends JModelList
 	}
 	
 	
-	function getItemsInBoundaries($x0up = 0, $x0down = 0, $y0up = 0, $y0down = 0)
+	function getItemsInBoundaries($x0up = 0, $x0down = 0, $y0up = 0, $y0down = 0, $limit = 0)
 	{
 		// Create a new query object.
 		$db		= $this->getDbo();
@@ -283,10 +283,9 @@ class ImprovemycityModelIssues extends JModelList
 			$query->where('a.catid IN ('.$filter_category.')');
 		}
 		
-		// Add the list ordering clause.
-		$query->order($this->getState('list.ordering', 'a.ordering').' '.$this->getState('list.direction', 'ASC'));
-	
-		$db->setQuery($query);
+		$query->order('id DESC');
+
+		$db->setQuery($query, 0, $limit);
 		$result = $db->loadRowList();
 		
 		return $result;

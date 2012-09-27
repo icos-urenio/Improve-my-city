@@ -58,18 +58,19 @@ class ImprovemycityControllerMobile extends JController
 	{
 		//get request
 		$showComments = JRequest::getInt('showComments');
-		
+		$limit = JRequest::getInt('limit');
 		//get boundaries
 		$x0up 	= JRequest::getFloat('x0up');		
 		$x0down	= JRequest::getFloat('x0down');
 		$y0up 	= JRequest::getFloat('y0up');
 		$y0down	= JRequest::getFloat('y0down');		
 		
+		
 		//get model and items
 		$items = array();
 		if( !empty($x0up) && !empty($x0down) && !empty($y0up) && !empty($y0down)){
 			$model = $this->getModel('issues');
-			$items	= $model->getItemsInBoundaries($x0up, $x0down, $y0up, $y0down);
+			$items	= $model->getItemsInBoundaries($x0up, $x0down, $y0up, $y0down, $limit);
 		}
 		else {
 			$model = $this->getModel('issues');
