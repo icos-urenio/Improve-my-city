@@ -17,7 +17,7 @@
 	Follow the instructions on: http://www.androidsnippets.com/encrypt-decrypt-between-android-and-php
 	Important: Key length must be 16 characters
 	--
- */
+*/
 
 // No direct access.
 defined('_JEXEC') or die;
@@ -161,6 +161,10 @@ class ImprovemycityControllerMobile extends JController
 		$description = strip_tags($description);
 		$latitude = JRequest::getVar('latitude');
 		$longitude = JRequest::getVar('longitude');
+		
+		if(strstr($title, '|') != false) $title = substr(strstr($title, '|'),1);
+		if(strstr($address, '|') != false) $address = substr(strstr($address, '|'),1);
+		if(strstr($description, '|') != false) $description = substr(strstr($description, '|'),1);
 		
 		//get model
 		$model = $this->getModel('addissue');
