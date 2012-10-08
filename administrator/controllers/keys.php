@@ -27,4 +27,12 @@ class ImprovemycityControllerKeys extends JControllerAdmin
 		
 		return $model;
 	}
+	
+	public function updateCategoryTimestamp()
+	{
+		//get model and categories
+		$model = $this->getModel('keys');
+		$updated = $model->updateCategoryTimestamp();
+		$this->setRedirect("index.php?option=com_improvemycity&view=keys");
+	}	
 }

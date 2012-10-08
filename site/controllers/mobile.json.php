@@ -137,6 +137,15 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}	
 	
+	public function getCategoryTimestamp()
+	{
+		//get model and timestamp
+		$model = $this->getModel('issues');
+		$timestamp = $model->getCategoryTimestamp();
+	
+		echo json_encode($timestamp);
+		return;
+	}	
 	
 	/* BELOW FUNCTIONS NEED valid username and encrypted_password */ 
 	

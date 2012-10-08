@@ -125,4 +125,24 @@ class ImprovemycityModelKeys extends JModelList
 
 		return $query;
 	}
+	
+	/* since 2.5.3
+	 * update category timestamp on table timestamp to notify Android application for changes in DB
+	* */
+	public function updateCategoryTimestamp()
+	{
+		$db = $this->getDbo();
+		$db->setQuery(
+				'UPDATE #__improvemycity_timestamp' .
+				' SET triggered = MD5(RAND())' .
+				' WHERE id = 2'
+		);
+			
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+	
+		return true;
+	}	
 }

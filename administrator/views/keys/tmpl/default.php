@@ -20,7 +20,7 @@ $listDirn	= $this->state->get('list.direction');
 $canOrder	= $user->authorise('core.edit.state', 'com_improvemycity');
 $saveOrder	= $listOrder == 'a.ordering';
 ?>
-
+<a href="<?php echo JRoute::_('index.php?option=com_improvemycity&task=keys.updateCategoryTimestamp');?>" onclick="alert('Categories timestamp is updated.\nPlease use this only if you truly change the categories structure!');">update categories timestamp</a>
 <form action="<?php echo JRoute::_('index.php?option=com_improvemycity&view=keys'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">

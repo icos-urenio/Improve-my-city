@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `#__improvemycity_timestamp` (
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT COLLATE=utf8_general_ci;
 
 INSERT INTO `#__improvemycity_timestamp` (`triggered`) VALUES (MD5(RAND()));
+INSERT INTO `#__improvemycity_timestamp` (`triggered`) VALUES (MD5(RAND()));
 
 CREATE TABLE IF NOT EXISTS `#__improvemycity_keys` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

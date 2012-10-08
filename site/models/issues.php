@@ -245,6 +245,20 @@ class ImprovemycityModelIssues extends JModelList
 		return $result;		
 	}
 	
+	function getCategoryTimestamp()
+	{
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+	
+		$query->select('a.*');
+		$query->from('`#__improvemycity_timestamp` AS a');
+		$query->where('a.id = 2');
+	
+		$db->setQuery($query);
+		$result = $db->loadRow();
+	
+		return $result;
+	}	
 	
 	function getItemsInBoundaries($x0up = 0, $x0down = 0, $y0up = 0, $y0down = 0, $limit = 0)
 	{
@@ -300,6 +314,7 @@ class ImprovemycityModelIssues extends JModelList
 		$query->select('c.id, c.title, c.level, c.parent_id, c.params');
 		$query->from('`#__categories` AS c');
 		$query->where('c.extension = "com_improvemycity"');
+		$query->where('c.published = 1');
 
 		$db->setQuery($query);
 		$result = $db->loadRowList();

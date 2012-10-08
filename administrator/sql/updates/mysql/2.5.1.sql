@@ -1,4 +1,4 @@
-#2.5.0
+#2.5.1
 DROP TABLE IF EXISTS `#__improvemycity_keys`; 
 CREATE TABLE `#__improvemycity_keys` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
