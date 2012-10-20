@@ -49,7 +49,7 @@ defined('_JEXEC') or die;
 	<div id="imc-issue-general-info">
 		<span class="strong"><?php echo JText::_('CATEGORY');?></span><span class="desc"><?php echo $this->item->catname;?></span><br />
 		<span class="strong"><?php echo JText::_('ADDRESS');?></span><span class="desc"><?php echo $this->item->address;?></span><br />
-		<span class="strong"><?php echo JText::_('REPORTED_BY');?></span><span class="desc"><?php echo $this->item->username . ' ' . $this->item->reported_rel;?></span><br />
+		<span class="strong"><?php echo JText::_('REPORTED_BY');?></span><span class="desc"><?php echo $this->item->fullname . ' ' . $this->item->reported_rel;?></span><br />
 		<span class="strong"><?php echo JText::_('VIEWED');?></span><span class="desc"><?php echo $this->item->hits;?></span><br />
 		<span class="strong"><?php echo JText::_('ISSUE_STATUS');?></span><span class="status-<?php echo $status;?>"><?php echo JText::_($status);?></span><br />						
 		<span class="strong"><?php echo JText::_('ISSUE_VOTES_DESC');?>: </span><span class="desc"><?php echo $this->item->votes;?></span>		
