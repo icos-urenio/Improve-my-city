@@ -70,7 +70,7 @@ $params = $this->form->getFieldsets('params');
 			<b><?php echo JText::_('COM_IMPROVEMYCITY_IMPROVEMYCITY_CLOSEST_ADDRESS');?></b>
 			<div id="near_address"></div>
 			<div id="geolocation">
-				<input id="address" type="textbox" size="75" value="">
+				<input id="address" type="text" size="75" value="">
 				<input style="background-color: #ccc;cursor:pointer;" type="button" value="<?php echo JText::_('COM_IMPROVEMYCITY_IMPROVEMYCITY_LOCATE');?>" onclick="codeAddress()">
 			</div>	
 			</div>	
