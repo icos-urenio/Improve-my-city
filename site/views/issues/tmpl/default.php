@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 
 //JHtml::_('behavior.tooltip');
 //JHtml::_('behavior.formvalidation');
+//load mootools for the ordering
+JHtml::_('behavior.framework', true);
 
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
