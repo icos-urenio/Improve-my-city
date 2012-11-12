@@ -90,7 +90,7 @@ class ImprovemycityViewIssues extends JView
         
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
-		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
+		    if ($state->get('filter.published') == -2 && $canDo->get('core.delete')) {
 			    JToolBarHelper::deleteList('', 'issues.delete','JTOOLBAR_EMPTY_TRASH');
 			    JToolBarHelper::divider();
 		    } else if ($canDo->get('core.edit.state')) {

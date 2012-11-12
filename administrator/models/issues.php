@@ -54,9 +54,9 @@ class ImprovemycityModelissues extends JModelList
 		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-		$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
-		$this->setState('filter.state', $published);
-
+		$published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
+		$this->setState('filter.published', $published);
+		
 		$categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
 		$this->setState('filter.category_id', $categoryId);		
 		
@@ -84,6 +84,7 @@ class ImprovemycityModelissues extends JModelList
 		// Compile the store id.
 		$id.= ':' . $this->getState('filter.search');
 		$id.= ':' . $this->getState('filter.state');
+		$id	.= ':'.$this->getState('filter.published');
 		$id	.= ':'.$this->getState('filter.category_id');
 		return parent::getStoreId($id);
 	}
@@ -130,6 +131,16 @@ class ImprovemycityModelissues extends JModelList
 		if (is_numeric($categoryId)) {
 			$query->where('a.catid IN ('.$categoryId.')');
 		}
+		
+		// Filter by published state
+		$published = $this->getState('filter.published');
+		if (is_numeric($published)) {
+			$query->where('a.state = ' . (int) $published);
+		}
+		elseif ($published === '') {
+			$query->where('(a.state = 0 OR a.state = 1)');
+		}		
+		
 		
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');
