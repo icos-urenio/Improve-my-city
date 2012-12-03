@@ -34,6 +34,8 @@ class ImprovemycityModelUsers extends JModel
 		$query->select('id, password');
 		$query->from('#__users');
 		$query->where('username=' . $db->Quote($username));
+		$query->where('block=0');
+		
 		
 		$db->setQuery($query);
 		$result = $db->loadObject();
@@ -82,14 +84,14 @@ class ImprovemycityModelUsers extends JModel
 		return $result;		
 	}
 	
-	public function userExists($email)
+	public function userExists($username)
 	{
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
 		
 		$query->select('COUNT(a.id) AS num');
 		$query->from('`#__users` AS a');
-		$query->where('a.email = ' . $db->Quote($email) . ' OR ' . 'a.username = ' . $db->Quote($email));
+		$query->where('a.username = ' . $db->Quote($username));
 
 		$db->setQuery($query);
 		$result = $db->loadResult();
@@ -108,7 +110,13 @@ class ImprovemycityModelUsers extends JModel
 		$user = new JUser;
 		
 		//$data = (array)$this->getData();
-	
+		$data['groups'] = array();
+		
+		// Get the default new user group, Registered if not specified.
+		$system	= $params->get('new_usertype', 2);
+		
+		$data['groups'][] = $system;		
+		
 		// Merge in the registration data.
 		foreach ($temp as $k => $v) {
 			$data[$k] = $v;
@@ -125,7 +133,7 @@ class ImprovemycityModelUsers extends JModel
 			$data['activation'] = JApplication::getHash(JUserHelper::genRandomPassword());
 			$data['block'] = 1;
 		}
-	
+
 		// Bind the data.
 		if (!$user->bind($data)) {
 			$this->setError(JText::sprintf('COM_USERS_REGISTRATION_BIND_FAILED', $user->getError()));

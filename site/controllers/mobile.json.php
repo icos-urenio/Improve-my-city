@@ -256,6 +256,7 @@ class ImprovemycityControllerMobile extends JController
 		$password = JRequest::getVar('password');
 		//Check authentication
 		$auth = $this->authenticate($username, $password);
+		print_r($auth);
 		echo json_encode($auth);
 		return;
 	}	
@@ -320,15 +321,16 @@ class ImprovemycityControllerMobile extends JController
 		}
 		
 		$name = JRequest::getVar('name');
+		$username = JRequest::getVar('username');
 		$email = JRequest::getVar('email');
 		$encrypted_password = JRequest::getVar('password');		
 		
-		if(empty($email) || empty($encrypted_password) || empty($name)){
+		if(empty($email) || empty($encrypted_password) || empty($name) || empty($username)){
 			echo json_encode('Wrong input');
 			return;
 		}
 		
-		//password should be decrypted first and then stored as md5
+		//password should be decrypted first and then stored by JUser
 		$code = "";
 		for ($i = 0; $i < strlen($encrypted_password); $i += 2) {
 			$code .= chr(hexdec(substr($encrypted_password, $i, 2)));
@@ -346,13 +348,13 @@ class ImprovemycityControllerMobile extends JController
 		//check if username exists
 		$model = $this->getModel('users');
 
-		if($model->userExists($email)){
+		if($model->userExists($username)){
 			echo json_encode('User already exists');
 			return;
 		}
 
 		//create user with username = email, email = email, password = decrypted_password, name = name; 
-		$temp = array('username' => $email, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
+		$temp = array('username' => $username, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
 		$return = $model->register($temp);
 		
 		$ret = '';
