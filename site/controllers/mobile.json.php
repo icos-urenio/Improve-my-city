@@ -147,7 +147,9 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}	
 	
+	
 	/* BELOW FUNCTIONS NEED valid username and encrypted_password */ 
+	
 	
 	public function addIssue()
 	{
@@ -307,4 +309,67 @@ class ImprovemycityControllerMobile extends JController
 		$response = $model->authenticateUser($username, $decrypted_password);
 		return $response;
 	}
+	
+	
+	//User registration using JUser
+	public function registerUser()
+	{
+		if(JComponentHelper::getParams('com_users')->get('allowUserRegistration') == 0) {
+			echo json_encode('Registration is not allowed in this site');
+			return;
+		}
+		
+		$name = JRequest::getVar('name');
+		$email = JRequest::getVar('email');
+		$encrypted_password = JRequest::getVar('password');		
+		
+		if(empty($email) || empty($encrypted_password) || empty($name)){
+			echo json_encode('Wrong input');
+			return;
+		}
+		
+		//password should be decrypted first and then stored as md5
+		$code = "";
+		for ($i = 0; $i < strlen($encrypted_password); $i += 2) {
+			$code .= chr(hexdec(substr($encrypted_password, $i, 2)));
+		}
+		$iv = $this->key; //Initialization vector same as key
+		$key= $this->key;
+		$td = mcrypt_module_open('rijndael-128', '', 'cbc', $iv);
+		mcrypt_generic_init($td, $key, $iv);
+		$decrypted_password = mdecrypt_generic($td, $code);
+		mcrypt_generic_deinit($td);
+		mcrypt_module_close($td);
+		$decrypted_password = utf8_encode(trim(substr($decrypted_password,0,16)));		
+		
+
+		//check if username exists
+		$model = $this->getModel('users');
+
+		if($model->userExists($email)){
+			echo json_encode('User already exists');
+			return;
+		}
+
+		//create user with username = email, email = email, password = decrypted_password, name = name; 
+		$temp = array('username' => $email, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
+		$return = $model->register($temp);
+		
+		$ret = '';
+		if ($return === 'adminactivate'){
+			$ret = JText::_('COM_USERS_REGISTRATION_COMPLETE_VERIFY');
+		} elseif ($return === 'useractivate') {
+			$ret = JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE');
+		} else {
+			$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
+		}		
+		
+		echo $ret;
+		return;
+		
+	}
+	
+	
+	
+	
 }
