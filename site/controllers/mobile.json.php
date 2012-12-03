@@ -321,7 +321,6 @@ class ImprovemycityControllerMobile extends JController
 		}
 		
 		$name = JRequest::getVar('name');
-		//$username = JRequest::getVar('username');
 		$email = JRequest::getVar('email');
 		$encrypted_password = JRequest::getVar('password');		
 		
@@ -370,8 +369,5 @@ class ImprovemycityControllerMobile extends JController
 		return;
 		
 	}
-	
-	
-	
 	
 }
