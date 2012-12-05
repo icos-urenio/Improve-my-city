@@ -256,7 +256,6 @@ class ImprovemycityControllerMobile extends JController
 		$password = JRequest::getVar('password');
 		//Check authentication
 		$auth = $this->authenticate($username, $password);
-		print_r($auth);
 		echo json_encode($auth);
 		return;
 	}	
