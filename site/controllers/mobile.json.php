@@ -89,6 +89,57 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}	
 	
+	
+	public function getIssuesZipped()
+	{
+		//get request
+		$showComments = JRequest::getInt('showComments');
+		$limit = JRequest::getInt('limit');
+		//get boundaries
+		$x0up 	= JRequest::getFloat('x0up');
+		$x0down	= JRequest::getFloat('x0down');
+		$y0up 	= JRequest::getFloat('y0up');
+		$y0down	= JRequest::getFloat('y0down');
+	
+	
+		//get model and items
+		$items = array();
+		if( !empty($x0up) && !empty($x0down) && !empty($y0up) && !empty($y0down)){
+			$model = $this->getModel('issues');
+			$items	= $model->getItemsInBoundaries($x0up, $x0down, $y0up, $y0down, $limit);
+		}
+		else {
+			$model = $this->getModel('issues');
+			$items	= $model->getItems();
+		}
+	
+		//clean up and prepare for json
+		foreach($items as $item){
+			unset($item->params);
+			if(!$showComments)
+				unset($item->discussion);
+		}
+		//$document = &JFactory::getDocument();
+		//$document->setMimeEncoding('text/xml');
+		if(function_exists('ob_gzhandler')){
+			$document = &JFactory::getDocument();
+			//$document->setMimeEncoding('application/json', true);
+			//JResponse::setHeader('Content-Encoding','gzip');
+			JResponse::setheader("Content-Type: text/html; charset=ISO-8859-1",true);
+			//ob_start('ob_gzhandler');
+			//echo json_encode($items);
+			//$var = ob_get_clean();//ob_end_flush();
+			//echo $var;
+			//echo gzcompress(json_encode($items), 9);
+			echo gzdeflate(json_encode($items), 1);
+			return;
+		}
+		
+		echo json_encode($items);
+		return;
+	}	
+	
+	
 	/* arguments:
 	 * issueId=X : get issue with ID = X
 	* showComments=1: includes issue's discussion, showComments=0 (default) discussion is not included
