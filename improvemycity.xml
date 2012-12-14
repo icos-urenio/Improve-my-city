@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade">
 	<name>com_improvemycity</name>
-	<creationDate>8 October 2012</creationDate>
+	<creationDate>14 December 2012</creationDate>
 	<copyright>Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.</copyright>
 	<license>GNU Affero General Public License version 3 or later; see LICENSE.txt</license>
     <author>Ioannis Tsampoulatidis for the URENIO Researh Unit</author>
