@@ -293,7 +293,7 @@ class ImprovemycityViewIssues extends JView
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 	
 		//add google maps
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=". $this->language ."&region=". $this->region);
+		$document->addScript("https://maps.google.com/maps/api/js?sensor=false&language=". $this->language ."&region=". $this->region);
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/infobox_packed.js');		
 
 		$document->addScriptDeclaration('var jsonMarkers = '.json_encode($this->getMarkersArrayFromItems()).';');
@@ -358,7 +358,7 @@ class ImprovemycityViewIssues extends JView
 					  ,width: \"200px\"
 					 }
 					,closeBoxMargin: \"10px 2px 2px 2px\"
-					,closeBoxURL: \"http://www.google.com/intl/en_us/mapfiles/close.gif\"
+					,closeBoxURL: \"https://www.google.com/intl/en_us/mapfiles/close.gif\"
 					,infoBoxClearance: new google.maps.Size(1, 1)
 					,isHidden: false
 					,pane: \"floatPane\"

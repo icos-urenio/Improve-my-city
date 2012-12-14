@@ -109,12 +109,12 @@ class ImprovemycityViewIssue extends JView
 
 		
 		//add jquery
-		$document->addScript('http://code.jquery.com/jquery-1.7.2.min.js');
+		$document->addScript('https://code.jquery.com/jquery-1.7.2.min.js');
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui.min.js');
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 		
 		//add google maps
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
+		$document->addScript("https://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/infobox_packed.js');	
 		
 		$document->addScriptDeclaration('var jsonMarkers = '.json_encode($this->getMarkerArrayFromItem()).';');

@@ -132,7 +132,7 @@ class ImprovemycityViewAddissue extends JView
 		//$document->addScript(JURI::root() . "/components/com_improvemycity/views/addissue/submitbutton.js");
 		
 		//add google maps
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
+		$document->addScript("https://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
 
 		$LAT = $this->lat;
 		$LON = $this->lon;
