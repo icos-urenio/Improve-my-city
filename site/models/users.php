@@ -137,7 +137,8 @@ class ImprovemycityModelUsers extends JModel
 		// Bind the data.
 		if (!$user->bind($data)) {
 			$this->setError(JText::sprintf('COM_USERS_REGISTRATION_BIND_FAILED', $user->getError()));
-			return false;
+			//return false;
+			return JText::sprintf('COM_USERS_REGISTRATION_BIND_FAILED', $user->getError());
 		}
 	
 		// Load the users plugin group.
@@ -146,7 +147,8 @@ class ImprovemycityModelUsers extends JModel
 		// Store the data.
 		if (!$user->save()) {
 			$this->setError(JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError()));
-			return false;
+			//return false;
+			return JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError());
 		}
 	
 		// Compile the notification mail values.
@@ -282,7 +284,8 @@ class ImprovemycityModelUsers extends JModel
 				// Check for an error.
 				if ($return !== true) {
 					$this->setError(JText::_('COM_USERS_REGISTRATION_ACTIVATION_NOTIFY_SEND_MAIL_FAILED'));
-					return false;
+					//return false;
+					return JText::_('COM_USERS_REGISTRATION_ACTIVATION_NOTIFY_SEND_MAIL_FAILED');
 				}
 			}
 		}
@@ -313,7 +316,8 @@ class ImprovemycityModelUsers extends JModel
 				$db->setQuery($q);
 				$db->query();
 			}
-			return false;
+			//return false;
+			return JText::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED');
 		}
 	
 		if ($useractivation == 1)

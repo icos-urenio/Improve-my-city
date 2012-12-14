@@ -89,7 +89,7 @@ class ImprovemycityControllerMobile extends JController
 		return;
 	}	
 	
-	
+	//testing zip
 	public function getIssuesZipped()
 	{
 		//get request
@@ -412,7 +412,8 @@ class ImprovemycityControllerMobile extends JController
 		} elseif ($return === 'useractivate') {
 			$ret = JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE');
 		} else {
-			$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
+			//$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
+			$ret = $return;
 		}		
 		
 		echo $ret;
