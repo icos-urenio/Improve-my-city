@@ -398,7 +398,7 @@ class ImprovemycityControllerMobile extends JController
 		$model = $this->getModel('users');
 
 		if($model->userExists($email)){
-			echo json_encode('User already exists');
+			echo json_encode(JText::_('COM_USERS_USER_ALREADY_EXISTS'));
 			return;
 		}
 
