@@ -102,6 +102,7 @@ class ImprovemycityModelUsers extends JModel
 	
 	public function register($temp)
 	{
+
 		$config = JFactory::getConfig();
 		$db		= $this->getDbo();
 		$params = JComponentHelper::getParams('com_users');

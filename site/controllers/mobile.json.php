@@ -370,11 +370,12 @@ class ImprovemycityControllerMobile extends JController
 			return;
 		}
 		
+		$username = JRequest::getVar('username');
 		$name = JRequest::getVar('name');
 		$email = JRequest::getVar('email');
 		$encrypted_password = JRequest::getVar('password');		
 		
-		if(empty($email) || empty($encrypted_password) || empty($name) ){
+		if(empty($email) || empty($encrypted_password) || empty($name) || empty($username)){
 			echo json_encode('Wrong input');
 			return;
 		}
@@ -397,13 +398,13 @@ class ImprovemycityControllerMobile extends JController
 		//check if username exists
 		$model = $this->getModel('users');
 
-		if($model->userExists($email)){
+		if($model->userExists($username)){
 			echo json_encode(JText::_('COM_USERS_USER_ALREADY_EXISTS'));
 			return;
 		}
 
 		//create user with username = email, email = email, password = decrypted_password, name = name; 
-		$temp = array('username' => $email, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
+		$temp = array('username' => $username, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
 		$return = $model->register($temp);
 		
 		$ret = '';
