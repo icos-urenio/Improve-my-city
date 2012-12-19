@@ -291,6 +291,7 @@ class ImprovemycityControllerMobile extends JController
 		$userid = $auth['id'];
 		$issueId = JRequest::getInt('issueId');
 		$description = JRequest::getVar('description');
+		
 		$description = strip_tags($description);
 		
 		//get model 
@@ -366,7 +367,7 @@ class ImprovemycityControllerMobile extends JController
 	public function registerUser()
 	{
 		if(JComponentHelper::getParams('com_users')->get('allowUserRegistration') == 0) {
-			echo json_encode('Registration is not allowed in this site');
+			echo 'Registration is not allowed in this site';
 			return;
 		}
 		
@@ -376,7 +377,7 @@ class ImprovemycityControllerMobile extends JController
 		$encrypted_password = JRequest::getVar('password');		
 		
 		if(empty($email) || empty($encrypted_password) || empty($name) || empty($username)){
-			echo json_encode('Wrong input');
+			echo 'Wrong input';
 			return;
 		}
 		
@@ -399,7 +400,8 @@ class ImprovemycityControllerMobile extends JController
 		$model = $this->getModel('users');
 
 		if($model->userExists($username)){
-			echo json_encode(JText::_('COM_USERS_USER_ALREADY_EXISTS'));
+			//echo json_encode(JText::_('COM_USERS_USER_ALREADY_EXISTS'));
+			echo JText::_('COM_USERS_USER_ALREADY_EXISTS');
 			return;
 		}
 
