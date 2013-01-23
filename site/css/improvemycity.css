@@ -72,6 +72,8 @@
 	height: 500px;
 	margin: 0 auto;
 }
+#mapCanvasNew img{max-width: inherit;}
+
 
 
 /* sidebar */
