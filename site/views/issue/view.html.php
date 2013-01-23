@@ -168,6 +168,8 @@ class ImprovemycityViewIssue extends JView
 		if($this->loadjqueryui == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui-1.8.18.custom.min.js');
 		}
+		if($this->loadbootstrap == 1)
+			$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');		
 		
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 		

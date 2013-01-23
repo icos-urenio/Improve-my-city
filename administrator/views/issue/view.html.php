@@ -115,7 +115,7 @@ class ImprovemycityViewIssue extends JView
 		$document = JFactory::getDocument();
 		$document->setTitle($isNew ? JText::_('COM_IMPROVEMYCITY_IMPROVEMYCITY_CREATING') : JText::_('COM_IMPROVEMYCITY_IMPROVEMYCITY_EDITING'));
 		
-		$document->addScript("http://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
+		$document->addScript("https://maps.google.com/maps/api/js?sensor=false&language=".$this->language."&region=" . $this->region);
 
 		$LAT = $this->form->getValue('latitude');
 		$LON = $this->form->getValue('longitude');
