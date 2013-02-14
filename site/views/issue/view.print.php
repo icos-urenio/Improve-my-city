@@ -109,8 +109,11 @@ class ImprovemycityViewIssue extends JView
 
 		
 		//add jquery
-		$document->addScript('https://code.jquery.com/jquery-1.7.2.min.js');
-		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui.min.js');
+		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
+		//jquery noConflict
+		$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );
+				
+		//$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui.min.js');
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 		
 		//add google maps
@@ -122,7 +125,7 @@ class ImprovemycityViewIssue extends JView
 		$LAT = $this->lat;
 		$LON = $this->lon;
 
-		$googleMapInit = "
+		$googleMap = "
 			var geocoder = new google.maps.Geocoder();
 			var map = null;
 			var gmarkers = [];
@@ -207,12 +210,20 @@ class ImprovemycityViewIssue extends JView
 			}
 
 			// Onload handler to fire off the app.
-			google.maps.event.addDomListener(window, 'load', initialize);
+			//google.maps.event.addDomListener(window, 'load', initialize);
 			
 		";
 
+		$documentReady = "
+		
+		jImc(document).ready(function() {
+			initialize();
+		});
+		";
+				
 		//add the javascript to the head of the html document
-		$document->addScriptDeclaration($googleMapInit);
+		$document->addScriptDeclaration($googleMap);
+		$document->addScriptDeclaration($documentReady);
 		
 		if ($this->print)
 		{

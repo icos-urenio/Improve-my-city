@@ -139,7 +139,7 @@ class ImprovemycityViewAddissue extends JView
 		$LAT = $this->lat;
 		$LON = $this->lon;
 
-		$googleMapInit = "
+		$googleMap = "
 			var geocoder = new google.maps.Geocoder();
 			var map;
 			var marker;
@@ -257,13 +257,20 @@ class ImprovemycityViewAddissue extends JView
 			}
 
 			// Onload handler to fire off the app.
-			google.maps.event.addDomListener(window, 'load', initialize);
+			//google.maps.event.addDomListener(window, 'load', initialize);
 			
 		";
 
+		$documentReady = "
+		jImc(document).ready(function() {
+			initialize();
+		});
+		";
+		
 		//add the javascript to the head of the html document
-		$document->addScriptDeclaration($googleMapInit);
-	
+		$document->addScriptDeclaration($googleMap);
+		$document->addScriptDeclaration($documentReady);
+			
 		$f = "
 		Joomla.submitbutton = function(task) {
 			if (task == 'issue.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {

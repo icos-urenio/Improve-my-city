@@ -182,7 +182,7 @@ class ImprovemycityViewIssue extends JView
 		$LAT = $this->lat;
 		$LON = $this->lon;
 
-		$googleMapInit = "
+		$googleMap = "
 			var geocoder = new google.maps.Geocoder();
 			var map = null;
 			var gmarkers = [];
@@ -278,12 +278,19 @@ class ImprovemycityViewIssue extends JView
 			}
 
 			// Onload handler to fire off the app.
-			google.maps.event.addDomListener(window, 'load', initialize);
+			//google.maps.event.addDomListener(window, 'load', initialize);
 			
 		";
 
+		$documentReady = "
+		jImc(document).ready(function() {
+			initialize();
+		});
+		";
+		
 		//add the javascript to the head of the html document
-		$document->addScriptDeclaration($googleMapInit);
+		$document->addScriptDeclaration($googleMap);
+		$document->addScriptDeclaration($documentReady);
 		
 		//also pass base so as to display comment image indicator
 		$js = "var com_improvemycity = {};\n";

@@ -293,6 +293,7 @@ class ImprovemycityViewIssues extends JView
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/improvemycity.js');	
 	
 		//add google maps
+		//$document->addScript("https://maps.google.com/maps/api/js?sensor=false&language=". $this->language ."&region=". $this->region);
 		$document->addScript("https://maps.google.com/maps/api/js?sensor=false&language=". $this->language ."&region=". $this->region);
 		$document->addScript(JURI::root(true).'/components/com_improvemycity/js/infobox_packed.js');		
 
@@ -305,9 +306,9 @@ class ImprovemycityViewIssues extends JView
 		$this->createCustomMarkers($this->categories);
 		$this->customMarkers = substr($this->customMarkers, 0, -2);	//remove /n and comma
 		
-		$googleMapInit = "
+		$googleMap = "
 			var geocoder = new google.maps.Geocoder();
-			var map = null;
+			var map;
 			var gmarkers = [];
 			
 			function zoomIn() {
@@ -328,13 +329,16 @@ class ImprovemycityViewIssues extends JView
 			var bounds = new google.maps.LatLngBounds();			
 			var infoWindow = null;
 			var infoBox = null;
+			  		
 
+        		
 			function initialize() {
 				var LAT = ".$LAT.";
 				var LON = ".$LON.";
 
 				var latLng = new google.maps.LatLng(LAT, LON);
 				map = new google.maps.Map(document.getElementById('mapCanvas'), {
+				
 				zoom: ".$this->zoom.",
 				center: latLng,
 				panControl: false,
@@ -544,79 +548,84 @@ class ImprovemycityViewIssues extends JView
 			}			
 			
 			// Onload handler to fire off the app.
-			google.maps.event.addDomListener(window, 'load', initialize);
+			//google.maps.event.addDomListener(window, 'load', initialize);
+														
 		";
 
 		
-		$megamenu_js = "
+		$documentReady = "
 		
 		jImc(document).ready(function() {
-		jImc(\".imc-issue-item\").mouseenter(function(event)
-		{
-		jImc(this).addClass(\"imc-highlight\");
-		markerhover(jImc(this).attr('id').substring(8));
-		});
-		
-		jImc(\".imc-issue-item\").mouseleave(function(event)
-		{
-		jImc(this).removeClass(\"imc-highlight\");
-		markerout(jImc(this).attr('id').substring(8));
-		});
-		
-		jImc(document).click(function(e) {
-		if( jImc('#drop-1').is('.hover')) { jImc('#drop-1').removeClass('hover');	}
-		if( jImc('#drop-2').is('.hover')) { jImc('#drop-2').removeClass('hover');	}
-		if( jImc('#drop-3').is('.hover')) { jImc('#drop-3').removeClass('hover');	}
-		});
+					
+			initialize();
+					
+			jImc(\".imc-issue-item\").mouseenter(function(event)
+			{
+			jImc(this).addClass(\"imc-highlight\");
+			markerhover(jImc(this).attr('id').substring(8));
+			});
 			
-		jImc('#btn-1').click(function(event)
-		{
-		if( jImc('#drop-2').is('.hover')) { jImc('#btn-2').click(); }
-		if( jImc('#drop-3').is('.hover')) { jImc('#btn-3').click(); }
-		
-		if( jImc('#drop-1').is('.hover')) {
-			jImc('#drop-1').removeClass('hover');
-		}
-		else{
-			jImc('#drop-1').addClass('hover');
-		}
-		event.stopPropagation();
-		});
+			jImc(\".imc-issue-item\").mouseleave(function(event)
+			{
+			jImc(this).removeClass(\"imc-highlight\");
+			markerout(jImc(this).attr('id').substring(8));
+			});
 			
-		jImc('#btn-2').click(function(event)
-		{
-		if( jImc('#drop-1').is('.hover')) { jImc('#btn-1').click(); }
-		if( jImc('#drop-3').is('.hover')) { jImc('#btn-3').click(); }
+			jImc(document).click(function(e) {
+			if( jImc('#drop-1').is('.hover')) { jImc('#drop-1').removeClass('hover');	}
+			if( jImc('#drop-2').is('.hover')) { jImc('#drop-2').removeClass('hover');	}
+			if( jImc('#drop-3').is('.hover')) { jImc('#drop-3').removeClass('hover');	}
+			});
+				
+			jImc('#btn-1').click(function(event)
+			{
+			if( jImc('#drop-2').is('.hover')) { jImc('#btn-2').click(); }
+			if( jImc('#drop-3').is('.hover')) { jImc('#btn-3').click(); }
 			
-		if( jImc('#drop-2').is('.hover')) {
-			jImc('#drop-2').removeClass('hover');
-		}
-		else{
-			jImc('#drop-2').addClass('hover');
-		}
-		event.stopPropagation();
-		});
-		jImc('#btn-3').click(function(event)
-		{
-		if( jImc('#drop-1').is('.hover')) { jImc('#btn-1').click(); }
-		if( jImc('#drop-2').is('.hover')) { jImc('#btn-2').click(); }
-			
-		if( jImc('#drop-3').is('.hover')) {
-			jImc('#drop-3').removeClass('hover');
-		}
-		else{
-			jImc('#drop-3').addClass('hover');
-		}
-		event.stopPropagation();
-		});
-			
-		jImc('.megadrop').click(function(event) { event.stopPropagation();	});
+			if( jImc('#drop-1').is('.hover')) {
+				jImc('#drop-1').removeClass('hover');
+			}
+			else{
+				jImc('#drop-1').addClass('hover');
+			}
+			event.stopPropagation();
+			});
+				
+			jImc('#btn-2').click(function(event)
+			{
+			if( jImc('#drop-1').is('.hover')) { jImc('#btn-1').click(); }
+			if( jImc('#drop-3').is('.hover')) { jImc('#btn-3').click(); }
+				
+			if( jImc('#drop-2').is('.hover')) {
+				jImc('#drop-2').removeClass('hover');
+			}
+			else{
+				jImc('#drop-2').addClass('hover');
+			}
+			event.stopPropagation();
+			});
+			jImc('#btn-3').click(function(event)
+			{
+			if( jImc('#drop-1').is('.hover')) { jImc('#btn-1').click(); }
+			if( jImc('#drop-2').is('.hover')) { jImc('#btn-2').click(); }
+				
+			if( jImc('#drop-3').is('.hover')) {
+				jImc('#drop-3').removeClass('hover');
+			}
+			else{
+				jImc('#drop-3').addClass('hover');
+			}
+			event.stopPropagation();
+			});
+				
+			jImc('.megadrop').click(function(event) { event.stopPropagation();	});
 			
 		});
 		";
 		
-		//add the javascript to the head of the html document
-		$document->addScriptDeclaration($googleMapInit);
-		$document->addScriptDeclaration($megamenu_js);
+		
+		$document->addScriptDeclaration($googleMap);
+		$document->addScriptDeclaration($documentReady);
+		
 	}
 }
