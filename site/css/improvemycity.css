@@ -15,12 +15,14 @@
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F4F4F4), to(#dfdedf));
 	margin: 1px 1px 10px 1px; 
 	padding: 10px 0;
+	display: inline-block;
+	width: 100%;
 }
 #imc-menu {vertical-align: middle; padding: 0 10px;}
 #imc-menu form{margin: 0;}
 #imc-menu .btn-group  {display:inline-block;/* float:left; */}
-#imc-menu {vertical-align: middle; line-height: 22px; height: 28px;}
-#imc-menu.issueslist {line-height: 40px; height: 40px;}
+#imc-menu {vertical-align: middle;}
+
 #imc-menu h2.imc-title {
 	font-family: 'Open Sans Condensed', sans-serif; color: #790101; 
 	display: inline; padding:0; margin: 0;
@@ -40,34 +42,19 @@
  
 /* Layout*/
 #imc-content{padding: 5px 15px 15px 15px; overflow: hidden;}
-	/* 60 list - 40 map */
-#imc-main-panel{
-	float:left;
-	width: 60%;
-	clear: both;
-}
-#imc-details-sidebar{
-	float:left; 
-	width: 40%; 
-}
-#imc-main-panel-fifty{float:left;	width: 50%;	clear: both;}
-#imc-details-sidebar-fifty{float:left;width: 50%; }
 
+.header-button {float: right;}
 
 
 /* map */
 #markerInfo img{padding: 2px; margin: 1px; border: none;}
-#imc-details-sidebar-fifty #mapCanvas{
+#mapCanvas{
 	width: 100%; 
 	height: 450px;
 	margin: 0 auto;
 }
-#imc-details-sidebar #mapCanvas{
-	width: 100%; 
-	height: 300px;
-	margin: 0 auto;
-}
-#imc-main-panel #mapCanvasNew{
+
+#mapCanvasNew{
 	width: 100%; 
 	height: 500px;
 	margin: 0 auto;
@@ -75,14 +62,10 @@
 #mapCanvasNew img{max-width: inherit;}
 
 
-
-/* sidebar */
-#imc-details-sidebar{min-height: 600px;} /* to display mega menu correctly if filters return no results*/
-
-
 /* issues list */
 .imc-issue-item{
-	margin: 0 15px 10px 0;
+	
+	margin: 0 0 10px 0;
 	padding: 5px;
 	border: solid 1px #ccc;
 	clear: both;
@@ -250,4 +233,24 @@ h2.imc-issue-title a:hover{color: #790101;}
 }
 
 
-#content-main{padding: 0px;}
+/* ==========================
+   Media Queries - max-width: 767px
+   ========================== */
+@media(max-width:767px) {
+	
+	.header-button {display: inline-block; text-align: center; width: 100%; padding-top: 5px;margin: 0 auto;}
+  	#mega-menu {text-align: center;margin: 0 auto;}
+  	#mega-menu li {float: none; margin-right: 0;}
+	
+  	
+} /* End of layout 480px - 767px */
+
+/* ===========================
+   Media Queries - max-width: 480px
+   =========================== */
+@media(max-width:480px) {
+	.imc-wrapper {padding: 0px;}
+} /* End of layout 480px - 767px */
+
+
+

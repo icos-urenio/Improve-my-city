@@ -30,7 +30,9 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	</h1>
 	<?php endif; ?>	
 
-	<div id="imc-header">
+	<div class="row-fluid">
+	  <div class="span12">
+	  <div id="imc-header">
 		<div id="imc-menu" class="issueslist">
 			<!-- Filters -->
 			<form action="<?php echo htmlspecialchars(JFactory::getURI()->toString()); ?>" method="post" name="adminForm" id="adminForm">
@@ -92,23 +94,24 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 								</ul>						
 							</div>
 						</div>
-					</li>					
+					</li>
 				</ul>
 			</form>	
-	
-			<!-- New Issue -->
-			<div class="btn-group imc-right">
-				<a class="btn btn-large btn-primary" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&task=addIssue');?>"><i class="icon-plus icon-white"></i> <?php echo JText::_('REPORT_AN_ISSUE');?></a>
+			<div class="header-button">
+				<a class="btn btn-large btn-primary rr" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&task=addIssue');?>"><i class="icon-plus icon-white"></i> <?php echo JText::_('REPORT_AN_ISSUE');?></a>
 			</div>
-				
 			
 		</div>
+	  </div>	
+	  </div>
 	</div>
 	
 	<div id="loading"><img src="<?php echo JURI::base().'components/com_improvemycity/images/ajax-loader.gif';?>" /></div>
 	
-	<div id="imc-content">
-		<div id="imc-main-panel-fifty">
+	<div class="row-fluid">
+	
+		<div class="span6">
+		<div class="imc-wrapper">
 			<?php if(empty($this->items)) : ?>
 				<div class="alert alert-error width75">
 				<?php echo JText::_('COM_IMPROVEMYCITY_FILTER_REVISION'); ?>
@@ -178,14 +181,17 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			<div id="system">
 			<?php echo $this->pagination->getPagesLinks(); ?>
 			</div>
-			
+		</div>	
 		</div>
-		<div id="imc-details-sidebar-fifty">
+		<div class="span6">
+			<div class="imc-wrapper">
 			<div id="mapCanvas"><?php echo JText::_('COM_IMPROVEMYCITY');?></div>
 			<?php if($this->credits == 1) : ?>
 				<div style="margin-top: 30px;" class="alert alert-info"><?php echo JText::_('COM_IMPROVEMYCITY_INFOALERT');?></div>
 			<?php endif; ?>
+			</div>
 		</div>	
+	
 	</div>
 </div>
 
