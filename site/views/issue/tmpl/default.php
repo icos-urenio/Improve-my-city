@@ -27,34 +27,36 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 	</h1>
 	<?php endif; ?>
 	
+	<div class="row-fluid">
+	<div class="span12">	
 	<div id="imc-header">
 		<div id="imc-menu">
 			<!-- bootstrap buttons -->	
 			
 			<!-- Return to issues -->
-			<div class="btn-group imc-left">
-				<a class="btn" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity');?>"><i class="icon-arrow-left"></i> <?php echo JText::_('RETURN_TO_ISSUES');?></a>
+			<div class="hr-button">
+				<a class="btn imc-left" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity');?>"><i class="icon-arrow-left"></i> <?php echo JText::_('RETURN_TO_ISSUES');?></a>
 			</div>
 			
 			<!-- New Issue -->
-			<div class="btn-group imc-right">
-				<a class="btn btn-primary" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue');?>"><i class="icon-plus icon-white"></i> <?php echo JText::_('REPORT_AN_ISSUE');?></a>
+			<div class="hr-button">
+				<a class="btn btn-primary imc-right" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&controller=improvemycity&task=addIssue');?>"><i class="icon-plus icon-white"></i> <?php echo JText::_('REPORT_AN_ISSUE');?></a>
 			</div>
 
 			<!-- Vote +1 -->
-			<div class="btn-group imc-right">
+			<div class="hr-button">
 				<?php if($this->item->currentstatus != 3 || $this->allowVotingOnClose == 1) : ?>
 					<?php if(!$this->guest) : ?>
 						<?php if(!$this->hasVoted) :?>
-							<a class="btn btn-success" href="javascript:vote(<?php echo $this->item->id; ?>, '<?php echo JUtility::getToken(); ?>');"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
+							<a class="btn btn-success imc-right" href="javascript:vote(<?php echo $this->item->id; ?>, '<?php echo JUtility::getToken(); ?>');"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
 						<?php else : //already voted ?>
-							<button class="btn btn-success disabled" disabled="disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('ALREADY_VOTED');?></button>
+							<a href="" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('ALREADY_VOTED');?></a>
 						<?php endif; ?>
 					<?php else : //not logged?>
-						<button class="btn btn-success disabled" disabled="disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></button>
+						<a href="" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
 					<?php endif; ?>
 				<?php else : ?>
-					<button class="btn btn-success disabled" disabled="disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></button>
+					<a href="" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
 				<?php endif;?>
 			</div>	
 			
@@ -70,15 +72,18 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 				echo JHtml::_('link', $url, 'moo', $attribs);
 				*/
 			?>
-			<a class="btn modalwin btn-success imc-right" rel="{size: {x: 700, y: 500}, handler:'iframe'}" href="<?php echo $url;?>"><i class="icon-print icon-white"></i> <?php echo JText::_('JGLOBAL_PRINT');?></a>
-			
+			<div class="hr-button">
+				<a class="btn modalwin btn-success imc-right" rel="{size: {x: 700, y: 500}, handler:'iframe'}" href="<?php echo $url;?>"><i class="icon-print icon-white"></i> <?php echo JText::_('JGLOBAL_PRINT');?></a>
+			</div>
 		</div>
+	</div>
+	</div>
 	</div>
 	
 	<div id="loading"><img src="<?php echo JURI::base().'components/com_improvemycity/images/ajax-loader.gif';?>" /></div>		
 		
-	<div id="imc-content">	
-		<div id="imc-main-panel">
+	<div class="row-fluid">
+		<div class="span6">
 			<div id="imc-issue-item-details">
 				<?php 
 					$status = '';
@@ -188,7 +193,7 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 				
 			</div>
 		</div>
-		<div id="imc-details-sidebar">			
+		<div class="span6">			
 			<?php if($this->item->currentstatus != 3 || $this->allowVotingOnClose == 1) : ?>
 				<?php if($this->guest) :?>
 					<div class="alert alert-error">

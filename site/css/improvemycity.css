@@ -147,7 +147,8 @@ h2.imc-issue-title a:hover{color: #790101;}
 
 /* Issue details */
 #imc-issue-item-details{
-	margin: 0 15px 10px 0;
+	
+	margin: 0 0 10px 0;
 	padding: 5px;
 	border: solid 1px #ccc;
 	clear: both;
@@ -232,7 +233,7 @@ h2.imc-issue-title a:hover{color: #790101;}
 	border-radius: 4px 4px 4px 4px;
 }
 
-
+.hr-button .imc-right {margin-right: 5px;}
 /* ==========================
    Media Queries - max-width: 767px
    ========================== */
@@ -241,7 +242,8 @@ h2.imc-issue-title a:hover{color: #790101;}
 	.header-button {display: inline-block; text-align: center; width: 100%; padding-top: 5px;margin: 0 auto;}
   	#mega-menu {text-align: center;margin: 0 auto;}
   	#mega-menu li {float: none; margin-right: 0;}
-	
+  	.imc-left, .imc-right, .hr-button {float: none;display: block; padding-top: 5px;}
+	.hr-button .imc-right {margin-right: 0px;}	
   	
 } /* End of layout 480px - 767px */
 
