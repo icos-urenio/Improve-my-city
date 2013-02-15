@@ -198,8 +198,11 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 				<?php if($this->guest) :?>
 					<div class="alert alert-error">
 					<?php echo JText::_('ONLY_LOGGED_VOTE');?>
+					<?php echo JText::_('PLEASE_LOG');?>
+					<?php /* UNCOMMENT IF YOU WANT login link 
 					<?php $return = base64_encode(ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity&view=issue&issue_id='.$this->item->id)); ?>
 					<a class="modalwin strong-link" rel="{size: {x: 320, y: 350}}" href="index.php?option=com_users&view=login&tmpl=component&return=<?php echo $return; ?>"><span class="strong-link"><?php echo JText::_('PLEASE_LOG');?></span></a>
+					*/?>
 					</div>
 				<?php endif; ?>
 			<?php else : ?>

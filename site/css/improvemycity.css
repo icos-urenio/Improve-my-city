@@ -212,15 +212,18 @@ h2.imc-issue-title a:hover{color: #790101;}
 
 
 /* Issue New */
-#imc-new-issue{margin: 0px 0 0 10px; padding: 0; }
-#imc-new-issue #adminForm label{display: block;}
-#imc-new-issue #adminForm .inputbox{	width: 100%; margin: 0; }
-#imc-new-issue #adminForm #jform_catid {width: 100%;}
-#imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 300px; min-width: 100%; width: 100%;}
-#imc-new-issue #adminForm select, #adminForm input, #adminForm  textarea{color: #45484C;}
-#imc-new-issue #adminForm fieldset{margin: 0; padding: 0 10px;}
+#imc-new-issue{margin: 0; padding: 10px 0; }
 
-#imc-lock-wrapper{width: 352px;height: 450px; position: relative;}
+
+#imc-new-issue #adminForm label{display: block;}
+#imc-new-issue #adminForm input.inputbox{ display: block; width: 100%;}
+#imc-new-issue #adminForm #jform_catid {width: 100%; display: block;}
+/*#imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 300px; min-width: 100%; width: 100%;}*/
+#imc-new-issue #adminForm select, #adminForm input, #adminForm  textarea{color: #45484C;}
+/*#imc-new-issue #adminForm fieldset{margin: 0; padding: 0 10px;}*/
+
+
+#imc-lock-wrapper{width: auto;height: auto; position: relative;}
 #imc-form-wrapper{z-index: 0; }
 #imc-lock {
 	z-index: 1;

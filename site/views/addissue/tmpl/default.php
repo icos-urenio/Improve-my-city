@@ -42,11 +42,11 @@ if($this->popupmodal == 1)
 		
 		</div>
 	</div>	
-	<div id="imc-content">
-		<div id="imc-main-panel">
+	<div class="row-fluid">
+		<div class="span6">
 			<div id="mapCanvasNew"><?php echo JText::_('COM_IMPROVEMYCITY');?></div>
 		</div>
-		<div id="imc-details-sidebar">
+		<div class="span6">
 			<div id="imc-new-issue">
 			
 				<?php if($this->guest) :?>			
