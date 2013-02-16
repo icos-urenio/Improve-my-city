@@ -153,8 +153,10 @@ class ImprovemycityViewIssue extends JView
 		$document->setTitle($this->item->title);
 		$document->setDescription(mb_substr($this->item->description, 0, 130, 'utf-8') . '...');
 		
-		if($this->loadbootstrapcss == 1)
-			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');			
+		if($this->loadbootstrapcss == 1){
+			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');
+			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap-responsive.min.css');
+		}		
 		
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/improvemycity.css');	
 

@@ -275,8 +275,10 @@ class ImprovemycityViewIssues extends JView
 	{
 		$document = JFactory::getDocument();
 		
-		if($this->loadbootstrapcss == 1)
-			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');	
+		if($this->loadbootstrapcss == 1){
+			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');
+			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap-responsive.min.css');
+		}	
 		
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/mega-menu.css');	
 		$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/css/improvemycity.css');	
@@ -284,9 +286,10 @@ class ImprovemycityViewIssues extends JView
 		//add scripts
 		if($this->loadjquery == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
-			//jquery noConflict
-			$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );
 		}
+		//jquery noConflict
+		$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );
+				
 		if($this->loadbootstrap == 1)
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/bootstrap/js/bootstrap.min.js');
 
