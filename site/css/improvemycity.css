@@ -262,7 +262,7 @@ fieldset {margin-right: 20px;}
 @media(max-width:480px) {
 	.imc-wrapper {padding: 0px;}
 	
-} /* End of layout 480px - 767px */
+}
 
 @media(max-width:320px) {
 	#imc-new-issue #adminForm #jform_catid {width: 185px; }
