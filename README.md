@@ -22,23 +22,28 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ## Changelog
 
-### Version 2.0
-* Contains many additions and bug fixes based on end-users comments and testing phase feedback
+### Version 2.5.4
+* Major update to support adaptive layout using Bootstrap's row-fluid
+* Problem loading map on latest Chrome version is fixed 
+* New field to keep track of how issues are inserted (normal/json)
 
-### Version 2.1 
-* Fixes some ACL features
+### Version 2.5.3
+* REST secure user registration following com_users guidelines completed
+* Ready for SSL
+* Trash / empty trash issues on administrator is fixed
+* Various bootstrap issues fixed
+* jQuery and popup modal conflict issues fixed
+* Ordering issue occuring in some templates is fixed
 
-### Version 2.2 
-* Introduces comments administration and suggestions and bug fixes based on JED and support group users. Also, new settings are added like: Show/Hide comments, Publish new issue on admin approval and more. Settings are now fully translated. Comment submit button is disabled during ajax call to avoid duplicate comments.
+### Version 2.5.2
+* Fixing upload photo server-path when adding new issue from mobile.json
+* Added getUserVotes() in mobile.json
 
-### Version 2.2.1 
-* Introduces automatic updates and also improves comments administration and fixes dropdown categories bug concerning unpublished items
-
-### Version 2.3 
-* Fixes the conflict between mootools/jquery which caused megamenu or/and google map not to work when certain templates are used.
-
-### Version 2.4.0 
-* Just a numbering convension to 3 level versioning
+### Version 2.5.1 security update
+* Security update concerning encryption/decryption. The method is now Android compatible
+* Secret key is now stored on DB instead of component's parameters
+* Administrator various fixes and submenus added
+* Updated mobile.json controller according to this [snippet](http://www.androidsnippets.com/encrypt-decrypt-between-android-and-php)
 
 ### Version 2.5.0 
 Brings complete support for mobile versions (Android, iOS, REST services) of ImproveMyCity, for third parties, by introducing a complete json wrapper. All gathered together through a common controller interface which administrators can activate/deactivate on demand.
@@ -56,13 +61,29 @@ Also v2.5.0 brings the following:
 - Remove login link on add new issue and add new comment
 - Mega-menu css enhancements
 - Fix administration approval issues (you can set on settings if you want to publish directly new issues or the administrator must first approve)
- 
-### Version 2.5.1 security update
-* Security update concerning encryption/decryption. The method is now Android compatible
-* Secret key is now stored on DB instead of component's parameters
-* Administrator various fixes and submenus added
-* Updated mobile.json controller according to this [snippet](http://www.androidsnippets.com/encrypt-decrypt-between-android-and-php)
 
-### Version 2.5.2
-* Fixing upload photo server-path when adding new issue from mobile.json
-* Added getUserVotes() in mobile.json
+### Version 2.4.0 
+* Just a numbering convension to 3 level versioning
+
+### Version 2.3 
+* Fixes the conflict between mootools/jquery which caused megamenu or/and google map not to work when certain templates are used.
+
+### Version 2.2.1 
+* Introduces automatic updates and also improves comments administration and fixes dropdown categories bug concerning unpublished items
+
+### Version 2.2 
+* Introduces comments administration and suggestions and bug fixes based on JED and support group users. Also, new settings are added like: Show/Hide comments, Publish new issue on admin approval and more. Settings are now fully translated. Comment submit button is disabled during ajax call to avoid duplicate comments.
+
+### Version 2.1 
+* Fixes some ACL features
+
+### Version 2.0
+* Contains many additions and bug fixes based on end-users comments and testing phase feedback
+
+
+
+
+
+
+ 
+
