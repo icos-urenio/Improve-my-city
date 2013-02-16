@@ -212,15 +212,15 @@ h2.imc-issue-title a:hover{color: #790101;}
 
 
 /* Issue New */
-#imc-new-issue{margin: 0; padding: 10px 0; }
+#imc-new-issue{margin: 0; padding: 0; }
 
 
 #imc-new-issue #adminForm label{display: block;}
 #imc-new-issue #adminForm input.inputbox{ display: block; width: 100%;}
 #imc-new-issue #adminForm #jform_catid {width: 100%; display: block;}
-/*#imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 300px; min-width: 100%; width: 100%;}*/
+#imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 300px; min-width: 100%; width: 100%;}
 #imc-new-issue #adminForm select, #adminForm input, #adminForm  textarea{color: #45484C;}
-/*#imc-new-issue #adminForm fieldset{margin: 0; padding: 0 10px;}*/
+
 
 
 #imc-lock-wrapper{width: auto;height: auto; position: relative;}
@@ -237,6 +237,7 @@ h2.imc-issue-title a:hover{color: #790101;}
 }
 
 .hr-button .imc-right {margin-right: 5px;}
+fieldset {margin-right: 20px;}
 /* ==========================
    Media Queries - max-width: 767px
    ========================== */
@@ -247,7 +248,12 @@ h2.imc-issue-title a:hover{color: #790101;}
   	#mega-menu li {float: none; margin-right: 0;}
   	.imc-left, .imc-right, .hr-button {float: none;display: block; padding-top: 5px;}
 	.hr-button .imc-right {margin-right: 0px;}	
-  	
+	#imc-menu h2.imc-title {text-align: center;display: block; height: auto; margin: 0 auto; float: none;}
+	#imc-new-issue{padding: 10px 0; }
+	fieldset {margin: 0 20px 0 3px;}
+	
+	
+	  	
 } /* End of layout 480px - 767px */
 
 /* ===========================
@@ -255,7 +261,13 @@ h2.imc-issue-title a:hover{color: #790101;}
    =========================== */
 @media(max-width:480px) {
 	.imc-wrapper {padding: 0px;}
+	
 } /* End of layout 480px - 767px */
 
-
+@media(max-width:320px) {
+	#imc-new-issue #adminForm #jform_catid {width: 185px; }
+	#imc-new-issue #adminForm input.inputbox{width: 185px; }
+	#imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 185px; min-width: 185px; width: 185px;}
+	#imc-new-issue #adminForm #jform_photo{width: 185px;}	
+} 
 

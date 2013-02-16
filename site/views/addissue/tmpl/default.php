@@ -29,18 +29,21 @@ if($this->popupmodal == 1)
 	<?php endif; ?>	
 	
 	<?php /* <h2 class="issue-title"><?php echo JText::_('NEW_ISSUE');?></h2> */ ?>
-	
+	<div class="row-fluid">
+	<div class="span12">
 	<div id="imc-header">
 		<div id="imc-menu">
 			<h2 class="imc-title"><?php echo JText::_('NEW_ISSUE');?></h2>
 			<!-- bootstrap buttons -->	
 			
 			<!-- Return to issues -->
-			<div class="btn-group imc-right">
-				<a class="btn" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity');?>"><i class="icon-arrow-left"></i> <?php echo JText::_('RETURN_TO_ISSUES');?></a>
+			<div class="hr-button">
+				<a class="btn imc-right" href="<?php echo ImprovemycityHelper::generateRouteLink('index.php?option=com_improvemycity');?>"><i class="icon-arrow-left"></i> <?php echo JText::_('RETURN_TO_ISSUES');?></a>
 			</div>
 		
 		</div>
+	</div>
+	</div>
 	</div>	
 	<div class="row-fluid">
 		<div class="span6">

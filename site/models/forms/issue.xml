@@ -7,7 +7,6 @@
 			type="text"
 			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_TITLE_LABEL"
 			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_TITLE_DESC"
-			size="46"
 			class="inputbox validate-title"
 			required="true"
 			default=""
@@ -33,7 +32,6 @@
 			type="text"
 			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_ADDRESS_LABEL"
 			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_ADDRESS_DESC"
-			size="50"
 			class="inputbox validate-address"
 			required="true"
 			default=""
@@ -45,7 +43,6 @@
 			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_ISSUEIMAGE_LABEL"
 			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_ISSUEIMAGE_DESC"
 			class="issueimage"
-			size="30"
 			required="false"
 			default=""
 		/>		
