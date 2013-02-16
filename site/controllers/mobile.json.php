@@ -238,6 +238,7 @@ class ImprovemycityControllerMobile extends JController
 		$data['address'] = $address;
 		$data['description'] = $description;
 		$data['userid'] = $userid;
+		$data['inserted_by'] = 1; //1 for mobile
 		
 		$s = $model->save($data);
 		echo json_encode($s); //0 or 1
