@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `#__improvemycity` (
   `state` tinyint(3) NOT NULL DEFAULT '1',
   `language` char(7) NOT NULL,
   `hits` int(10) NOT NULL,
+  `inserted_by` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT COLLATE=utf8_general_ci;
 
