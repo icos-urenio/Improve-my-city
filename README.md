@@ -22,6 +22,10 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ## Changelog
 
+### Version 2.5.5
+* Menu parameter HTML5 to select between the old classic layout and the new responsive based on bootstrap and html5
+* Include latest bootstrap
+
 ### Version 2.5.4
 * Major update to support adaptive layout using Bootstrap's row-fluid
 * Problem loading map on latest Chrome version is fixed 
