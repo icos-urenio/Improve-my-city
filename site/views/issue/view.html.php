@@ -116,6 +116,16 @@ class ImprovemycityViewIssue extends JView
 		$model = $this->getModel();
 		$model->hit();		
 		
+		
+		// get the menu parameters
+		$menuparams = $this->state->get("parameters.menu");
+		$html5 = $menuparams->get("html5");
+
+		//select if HTML5 or previous and load the appropriate template
+		if($html5 == 0)
+			$tpl = 'nohtml5';
+		else
+			$tpl = null;				
 		parent::display($tpl);
 		
 		// Set the document

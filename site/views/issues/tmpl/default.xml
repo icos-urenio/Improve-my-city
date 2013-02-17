@@ -3,5 +3,14 @@
 	<layout title="COM_IMPROVEMYCITY_IMPROVEMYCITY_VIEW_DEFAULT_TITLE">
 		<message>COM_IMPROVEMYCITY_IMPROVEMYCITY_VIEW_DEFAULT_DESC</message>
 	</layout>
+    <fields name="params">
+        <fieldset name="request">
+			<field name="html5" type="radio" default="1" label="HTML5 template?" description="Improve My City is installed on HTML5 based template?">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>	
+
+        </fieldset>
+    </fields>	
 </metadata>
 

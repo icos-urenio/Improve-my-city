@@ -1,0 +1,253 @@
+/**
+ * @version     2.5.x
+ * @package     com_improvemycity
+ * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
+ * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
+ * @author      Ioannis Tsampoulatidis for the URENIO Research Unit
+ */
+
+/* General  */
+#imc-wrapper {margin: 0;	padding: 0; overflow: hidden;}
+#imc-wrapper a {outline: 0;}  /* remove this line for accessibility issues */
+#imc-header {
+	background: #ececed;
+	background: -moz-linear-gradient(top, #ececed, #dfdedf);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F4F4F4), to(#dfdedf));
+	margin: 1px 1px 10px 1px; 
+	padding: 10px 0;
+}
+#imc-menu {vertical-align: middle; padding: 0 10px;}
+#imc-menu form{margin: 0;}
+#imc-menu .btn-group  {display:inline-block;/* float:left; */}
+#imc-menu {vertical-align: middle; line-height: 22px; height: 28px;}
+#imc-menu.issueslist {line-height: 40px; height: 40px;}
+#imc-menu h2.imc-title {
+	font-family: 'Open Sans Condensed', sans-serif; color: #790101; 
+	display: inline; padding:0; margin: 0;
+	line-height: 25px; height: 25px;
+	float: left;
+	font-size: 22px;
+}
+#imc-menu .btn-large {font-weight: bold; font-size: 16px;}
+
+#loading img{margin-left: 10px;	margin-bottom: 5px;}
+.imc-left{float: left;}
+.imc-right{float: right;}
+#imc-wrapper .strong{font-weight: bold; color: #790101;} 
+#imc-wrapper .strong-link{font-weight: bold; color: #790101;} 
+#imc-wrapper .strong-link :hover{font-weight: bold; color: red;} 
+#imc-wrapper .desc{color: #45484C;} 
+ 
+/* Layout*/
+#imc-content{padding: 5px 15px 15px 15px; overflow: hidden;}
+	/* 60 list - 40 map */
+#imc-main-panel{
+	float:left;
+	width: 60%;
+	clear: both;
+}
+#imc-details-sidebar{
+	float:left; 
+	width: 40%; 
+}
+#imc-main-panel-fifty{float:left;	width: 50%;	clear: both;}
+#imc-details-sidebar-fifty{float:left;width: 50%; }
+
+
+
+/* map */
+#markerInfo img{padding: 2px; margin: 1px; border: none;}
+#imc-details-sidebar-fifty #mapCanvas{
+	width: 100%; 
+	height: 450px;
+	margin: 0 auto;
+}
+#imc-details-sidebar #mapCanvas{
+	width: 100%; 
+	height: 300px;
+	margin: 0 auto;
+}
+#imc-main-panel #mapCanvasNew{
+	width: 100%; 
+	height: 500px;
+	margin: 0 auto;
+}
+#mapCanvasNew img{max-width: inherit;}
+
+
+
+/* sidebar */
+#imc-details-sidebar{min-height: 600px;} /* to display mega menu correctly if filters return no results*/
+
+
+/* issues list */
+.imc-issue-item{
+	margin: 0 15px 10px 0;
+	padding: 5px;
+	border: solid 1px #ccc;
+	clear: both;
+	overflow: hidden;
+	cursor: pointer;
+	z-index: 2;
+}
+.imc-issue-content{
+	float: left;
+	width: 83%;
+	clear: both;
+	z-index: 1;
+}
+.imc-issue-photo{
+	float: left;
+	width: 17%;
+}
+.imc-issue-photo img{float: right;}
+
+.imc-issue-votes{
+	float: left;
+	width: 60px;
+	height: 60px;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.imc-issue-votes span.title{
+	display: block; 
+	width: 100%; 
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.imc-issue-votes span.num{
+	width: 100%;
+	display: block; 
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 9px;
+}
+
+.imc-issue-review{
+	padding-left: 5px;
+	/* margin-left: 70px; */
+}
+.imc-issue-review h2{ font-size: 14px; margin: 0; padding: 0;color: #790101; line-height: 20px;}
+.imc-issue-review h2.imc-issue-tile {font-size: 14px; font-family: Arial, sans-serif;}
+.imc-issue-review h2 span.status-OPEN, .imc-issue-review h2 span.status-ACK, .imc-issue-review h2 span.status-CLOSED{
+	/* margin-left: 10px; */
+	font-weight: normal;
+}
+#imc-issue-item-details h2.imc-issue-title {
+	font-family: 'Open Sans Condensed', sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #790101;
+	line-height: 22px;
+	font-size: 20px;
+}
+h2.imc-issue-title a:hover{color: #790101;}
+
+
+#imc-issue-item-details h3{font-family: 'Open Sans Condensed', sans-serif;}
+
+.imc-issue-posted{
+	width: 90%;
+	color: #45484C;
+	font-size: 11px;
+}
+.status-OPEN{ color: green;}
+.status-ACK{ color: orange;}
+.status-CLOSED{ color: #1090B0;}
+.status-GRAY{ color: #ccc;}
+
+.imc-highlight{border-color: #790101;}
+
+
+/* Issue details */
+#imc-issue-item-details{
+	margin: 0 15px 10px 0;
+	padding: 5px;
+	border: solid 1px #ccc;
+	clear: both;
+}
+#imc-steps {	margin-bottom: 20px; font-weight: bold; border-bottom: 1px dashed #ccc; padding-bottom: 10px;}
+#imc-steps span{	margin-right: 10px;}
+#imc-steps img {position: relative; padding-right: 5px;}
+
+#imc-issue-general-info{
+	padding: 15px;
+	margin-bottom: 15px;
+	border-bottom: 1px dashed #ccc;
+}
+
+#imc-issue-description{padding: 10px 5px 30px 5px;}
+#imc-issue-description .img-wrp {float: left; width: 100%;}
+#imc-issue-description img {	
+	max-width:100%;
+	height:auto;
+	/* Give it some text styles to offset alt text */
+	font-style:italic;
+	color:#c00;
+}
+
+/* Issue comments */
+#imc-comments-wrapper{padding-bottom: 30px;}
+#imc-comments-wrapper .imc-chat{
+	margin: 5px 30px;
+	padding: 0;
+	background: url(../images/no-avatar.png) 0px 5px no-repeat;
+	min-height: 36px;
+	
+}
+#imc-comments-wrapper .imc-chat-info{
+	color: #790101;
+	font-size: 10px;
+	font-weight: bold;
+	display:block;
+	margin-left: 36px;
+}
+#imc-comments-wrapper .imc-chat-desc{
+	line-height: 15px;
+	display:block;
+	margin-left: 36px;
+}
+
+#imc-new-comment-wrapper{ 
+	padding: 5px 10px 0 5px;
+	overflow: hidden;
+}
+
+/* Issue votes */
+#imc-votes-wrapper{margin-top: 30px;}
+.imc-votes-desc{text-align: center;}
+.imc-votes-giant{
+	text-align: center; 
+	font-weight: bold; 
+	font-size: 52px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.125);
+}
+
+
+/* Issue New */
+#imc-new-issue{margin: 0px 0 0 10px; padding: 0; }
+#imc-new-issue #adminForm label{display: block;}
+#imc-new-issue #adminForm .inputbox{	width: 100%; margin: 0; }
+#imc-new-issue #adminForm #jform_catid {width: 100%;}
+#imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 300px; min-width: 100%; width: 100%;}
+#imc-new-issue #adminForm select, #adminForm input, #adminForm  textarea{color: #45484C;}
+#imc-new-issue #adminForm fieldset{margin: 0; padding: 0 10px;}
+
+#imc-lock-wrapper{width: 352px;height: 450px; position: relative;}
+#imc-form-wrapper{z-index: 0; }
+#imc-lock {
+	z-index: 1;
+	position: absolute;
+	left: 0;top: 0;	
+	background: url(../images/lock.png) no-repeat 50% 50% rgba(207, 207, 207, 0.80); 
+	width: 100%;
+	height: 100%;
+	border: 1px solid #cccccc;
+	border-radius: 4px 4px 4px 4px;
+}
+
+
+#content-main{padding: 0px;}
