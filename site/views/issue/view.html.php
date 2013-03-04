@@ -173,9 +173,9 @@ class ImprovemycityViewIssue extends JView
 		//add scripts
 		if($this->loadjquery == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-1.7.1.min.js');
-			//jquery noConflict
-			$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );
 		}
+		//jquery noConflict
+		$document->addScriptDeclaration( 'var jImc = jQuery.noConflict();' );		
 		
 		if($this->loadjqueryui == 1){
 			$document->addScript(JURI::root(true).'/components/com_improvemycity/js/jquery-ui-1.8.18.custom.min.js');
