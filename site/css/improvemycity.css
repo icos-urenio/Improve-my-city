@@ -220,7 +220,7 @@ h2.imc-issue-title a:hover{color: #790101;}
 #imc-new-issue #adminForm #jform_catid {width: 100%; display: block;}
 #imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 300px; min-width: 100%; width: 100%;}
 #imc-new-issue #adminForm select, #adminForm input, #adminForm  textarea{color: #45484C;}
-
+#adminForm input {margin-right: 5px; margin-bottom: 5px;}
 
 
 #imc-lock-wrapper{width: auto;height: auto; position: relative;}
