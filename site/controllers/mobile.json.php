@@ -4,7 +4,7 @@
  * @package     com_improvemycity
  * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
  * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
- * @author      Ioannis Tsampoulatidis for the URENIO Research Unit
+ * @author      Panagiotis Tsarchopoulos for the URENIO Research Unit
  * 
  * **** WARNING *****
  * DURING JSON REQUESTS, USERNAME AND PASSWORD ALTHOUGH TRANSMITTED ENCRYPTED, MIGHT BE STOLEN BY SNIFFERS AND USED AS IS. 
