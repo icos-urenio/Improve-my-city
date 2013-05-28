@@ -2,7 +2,7 @@
 /**
  * @version     2.5.x
  * @package     com_improvemycity
- * @copyright   Copyright (C) 2011 - 2012 URENIO Research Unit. All rights reserved.
+ * @copyright   Copyright (C) 2011 - 2013 URENIO Research Unit. All rights reserved.
  * @license     GNU Affero General Public License version 3 or later; see LICENSE.txt
  * @author      Panagiotis Tsarchopoulos for the URENIO Research Unit
  * 
