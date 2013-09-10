@@ -22,6 +22,9 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ## Changelog
 
+### Version 2.5.6
+* Problem adding new issue when IMC is set on Home menu is fixed
+
 ### Version 2.5.5
 * Menu parameter HTML5 to select between the old classic layout and the new responsive based on bootstrap and html5
 * Include latest bootstrap
