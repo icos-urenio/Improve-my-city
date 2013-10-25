@@ -189,6 +189,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			<?php if($this->credits == 1) : ?>
 				<div style="margin-top: 30px;" class="alert alert-info"><?php echo JText::_('COM_IMPROVEMYCITY_INFOALERT');?></div>
 			<?php endif; ?>
+				<div style="margin-top: 30px;"><?php echo htmlspecialchars_decode($this->banner);?></div>
 			</div>
 		</div>	
 	

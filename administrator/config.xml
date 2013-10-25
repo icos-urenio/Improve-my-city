@@ -142,7 +142,9 @@
 			<field name="credits" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_DESC">
 			  <option value="0">JNO</option>
 			  <option value="1">JYES</option>
-			</field>	
+			</field>
+			
+			<field name="banner" type="textarea" default="" filter="safehtml" label="Banner" description="" rows="10" cols="45" />				
 			<field name="version" label="Version" type="text" default="ImproveMyCity" readonly="true" />			
 	</fieldset>
 		
