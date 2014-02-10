@@ -425,4 +425,66 @@ class ImprovemycityControllerMobile extends JController
 		
 	}
 	
+	
+	//User registration using JUser WITHOUT email activation
+	public function registerSocialUser()
+	{
+		if(JComponentHelper::getParams('com_users')->get('allowUserRegistration') == 0) {
+			echo 'Registration is not allowed in this site';
+			return;
+		}
+	
+		$username = JRequest::getVar('username');
+		$name = JRequest::getVar('name');
+		$email = JRequest::getVar('email');
+		$encrypted_password = JRequest::getVar('password');
+	
+		if(empty($email) || empty($encrypted_password) || empty($name) || empty($username)){
+			echo 'Wrong input';
+			return;
+		}
+	
+		//password should be decrypted first and then stored by JUser
+		$code = "";
+		for ($i = 0; $i < strlen($encrypted_password); $i += 2) {
+			$code .= chr(hexdec(substr($encrypted_password, $i, 2)));
+		}
+		$iv = $this->key; //Initialization vector same as key
+		$key= $this->key;
+		$td = mcrypt_module_open('rijndael-128', '', 'cbc', $iv);
+		mcrypt_generic_init($td, $key, $iv);
+		$decrypted_password = mdecrypt_generic($td, $code);
+		mcrypt_generic_deinit($td);
+		mcrypt_module_close($td);
+		$decrypted_password = utf8_encode(trim(substr($decrypted_password,0,16)));
+	
+	
+		//check if username exists
+		$model = $this->getModel('users');
+	
+		if($model->userExists($username)){
+			//echo json_encode(JText::_('COM_USERS_USER_ALREADY_EXISTS'));
+			echo JText::_('COM_USERS_USER_ALREADY_EXISTS');
+			return;
+		}
+	
+		//create user with username = email, email = email, password = decrypted_password, name = name;
+		$temp = array('username' => $username, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
+		$return = $model->register($temp, true); //true means skip activation
+	
+		$ret = '';
+		if ($return === 'adminactivate'){
+			$ret = JText::_('COM_USERS_REGISTRATION_COMPLETE_VERIFY');
+		} elseif ($return === 'useractivate') {
+			$ret = JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE');
+		} else {
+			//$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
+			$ret = $return;
+		}
+	
+		echo $ret;
+		return;
+	
+	}	
+	
 }

@@ -100,7 +100,7 @@ class ImprovemycityModelUsers extends JModel
 	}
 
 	
-	public function register($temp)
+	public function register($temp, $skipActivation = false)
 	{
 
 		$config = JFactory::getConfig();
@@ -130,9 +130,14 @@ class ImprovemycityModelUsers extends JModel
 		$sendpassword = $params->get('sendpassword', 1);
 	
 		// Check if the user needs to activate their account.
-		if (($useractivation == 1) || ($useractivation == 2)) {
-			$data['activation'] = JApplication::getHash(JUserHelper::genRandomPassword());
-			$data['block'] = 1;
+		if ($skipActivation == true){
+			$data['block'] = 0;
+		}
+		else {
+			if (($useractivation == 1) || ($useractivation == 2)) {
+				$data['activation'] = JApplication::getHash(JUserHelper::genRandomPassword());
+				$data['block'] = 1;
+			}
 		}
 
 		// Bind the data.
