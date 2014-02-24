@@ -34,37 +34,45 @@ class ImprovemycityModelUsers extends JModel
 		$query->select('id, password');
 		$query->from('#__users');
 		$query->where('username=' . $db->Quote($username));
-		$query->where('block=0');
+		//$query->where('block=0');
 		
 		
 		$db->setQuery($query);
 		$result = $db->loadObject();
+		 
+		if ($result)
+		{
+			$match = JUserHelper::verifyPassword($password, $result->password, $result->id);
 		
-		if ($result) {
-			$parts	= explode(':', $result->password);
-			$crypt	= $parts[0];
-			$salt	= @$parts[1];
-			$testcrypt = JUserHelper::getCryptedPassword($password, $salt);
-		
-			if ($crypt == $testcrypt) {
+			if ($match === true)
+			{
 				$user = JUser::getInstance($result->id); // Bring this in line with the rest of the system
 				$response['id'] = $user->id;
 				$response['email'] = $user->email;
 				$response['fullname'] = $user->name;
-				if (JFactory::getApplication()->isAdmin()) {
+		
+				if (JFactory::getApplication()->isAdmin())
+				{
 					$response['language'] = $user->getParam('admin_language');
 				}
-				else {
+				else
+				{
 					$response['language'] = $user->getParam('language');
 				}
+				
 				$response['error_message'] = '';
-			} else {
+			}
+			else
+			{
 				$response['error_message'] = JText::_('JGLOBAL_AUTH_INVALID_PASS');
 			}
-		} else {
-			$response['error_message'] = JText::_('JGLOBAL_AUTH_NO_USER');
 		}
+		else
+		{
+			$response['error_message'] = JText::_('JGLOBAL_AUTH_NO_USER');
+		}		
 		return $response;
+		
 	}
 	
 	
