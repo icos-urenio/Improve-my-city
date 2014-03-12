@@ -241,7 +241,7 @@ class ImprovemycityControllerMobile extends JController
 		$data['inserted_by'] = 1; //1 for mobile
 		
 		$s = $model->save($data);
-		echo json_encode($s); //0 or 1
+		echo json_encode($s); //s contains the id of last inserted record
 		return;
 	}
 

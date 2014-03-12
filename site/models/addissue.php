@@ -371,7 +371,8 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		//notify admins and user
 		$this->notifyByEmail($table->id, $data);	
 		
-		return true;
+		return $table->id;
+		//return true;
 	}
 	
 	/* since 2.4.1 

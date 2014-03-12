@@ -78,7 +78,7 @@ abstract class ImprovemycityHelper
 		else
 		{
 			$years = floor($delta / $DAY / 365);
-			if(years < 100)	//TODO: needed for versions older than PHP5.3
+			if($years < 100)	//TODO: needed for versions older than PHP5.3
 				return $years <= 1 ? JText::_('ONE_YEAR_AGO') : sprintf(JText::_('YEARS_AGO'), $years);
 			else
 				return '';
