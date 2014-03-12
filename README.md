@@ -24,7 +24,6 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ### Version 2.5.7
 * Authentication compatibility according to PHPass as introduced in Joomla concerning the JSON controller
-* 
 
 ### Version 2.5.6
 * Problem adding new issue when IMC is set on Home menu is fixed
