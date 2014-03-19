@@ -9,7 +9,7 @@
 
 // No direct access
 defined('_JEXEC') or die;
-
+jimport( 'joomla.filesystem.file' );
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/models/issue.php';
 
 /**

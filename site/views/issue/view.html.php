@@ -163,6 +163,47 @@ class ImprovemycityViewIssue extends JView
 		$document->setTitle($this->item->title);
 		$document->setDescription(mb_substr($this->item->description, 0, 130, 'utf-8') . '...');
 		
+		//set social media tags
+		$socialTitle = htmlspecialchars($this->item->title);
+		$socialLargePhotoURL = JURI::base() . preg_replace('/thumbs\//', '', $this->item->photo, 1);
+		$socialPhotoURL = JURI::base() . $this->item->photo;
+		$socialIssueURL = JURI::current();
+		$socialDescription = htmlspecialchars($this->item->description);
+		
+		if($this->params->get('facebookactivated')){
+			$document->addCustomTag('<!-- Facebook related tags -->');
+			$fb_app_id = $this->params->get('fb_app_id');
+			$fb_app_ns = $this->params->get('fb_app_ns');
+			$document->addCustomTag('<meta property="fb:app_id" content="'.$fb_app_id.'">');
+			$document->addCustomTag('<meta property="og:title" content="'.$socialTitle.'">');
+			if($this->item->photo != ''){
+				$document->addCustomTag('<meta property="og:image" content="'.$socialPhotoURL.'">');
+			}
+			$document->addCustomTag('<meta property="og:url" content="'.$socialIssueURL.'">');
+			$document->addCustomTag('<meta property="og:type" content="'.$fb_app_ns.':issue">');
+			$document->addCustomTag('<meta property="og:description" content="'.$socialDescription.'">');
+		}
+		
+		if($this->params->get('twitteractivated')){
+			$document->addCustomTag('<!-- Twitter related tags -->');
+			if($this->item->photo != ''){
+				$document->addCustomTag('<meta name="twitter:card" content="'.$socialLargePhotoURL.'">');
+			}
+			$document->addCustomTag('<meta name="twitter:title" content="'.$socialTitle.'">');
+			$document->addCustomTag('<meta name="twitter:description" content="'.$socialDescription.'">');
+			$document->addCustomTag('<meta name="twitter:image:src" content="'.$socialPhotoURL.'">');
+		}
+		
+		if($this->params->get('googleplusactivated')){
+			$document->addCustomTag('<!-- Google+ related tags -->');
+			$document->addCustomTag('<meta itemprop="name" content="'.$socialTitle.'">');
+			$document->addCustomTag('<meta itemprop="description" content="'.$socialDescription.'">');
+			if($this->item->photo != ''){
+				$document->addCustomTag('<meta itemprop="image" content="'.$socialPhotoURL.'">');
+			}
+		}
+		
+		
 		if($this->loadbootstrapcss == 1){
 			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap.min.css');
 			$document->addStyleSheet(JURI::root(true).'/components/com_improvemycity/bootstrap/css/bootstrap-responsive.min.css');
