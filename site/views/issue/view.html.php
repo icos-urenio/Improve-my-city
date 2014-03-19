@@ -177,7 +177,7 @@ class ImprovemycityViewIssue extends JView
 			$document->addCustomTag('<meta property="fb:app_id" content="'.$fb_app_id.'">');
 			$document->addCustomTag('<meta property="og:title" content="'.$socialTitle.'">');
 			if($this->item->photo != ''){
-				$document->addCustomTag('<meta property="og:image" content="'.$socialPhotoURL.'">');
+				$document->addCustomTag('<meta property="og:image" content="'.$socialLargePhotoURL.'">');
 			}
 			$document->addCustomTag('<meta property="og:url" content="'.$socialIssueURL.'">');
 			$document->addCustomTag('<meta property="og:type" content="'.$fb_app_ns.':issue">');
@@ -187,11 +187,12 @@ class ImprovemycityViewIssue extends JView
 		if($this->params->get('twitteractivated')){
 			$document->addCustomTag('<!-- Twitter related tags -->');
 			if($this->item->photo != ''){
-				$document->addCustomTag('<meta name="twitter:card" content="'.$socialLargePhotoURL.'">');
+				$document->addCustomTag('<meta name="twitter:card" content="summary_large_image">');
+				$document->addCustomTag('<meta name="twitter:image:src" content="'.$socialLargePhotoURL.'">');
 			}
 			$document->addCustomTag('<meta name="twitter:title" content="'.$socialTitle.'">');
 			$document->addCustomTag('<meta name="twitter:description" content="'.$socialDescription.'">');
-			$document->addCustomTag('<meta name="twitter:image:src" content="'.$socialPhotoURL.'">');
+			
 		}
 		
 		if($this->params->get('googleplusactivated')){
