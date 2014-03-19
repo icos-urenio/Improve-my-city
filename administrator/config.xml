@@ -106,8 +106,43 @@
 			  <option value="0">JNO</option>
 			  <option value="1">JYES</option>
 			</field>					
+	</fieldset>
+		
+	<fieldset name="socialmedia"
+		label="COM_IMPROVEMYCITY_SETTINGS_SOCIAL_LABEL"
+		description="COM_IMPROVEMYCITY_SETTINGS_SOCIAL_DESC"
+	>
+			<field type="spacer" label="&lt;b&gt;Facebook&lt;/b&gt;" />
+			<field name="facebookactivated" type="radio" default="0" label="COM_IMPROVEMYCITY_SETTINGS_ACTIVATE_FACEBOOK_LABEL">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>
+			<field
+				name="fb_app_id"
+				type="text"
+				label="COM_IMPROVEMYCITY_SETTINGS_FB_APP_ID_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_FB_APP_ID_DESC"
+			/>			
+			<field
+				name="fb_app_ns"
+				type="text"
+				label="COM_IMPROVEMYCITY_SETTINGS_FB_APP_NS_LABEL"
+				description="COM_IMPROVEMYCITY_SETTINGS_FB_APP_NS_DESC"
+			/>			
+						
+			<field type="spacer" label="&lt;b&gt;Twitter&lt;/b&gt;" />
+			<field name="twitteractivated" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_ACTIVATE_TWITTER_LABEL">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>				
+			<field type="spacer" label="&lt;b&gt;Google+&lt;/b&gt;" />
+			<field name="googleplusactivated" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_ACTIVATE_GOOGLEPLUS_LABEL">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>				
+													
 	</fieldset>	
-
+	
 	<fieldset name="loadscripts"
 		label="COM_IMPROVEMYCITY_SETTINGS_ADVANCED_LABEL"
 		description="COM_IMPROVEMYCITY_SETTINGS_ADVANCED_DESC"
@@ -137,7 +172,7 @@
 			  <option value="1">JYES</option>
 			</field>		
 	</fieldset>
-	
+    	
 	<fieldset name="credits" label="COM_IMPROVEMYCITY_SETTINGS_CREDITS_LABEL">
 			<field name="credits" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_SHOW_CREDITS_DESC">
 			  <option value="0">JNO</option>
