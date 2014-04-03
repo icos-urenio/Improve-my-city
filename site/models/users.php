@@ -134,8 +134,11 @@ class ImprovemycityModelUsers extends JModel
 		// Prepare the data for the user object.
 		$data['email']		= $data['email1'];
 		$data['password']	= $data['password1'];
-		$useractivation = $params->get('useractivation');
-		$sendpassword = $params->get('sendpassword', 1);
+		
+                //skipActivation set true ONLY from registerSocialUser (mobile.json.php)
+                $userActivation = ($skipActivation ? 0 : $params->get('useractivation'));
+		
+                $sendpassword = $params->get('sendpassword', 1);
 	
 		// Check if the user needs to activate their account.
 		if ($skipActivation == true){
