@@ -164,8 +164,11 @@ class ImprovemycityModelUsers extends JModel
 		// Store the data.
 		if (!$user->save()) {
 			$this->setError(JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError()));
-			//return false;
-			return JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError());
+			
+                        if($skipActivation)
+                            return -1;
+                        else
+                            return JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError());
 		}
 	
 		// Compile the notification mail values.
