@@ -48,8 +48,7 @@ class ImprovemycityViewIssue extends JView
 		$this->params		= $app->getParams();
 		$this->print	= JRequest::getBool('print');
 		//remove || from title
-		$strip_title = $this->params->get('page_title');
-		$strip_title = str_replace('||', '', $strip_title);
+		$strip_title = str_replace('||', '', $this->params->get('page_title'));
 		$this->params->set('page_title', $strip_title);
 		
 		$this->pageclass_sfx = htmlspecialchars($this->params->get('pageclass_sfx'));
@@ -186,10 +185,14 @@ class ImprovemycityViewIssue extends JView
 		
 		if($this->params->get('twitteractivated')){
 			$document->addCustomTag('<!-- Twitter related tags -->');
+                        $document->addCustomTag('<meta name="twitter:card" content="summary_large_image">');
 			if($this->item->photo != ''){
-				$document->addCustomTag('<meta name="twitter:card" content="summary_large_image">');
-				$document->addCustomTag('<meta name="twitter:image:src" content="'.$socialLargePhotoURL.'">');
+                            $document->addCustomTag('<meta name="twitter:image:src" content="'.$socialLargePhotoURL.'">');
 			}
+                        else{
+                            $noPhotoURL = 'http://www.improve-my-city.com/ext/ios_demo_1024_logo.png';
+                            $document->addCustomTag('<meta name="twitter:image:src" content="'.$noPhotoURL.'">');
+                        }
 			$document->addCustomTag('<meta name="twitter:title" content="'.$socialTitle.'">');
 			$document->addCustomTag('<meta name="twitter:description" content="'.$socialDescription.'">');
 			
