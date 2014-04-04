@@ -163,6 +163,7 @@ class ImprovemycityViewIssue extends JView
 		$document->setDescription(mb_substr($this->item->description, 0, 130, 'utf-8') . '...');
 		
 		//set social media tags
+                $noPhotoURL = 'http://www.improve-my-city.com/ext/ios_demo_1024_logo.png';
 		$socialTitle = htmlspecialchars($this->item->title);
 		$socialLargePhotoURL = JURI::base() . preg_replace('/thumbs\//', '', $this->item->photo, 1);
 		$socialPhotoURL = JURI::base() . $this->item->photo;
@@ -170,14 +171,18 @@ class ImprovemycityViewIssue extends JView
 		$socialDescription = htmlspecialchars($this->item->description);
 		
 		if($this->params->get('facebookactivated')){
-			$document->addCustomTag('<!-- Facebook related tags -->');
+                        
+                        $document->addCustomTag('<!-- Facebook related tags -->');
 			$fb_app_id = $this->params->get('fb_app_id');
 			$fb_app_ns = $this->params->get('fb_app_ns');
 			$document->addCustomTag('<meta property="fb:app_id" content="'.$fb_app_id.'">');
 			$document->addCustomTag('<meta property="og:title" content="'.$socialTitle.'">');
 			if($this->item->photo != ''){
-				$document->addCustomTag('<meta property="og:image" content="'.$socialLargePhotoURL.'">');
+                            $document->addCustomTag('<meta property="og:image" content="'.$socialLargePhotoURL.'">');
 			}
+                        else{
+                            $document->addCustomTag('<meta property="og:image" content="'.$noPhotoURL.'">');
+                        }
 			$document->addCustomTag('<meta property="og:url" content="'.$socialIssueURL.'">');
 			$document->addCustomTag('<meta property="og:type" content="'.$fb_app_ns.':issue">');
 			$document->addCustomTag('<meta property="og:description" content="'.$socialDescription.'">');
@@ -187,12 +192,9 @@ class ImprovemycityViewIssue extends JView
 			$document->addCustomTag('<!-- Twitter related tags -->');
                         $document->addCustomTag('<meta name="twitter:card" content="summary_large_image">');
 			if($this->item->photo != ''){
+                            
                             $document->addCustomTag('<meta name="twitter:image:src" content="'.$socialLargePhotoURL.'">');
 			}
-                        else{
-                            $noPhotoURL = 'http://www.improve-my-city.com/ext/ios_demo_1024_logo.png';
-                            $document->addCustomTag('<meta name="twitter:image:src" content="'.$noPhotoURL.'">');
-                        }
 			$document->addCustomTag('<meta name="twitter:title" content="'.$socialTitle.'">');
 			$document->addCustomTag('<meta name="twitter:description" content="'.$socialDescription.'">');
 			

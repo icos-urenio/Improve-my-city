@@ -164,11 +164,8 @@ class ImprovemycityModelUsers extends JModel
 		// Store the data.
 		if (!$user->save()) {
 			$this->setError(JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError()));
-			
-                        if($skipActivation)
-                            return -1;
-                        else
-                            return JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError());
+			return $user->getError();
+                        //return JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError());
 		}
 	
 		// Compile the notification mail values.
@@ -270,9 +267,14 @@ class ImprovemycityModelUsers extends JModel
 			);
 		}
 	
-		// Send the registration email.
-		$return = JFactory::getMailer()->sendMail($data['mailfrom'], $data['fromname'], $data['email'], $emailSubject, $emailBody);
-	
+		// DO NOT Send registration email if called from registerSocial.
+                if ($skipActivation == true){
+                    return true;
+                }
+                else{
+                    // Send the registration email.
+                    $return = JFactory::getMailer()->sendMail($data['mailfrom'], $data['fromname'], $data['email'], $emailSubject, $emailBody);
+                }
 		//Send Notification mail to administrators
 		if (($params->get('useractivation') < 2) && ($params->get('mail_to_admin') == 1)) {
 			$emailSubject = JText::sprintf(
