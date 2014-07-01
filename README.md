@@ -22,6 +22,9 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ## Changelog
 
+### Version 2.5.8
+* Social tags introduced (mainly used by mobile apps)
+
 ### Version 2.5.7
 * Authentication compatibility according to PHPass as introduced in Joomla concerning the JSON controller
 
