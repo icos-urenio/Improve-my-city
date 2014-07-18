@@ -44,8 +44,10 @@ class ImprovemycityViewIssues extends JView
 	protected $showcomments;
 	protected $approveissue;
 	protected $loadjqueryui;
-	
-	public $f = '';	
+        protected $showallissues;
+
+
+        public $f = '';	
 	function display($tpl = null)
 	{
 		$app		= JFactory::getApplication();
@@ -88,6 +90,7 @@ class ImprovemycityViewIssues extends JView
 		$lon = $this->params->get('longitude');
 		$term = $this->params->get('searchterm');
 		$zoom = $this->params->get('zoom');
+                $this->showallissues = $this->params->get('showallissues');
 		$this->loadjquery = $this->params->get('loadjquery');
 		$this->loadbootstrap = $this->params->get('loadbootstrap');
 		$this->loadbootstrapcss = $this->params->get('loadbootstrapcss');
@@ -226,7 +229,10 @@ class ImprovemycityViewIssues extends JView
 	{
 		$selected = $this->state->get('list.limit');
 		$html = '';
-		$values = array (10, 20, 100, 0);
+		if($this->showallissues)
+                    $values = array (10, 20, 100, 0);
+                else
+                    $values = array (10, 20, 100);
 		foreach($values as $i){
 			$a = $i;
 			if($a == 0)

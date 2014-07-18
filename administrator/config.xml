@@ -74,7 +74,11 @@
 				label="COM_IMPROVEMYCITY_SETTINGS_DATE_FORMAT_LABEL"
 				description="COM_IMPROVEMYCITY_SETTINGS_DATE_FORMAT_DESC"
 				default="m/d/Y h:i:s"
-			/>			
+			/>	
+			<field name="showallissues" type="radio" default="1" label="COM_IMPROVEMYCITY_SETTINGS_SHOW_ALL_ISSUES_LABEL" description="COM_IMPROVEMYCITY_SETTINGS_SHOW_ALL_ISSUES_DESC">
+			  <option value="0">JNO</option>
+			  <option value="1">JYES</option>
+			</field>                        		
 				
 	</fieldset>
 
