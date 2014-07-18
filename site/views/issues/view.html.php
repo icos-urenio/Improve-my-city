@@ -253,6 +253,7 @@ class ImprovemycityViewIssues extends JView
             $return = array();
             foreach($cats as $JCatNode)
             {
+                $return[$i] = new stdClass();
                 $return[$i]->title = $JCatNode->title;
                 $return[$i]->id = $JCatNode->id;
 

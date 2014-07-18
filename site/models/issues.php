@@ -118,6 +118,7 @@ class ImprovemycityModelIssues extends JModelList
             $return = array();
             foreach($cats as $JCatNode)
             {
+                $return[$i] = new stdClass();
                 $return[$i]->title = $JCatNode->title;
                 $return[$i]->parentid = $JCatNode->parent_id;
                 $return[$i]->path = $JCatNode->get('path');
