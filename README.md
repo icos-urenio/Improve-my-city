@@ -22,9 +22,11 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ## Changelog
 
+### Version 2.5.9
+* Added pagination, filtering and search on report
+
 ### Version 2.5.8
 * Social tags introduced (mainly used by mobile apps)
-* Added pagination, filtering and search on report
 * Creating default object from empty value fix
 * Limit box show all issues added on settings
 
