@@ -31,8 +31,10 @@ class ImprovemycityModelReports extends JModelList
 				'id', 'a.id',
 				'description', 'a.description',      
 				'state', 'a.state',
-				'improvemycityid', 'a.improvemycityid'                
-            );
+				'improvemycityid', 'a.improvemycityid',
+				'catid', 'a.catid',
+                                'currentstatus', 'a.currentstatus'
+                );
         }
 
         parent::__construct($config);
@@ -53,15 +55,21 @@ class ImprovemycityModelReports extends JModelList
 		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-		$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
-		$this->setState('filter.state', $published);
+		//no need since query selects only of status=1
+                //$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
+		//$this->setState('filter.state', $published);
+                
+                $currentstatus = $app->getUserStateFromRequest($this->context.'.filter.currentstatus', 'filter_currentstatus');
+                $this->setState('filter.currentstatus', $currentstatus);
+                
+		$categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
+		$this->setState('filter.category_id', $categoryId);
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_improvemycity');
 		$this->setState('params', $params);
-
 		// List state information.
-		parent::populateState('a.id', 'asc');
+		parent::populateState('a.id', 'desc');
 	}
 
 	/**
@@ -79,8 +87,8 @@ class ImprovemycityModelReports extends JModelList
 	{
 		// Compile the store id.
 		$id.= ':' . $this->getState('filter.search');
-		$id.= ':' . $this->getState('filter.state');
-
+		$id.= ':' . $this->getState('filter.currentstatus');
+		$id.= ':'.$this->getState('filter.category_id');
 		return parent::getStoreId($id);
 	}
 
@@ -117,29 +125,29 @@ class ImprovemycityModelReports extends JModelList
 				$query->where('a.id = '.(int) substr($search, 3));
 			} else {
 				$search = $db->Quote('%'.$db->getEscaped($search, true).'%');
-                $query->where('(a.description LIKE '.$search.')');
+                $query->where('(a.description LIKE '.$search.' OR a.title LIKE '.$search.')');
 			}
 		}
 
-		$query->order('a.reported DESC');
-
-
+                
+		// Filter by category
+		$categoryId = $this->getState('filter.category_id');
+		if (is_numeric($categoryId)) {
+			$query->where('a.catid IN ('.$categoryId.')');
+		}
+		
+		// Filter by currentstatus
+		$currentstatus = $this->getState('filter.currentstatus');
+		if (is_numeric($currentstatus)) {
+			$query->where('a.currentstatus = '.$currentstatus);
+		}                
+                
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');
-		$orderDirn	= $this->state->get('list.direction');
-        if ($orderCol && $orderDirn) {
-		    $query->order($db->getEscaped($orderCol.' '.$orderDirn));
-        }
-		
-		
-		//Get all records
-		$this->setState('list.limit', 0);
-		$this->setState('list.start', 0);
-		
-		//$this->setState('list.ordering', 'a.ordering');
-		//$this->setState('list.direction', 'ASC');
-
-
+		$orderDirn	= $this->state->get('list.direction', 'desc');
+                if ($orderCol && $orderDirn) {
+                            $query->order($db->getEscaped($orderCol.' '.$orderDirn));
+                }
 
 		return $query;
 	}

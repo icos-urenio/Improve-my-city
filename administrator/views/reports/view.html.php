@@ -17,23 +17,26 @@ jimport('joomla.application.component.view');
  */
 class ImprovemycityViewReports extends JView
 {
-	protected $state;
 	protected $items;
+	protected $pagination;
+	protected $state;        
+        
+        
 	/**
 	 * Display the view
 	 */
 	public function display($tpl = null)
 	{
-		$this->state	= $this->get('State');
-		$this->items	= $this->get('Items');
+		$this->state = $this->get('State');
+		$this->items = $this->get('Items');
+		$this->pagination = $this->get('Pagination');                
 
-		$canDo		= ImprovemycityHelper::getActions();
+		$canDo = ImprovemycityHelper::getActions();
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
-
 
 		$this->addToolbar();
 		parent::display($tpl);
