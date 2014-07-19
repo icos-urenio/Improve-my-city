@@ -2,7 +2,7 @@
 
 ![Screenshots from the application](http://smartcityapps.urenio.org/img/screens_improve_en.png)
 
-ImproveMyCity is a Joomla 2.5.x compatible component to report, vote and track non-emergency issues. 
+ImproveMyCity is a Joomla 2.5.x extension to report, vote and track non-emergency issues. 
 
 The application enables citizens to report local problems such as potholes, illegal trash dumping, faulty street lights, broken tiles on sidewalks, and illegal advertising boards. The submitted issues are displayed on the city's map. Users may add photos and comments. Moreover, they can suggest solutions for improving the environment of their neighbourhood. 
 
