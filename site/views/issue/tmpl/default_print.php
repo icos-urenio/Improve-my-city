@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <div id="imc-wrapper">
 	<div id="imc-print-header"><a href="javascript:window.print()"><i class="icon-print"></i> <?php echo JText::_('COM_IMPROVEMYCITY_CLICK_TO_PRINT');?></a></div>
 	
-	<h1><?php echo JText::_('COM_IMPROVEMYCITY'); ?></h1>
+	<h1><?php echo 'ff'.JText::_('COM_IMPROVEMYCITY'); ?></h1>
 	<h2>#<?php echo $this->item->id . ' ' . $this->item->title;?></h2>
 	
 	<?php 
@@ -85,7 +85,7 @@ defined('_JEXEC') or die;
 			<h3><?php echo JText::_('COMMENTS'); ?></h3>
 			<?php foreach ($this->discussion as $item) : ?>
 				<div class="imc-chat">
-					<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->username; ?></span>
+					<span class="imc-chat-info"><?php echo JText::_('COMMENT_REPORTED') . ' ' . $item->progressdate_rel . ' ' .JText::_('BY') .' ' . $item->fullname; ?></span>
 					<span class="imc-chat-desc"><?php echo $item->description;?></span>
 				</div>
 			<?php endforeach;?>
