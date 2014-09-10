@@ -82,6 +82,8 @@ class ImprovemycityControllerMobile extends JController
 			unset($item->params);
 			if(!$showComments)
 				unset($item->discussion);
+                        
+                        //$item->description = strip_tags(htmlspecialchars($item->description));
 		}
 		//$document = &JFactory::getDocument();
 		//$document->setMimeEncoding('text/xml');		
@@ -164,6 +166,9 @@ class ImprovemycityControllerMobile extends JController
 		if(!$showComments)
 			unset($item->discussion);
 
+                //$item->description = strip_tags(htmlspecialchars($item->description));
+        
+        
 		echo json_encode($item);
 		return;
 	}	
@@ -416,8 +421,8 @@ class ImprovemycityControllerMobile extends JController
 		} elseif ($return === 'useractivate') {
 			$ret = JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE');
 		} else {
-			//$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
-			$ret = $return;
+			$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
+			//$ret = $return;
 		}		
 		
 		echo $ret;

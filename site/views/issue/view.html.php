@@ -168,7 +168,7 @@ class ImprovemycityViewIssue extends JView
 		$socialLargePhotoURL = JURI::base() . preg_replace('/thumbs\//', '', $this->item->photo, 1);
 		$socialPhotoURL = JURI::base() . $this->item->photo;
 		$socialIssueURL = JURI::current();
-		$socialDescription = htmlspecialchars($this->item->description);
+		$socialDescription = strip_tags(htmlspecialchars($this->item->description));
 		
 		if($this->params->get('facebookactivated')){
                         
