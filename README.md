@@ -22,6 +22,9 @@ ImproveMyCity's source code is licensed under the [GNU Affero General Public Lic
 
 ## Changelog
 
+### Version 2.6.0
+* Various fixes and improvements
+
 ### Version 2.5.9
 * Added pagination, filtering and search on report
 
