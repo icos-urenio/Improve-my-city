@@ -152,7 +152,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 									}
 								?>
 							</div>
-							<div><span class="label"><?php echo JText::_('VOTES');?>: <?php echo $item->votes;?></span></div>
+							<div><span class="label"><?php echo $item->votes;?> <?php echo JText::_('VOTES');?></span></div>
 						</div>
 					</div>
 					<?php if ($item->photo != '') : ?>

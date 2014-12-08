@@ -229,7 +229,7 @@ class ImprovemycityViewIssues extends JView
 	{
 		$selected = $this->state->get('list.limit');
 		$html = '';
-		if($this->state->get('params')->get('showallissues') == 1) 
+		if($this->showallissues)
                     $values = array (10, 20, 100, 0);
                 else
                     $values = array (10, 20, 100);

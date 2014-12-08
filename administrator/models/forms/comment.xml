@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form addrulepath="/administrator/components/com_improvemycity/models/rules">
+<form>
 	<fieldset name="details">
 		<field
 			name="id"
 			type="hidden"
 		/>
-		<field
-			name="userid"
-			type="text"
-			label="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_TITLE_LABEL"
-			description="COM_IMPROVEMYCITY_IMPROVEMYCITY_FIELD_TITLE_DESC"
-			size="46"
-			class="inputbox validate-title"
-			required="true"
-			default=""
-		/>
-	
+
+		<field name="improvemycityid" type="sql" class="inputbox" query="SELECT 0 AS `id`, '- Please select issue -' AS `val` UNION SELECT `id`, CONCAT(`title`,' (', `reported`,')') AS val FROM `#__improvemycity` WHERE `state`=1 ORDER BY `id`" key_field="id" value_field="val"/>
+
 		<field
 			name="description"
 			type="textarea"

@@ -25,6 +25,7 @@ class ImprovemycityViewIssue extends JView
 	protected $guest;
 	protected $voted;
 	protected $hasVoted;
+	protected $isMyIssue;
 	protected $language = '';
 	protected $region = '';
 	protected $lat = '';
@@ -94,6 +95,7 @@ class ImprovemycityViewIssue extends JView
 		/*note: I am using multiple models so I have to specify not only the method but the model as well - http://docs.joomla.org/Using_multiple_models_in_an_MVC_component */
 		//TODO: Check if it would be best to move these lines to the model instead of view (here)...
 		$this->item	= $this->get('Item');
+		$this->isMyIssue = $this->get('IsMyIssue');
 		$this->hasVoted = $this->get('HasVoted');
 		$this->assign('discussion', $this->get('Items', 'discussions'));		
 		
@@ -118,13 +120,15 @@ class ImprovemycityViewIssue extends JView
 		
 		// get the menu parameters
 		$menuparams = $this->state->get("parameters.menu");
-		$html5 = $menuparams->get("html5");
+		$tpl = null;				
+		
+		if($menuparams){
+			$html5 = $menuparams->get("html5");
+			//select if HTML5 or previous and load the appropriate template
+			if($html5 == 0)
+				$tpl = 'nohtml5';
+		}
 
-		//select if HTML5 or previous and load the appropriate template
-		if($html5 == 0)
-			$tpl = 'nohtml5';
-		else
-			$tpl = null;				
 		parent::display($tpl);
 		
 		// Set the document
@@ -168,7 +172,7 @@ class ImprovemycityViewIssue extends JView
 		$socialLargePhotoURL = JURI::base() . preg_replace('/thumbs\//', '', $this->item->photo, 1);
 		$socialPhotoURL = JURI::base() . $this->item->photo;
 		$socialIssueURL = JURI::current();
-		$socialDescription = strip_tags(htmlspecialchars($this->item->description));
+		$socialDescription = htmlspecialchars($this->item->description);
 		
 		if($this->params->get('facebookactivated')){
                         

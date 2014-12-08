@@ -201,3 +201,17 @@ ul#mega-menu li {
 	padding:4px 6px 4px 6px;
 	margin:0px 0px 4px 0px;
 }
+
+@media(max-width:1024px) {
+
+.dropdown_6columns {width: 620px;}
+.col_6 {width:610px;}
+	  	
+} 
+
+@media(max-width:900px) {
+
+.dropdown_6columns {width: 520px;}
+.col_6 {width:510px;}
+	  	
+} 

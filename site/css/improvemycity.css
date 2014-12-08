@@ -7,7 +7,7 @@
  */
 
 /* General  */
-#imc-wrapper {margin: 0;	padding: 0; overflow: hidden;}
+#imc-wrapper {margin: 0;	padding: 0; /*overflow: hidden;*/ min-height: 800px;}
 #imc-wrapper a {outline: 0;}  /* remove this line for accessibility issues */
 #imc-header {
 	background: #ececed;
@@ -116,7 +116,7 @@
 .imc-issue-review h2{ font-size: 14px; margin: 0; padding: 0;color: #790101; line-height: 20px;}
 .imc-issue-review h2.imc-issue-tile {font-size: 14px; font-family: Arial, sans-serif;}
 .imc-issue-review h2 span.status-OPEN, .imc-issue-review h2 span.status-ACK, .imc-issue-review h2 span.status-CLOSED{
-	/* margin-left: 10px; */
+	margin-left: 10px;
 	font-weight: normal;
 }
 #imc-issue-item-details h2.imc-issue-title {
@@ -238,10 +238,7 @@ h2.imc-issue-title a:hover{color: #790101;}
 
 .hr-button .imc-right {margin-right: 5px;}
 fieldset {margin-right: 20px;}
-/* ==========================
-   Media Queries - max-width: 767px
-   ========================== */
-@media(max-width:767px) {
+@media(max-width:1160px) {
 	
 	.header-button {display: inline-block; text-align: center; width: 100%; padding-top: 5px;margin: 0 auto;}
   	#mega-menu {text-align: center;margin: 0 auto;}
@@ -251,14 +248,8 @@ fieldset {margin-right: 20px;}
 	#imc-menu h2.imc-title {text-align: center;display: block; height: auto; margin: 0 auto; float: none;}
 	#imc-new-issue{padding: 10px 0; }
 	fieldset {margin: 0 20px 0 3px;}
-	
-	
 	  	
-} /* End of layout 480px - 767px */
-
-/* ===========================
-   Media Queries - max-width: 480px
-   =========================== */
+} 
 @media(max-width:480px) {
 	.imc-wrapper {padding: 0px;}
 	
@@ -270,4 +261,3 @@ fieldset {margin-right: 20px;}
 	#imc-new-issue #adminForm #jform_description{max-height: 200px; min-height: 65px; max-width: 185px; min-width: 185px; width: 185px;}
 	#imc-new-issue #adminForm #jform_photo{width: 185px;}	
 } 
-

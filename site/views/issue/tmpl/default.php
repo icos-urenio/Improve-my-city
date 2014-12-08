@@ -48,15 +48,19 @@ JText::script('COM_IMPROVEMYCITY_WRITE_COMMENT');
 				<?php if($this->item->currentstatus != 3 || $this->allowVotingOnClose == 1) : ?>
 					<?php if(!$this->guest) : ?>
 						<?php if(!$this->hasVoted) :?>
+							<?php if ($this->isMyIssue) : ?>
+							<a href="javascript:void(0);" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
+							<?php else : ?>	
 							<a class="btn btn-success imc-right" href="javascript:vote(<?php echo $this->item->id; ?>, '<?php echo JUtility::getToken(); ?>');"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
+							<?php endif; ?>							
 						<?php else : //already voted ?>
-							<a href="" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('ALREADY_VOTED');?></a>
+							<a href="javascript:void(0);" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('ALREADY_VOTED');?></a>
 						<?php endif; ?>
 					<?php else : //not logged?>
-						<a href="" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
+						<a href="javascript:void(0);" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
 					<?php endif; ?>
 				<?php else : ?>
-					<a href="" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
+					<a href="javascript:void(0);" class="btn btn-success imc-right disabled"><i class="icon-plus icon-white"></i> <?php echo JText::_('NEW_VOTE');?></a>
 				<?php endif;?>
 			</div>	
 			

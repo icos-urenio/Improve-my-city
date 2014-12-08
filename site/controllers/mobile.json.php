@@ -60,33 +60,83 @@ class ImprovemycityControllerMobile extends JController
 		$showComments = JRequest::getInt('showComments');
 		$limit = JRequest::getInt('limit');
 		//get boundaries
-		$x0up 	= JRequest::getFloat('x0up');		
-		$x0down	= JRequest::getFloat('x0down');
-		$y0up 	= JRequest::getFloat('y0up');
-		$y0down	= JRequest::getFloat('y0down');		
+		$x0up 	= JRequest::getFloat('x0up', 99999.0);		
+		$x0down	= JRequest::getFloat('x0down', 99999.0);
+		$y0up 	= JRequest::getFloat('y0up', 99999.0);
+		$y0down	= JRequest::getFloat('y0down', 99999.0);		
+		
 		
 		
 		//get model and items
 		$items = array();
-		if( !empty($x0up) && !empty($x0down) && !empty($y0up) && !empty($y0down)){
+		if( ($x0up != 99999.0) && ($x0down != 99999.0) && ($y0up != 99999.0) && ($y0down != 99999.0)){
 			$model = $this->getModel('issues');
 			$items	= $model->getItemsInBoundaries($x0up, $x0down, $y0up, $y0down, $limit);
+
+			//get timezone from Joomla settings	
+			$offset = JFactory::getConfig()->get('offset');	
+			//clean up and prepare for json
+
+			for($i = 0; $i < count($items); $i++){
+				error_reporting(E_ERROR | E_PARSE);
+				if($items[$i][10] != "0000-00-00 00:00:00"){
+					$date_reported = new DateTime($items[$i][10], new DateTimeZone($offset));
+					$date_reported->setTimezone(new DateTimeZone('UTC'));
+					$items[$i][10] = $date_reported->format('Y-m-d H:i:s');
+				}
+				
+				if($items[$i][11] != "0000-00-00 00:00:00"){
+					$date_acknowledged = new DateTime($items[$i][11], new DateTimeZone($offset));
+					$date_acknowledged->setTimezone(new DateTimeZone('UTC'));
+					$items[$i][11] = $date_acknowledged->format('Y-m-d H:i:s');
+				}
+
+				if($items[$i][12] != "0000-00-00 00:00:00"){
+					$date_closed = new DateTime($items[$i][12], new DateTimeZone($offset));
+					$date_closed->setTimezone(new DateTimeZone('UTC'));
+					$items[$i][12] = $date_closed->format('Y-m-d H:i:s');
+				}
+
+			}			
 		}
 		else {
 			$model = $this->getModel('issues');
 			$items	= $model->getItems();
-		}
+
+			//get timezone from Joomla settings	
+			$offset = JFactory::getConfig()->get('offset');	
+			//clean up and prepare for json
+			foreach($items as &$item){
+				unset($item->params);
+				if(!$showComments){
+					unset($item->discussion);
+				}
+
+				error_reporting(E_ERROR | E_PARSE);
+				if($item->reported != "0000-00-00 00:00:00"){
+					$date_reported = new DateTime($item->reported, new DateTimeZone($offset));
+					$date_reported->setTimezone(new DateTimeZone('UTC'));
+					$item->reported = $date_reported->format('Y-m-d H:i:s');
+				}
 				
-		//clean up and prepare for json
-		foreach($items as $item){
-			unset($item->params);
-			if(!$showComments)
-				unset($item->discussion);
-                        
-                        //$item->description = strip_tags(htmlspecialchars($item->description));
+				if($item->acknowledged != "0000-00-00 00:00:00"){
+					$date_acknowledged = new DateTime($item->acknowledged, new DateTimeZone($offset));
+					$date_acknowledged->setTimezone(new DateTimeZone('UTC'));
+					$item->acknowledged = $date_acknowledged->format('Y-m-d H:i:s');
+				}
+
+				if($item->closed != "0000-00-00 00:00:00"){
+					$date_closed = new DateTime($item->closed, new DateTimeZone($offset));
+					$date_closed->setTimezone(new DateTimeZone('UTC'));
+					$item->closed = $date_closed->format('Y-m-d H:i:s');
+				}
+				
+			}
+
 		}
-		//$document = &JFactory::getDocument();
-		//$document->setMimeEncoding('text/xml');		
+		
+
+	
 		echo json_encode($items);
 		return;
 	}	
@@ -166,9 +216,27 @@ class ImprovemycityControllerMobile extends JController
 		if(!$showComments)
 			unset($item->discussion);
 
-                //$item->description = strip_tags(htmlspecialchars($item->description));
-        
-        
+		//get timezone from Joomla settings	
+		$offset = JFactory::getConfig()->get('offset');
+		error_reporting(E_ERROR | E_PARSE);
+		if($item->reported != "0000-00-00 00:00:00"){			
+			$date_reported = new DateTime($item->reported, new DateTimeZone($offset));
+			$date_reported->setTimezone(new DateTimeZone('UTC'));
+			$item->reported = $date_reported->format('Y-m-d H:i:s');
+		}
+
+		if($item->acknowledged != "0000-00-00 00:00:00"){
+			$date_acknowledged = new DateTime($item->acknowledged, new DateTimeZone($offset));
+			$date_acknowledged->setTimezone(new DateTimeZone('UTC'));
+			$item->acknowledged = $date_acknowledged->format('Y-m-d H:i:s');
+		}
+
+		if($item->closed != "0000-00-00 00:00:00"){			
+			$date_closed = new DateTime($item->closed, new DateTimeZone($offset));
+			$date_closed->setTimezone(new DateTimeZone('UTC'));
+			$item->closed = $date_closed->format('Y-m-d H:i:s');
+		}		
+
 		echo json_encode($item);
 		return;
 	}	
@@ -178,7 +246,12 @@ class ImprovemycityControllerMobile extends JController
 		//get model and categories
 		$model = $this->getModel('issues');
 		$categories	= $model->getSimpleCategories();
-		
+		foreach ($categories as &$category) {
+			$r = json_decode($category[4]);
+			$path = rawurlencode($r->image);
+			$category[4] = str_replace('%2F', '/', $path);
+			
+		}
 		echo json_encode($categories);
 		return;
 	}
@@ -372,6 +445,30 @@ class ImprovemycityControllerMobile extends JController
 	//User registration using JUser
 	public function registerUser()
 	{
+
+        $language = JRequest::getVar('language');
+	    switch($language){
+			case 'en':
+			$language = 'en-GB';break;
+			case 'es':
+			$language = 'es-ES';break;
+			case 'pt':
+			$language = 'pt-PT';break;
+			case 'el':
+			$language = 'el-GR';break;
+			default:
+			$languge = 'en-GB';break;
+		}
+
+		$lang = JFactory::getLanguage();
+
+		$extension = 'com_improvemycity';
+		$base_dir = JPATH_SITE;
+		$language_tag = $language;
+		$reload = true;
+		$lang->load($extension, $base_dir, $language_tag, $reload);
+		//print_r($lang);
+
 		if(JComponentHelper::getParams('com_users')->get('allowUserRegistration') == 0) {
 			echo 'Registration is not allowed in this site';
 			return;
@@ -421,8 +518,8 @@ class ImprovemycityControllerMobile extends JController
 		} elseif ($return === 'useractivate') {
 			$ret = JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE');
 		} else {
-			$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
-			//$ret = $return;
+			//$ret = JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS');
+			$ret = $return;
 		}		
 		
 		echo $ret;

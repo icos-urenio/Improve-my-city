@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <div id="imc-wrapper">
 	<div id="imc-print-header"><a href="javascript:window.print()"><i class="icon-print"></i> <?php echo JText::_('COM_IMPROVEMYCITY_CLICK_TO_PRINT');?></a></div>
 	
-	<h1><?php echo 'ff'.JText::_('COM_IMPROVEMYCITY'); ?></h1>
+	<h1><?php echo JText::_('COM_IMPROVEMYCITY'); ?></h1>
 	<h2>#<?php echo $this->item->id . ' ' . $this->item->title;?></h2>
 	
 	<?php 

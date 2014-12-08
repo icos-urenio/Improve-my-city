@@ -31,7 +31,7 @@ class ImprovemycityModelUsers extends JModel
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 		
-		$query->select('id, password');
+		$query->select('id, password, block');
 		$query->from('#__users');
 		$query->where('username=' . $db->Quote($username));
 		//$query->where('block=0');
@@ -42,6 +42,11 @@ class ImprovemycityModelUsers extends JModel
 		 
 		if ($result)
 		{
+			if($result->block == 1){
+				$response['error_message'] = JText::_('JGLOBAL_AUTH_FAIL');
+				return $response;
+			}
+
 			$match = JUserHelper::verifyPassword($password, $result->password, $result->id);
 		
 			if ($match === true)

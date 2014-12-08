@@ -179,6 +179,27 @@ class ImprovemycityModelIssue extends JModelItem
 		return $results;
 	}
 	
+	public function getIsMyIssue($pk = 0, $userid = null)
+	{
+		
+		$pk = (!empty($pk)) ? $pk : (int) $id = $this->getState('improvemycity.id');
+		$db = $this->getDbo();	
+		
+		if($userid == null){
+			$user =& JFactory::getUser();
+			$userid = (int) $user->id;
+		}
+				
+		$query	= $db->getQuery(true);
+		$query->select('COUNT(*)');
+		$query->from('`#__improvemycity` AS a');		
+		$query->where('a.userid = '.(int) $userid.' AND a.id='.(int) $pk);
+		$db->setQuery( $query );
+		$results = $db->loadResult();
+	
+		return $results;
+	}
+
 	public function getCategoryIcon($pk = 0)
 	{
 		$pk = (!empty($pk)) ? $pk : (int) $id = $this->getState('improvemycity.id');
