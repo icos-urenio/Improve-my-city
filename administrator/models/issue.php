@@ -102,6 +102,35 @@ class ImprovemycityModelIssue extends JModelAdmin
 		return $item;
 	}
 
+	public static function getFeedRoute($url)
+	{
+		// Get the router.
+		$app = JApplication::getInstance('site');
+		$router = $app->getRouter();
+		// Make sure that we have our router
+		if (!$router)
+		{
+			return null;
+		}
+		if ((strpos($url, '&') !== 0) && (strpos($url, 'index.php') !== 0))
+		{
+			return $url;
+		}
+		// Build route.
+		$uri = $router->build($url);
+		$url = $uri->toString(array('path', 'query', 'fragment'));
+		// Replace spaces.
+		$url = preg_replace('/\s/u', '%20', $url);
+		// Replace '/administrator'
+		$url = str_replace('/administrator', '', $url);
+		// Strip .html, just in case
+		$url = str_replace('.html', '', $url);
+		$url = htmlspecialchars($url);
+		return $url;
+	}
+
+
+
 
 	/**
 	 * Prepare and sanitise the table prior to saving.
@@ -149,12 +178,11 @@ class ImprovemycityModelIssue extends JModelAdmin
 			$table->userid = $user->id;  
 		}
 		
-		/*TODO: Tide up the following lines to a decent member function */
-		
-		//get link to the issue
-		$issueLink = 'http://' . $_SERVER['HTTP_HOST'] . JRoute::_('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
-		$issueLink = str_replace('/administrator', '', $issueLink);
-		
+		//SEF links
+		$issueLink = $this->getFeedRoute('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
+		$issueLink = 'http://' . $_SERVER['HTTP_HOST'] . $issueLink;
+		$issueLink = str_replace('component/improvemycity', 'abisa', $issueLink);
+
 		$user =& JFactory::getUser($table->userid);	//user's id needed. Not admin's
 		$app = JFactory::getApplication();
 		$mailfrom	= $app->getCfg('mailfrom');
