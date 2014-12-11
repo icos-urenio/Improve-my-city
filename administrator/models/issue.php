@@ -178,12 +178,28 @@ class ImprovemycityModelIssue extends JModelAdmin
 			$table->userid = $user->id;  
 		}
 		
+
+		//all notifications should be sent on user's language if set
+		$user =& JFactory::getUser($table->userid);	//user's id needed. Not admin's
+		
+		$lang = JFactory::getLanguage();
+		$user_language = $user->getParam('language');
+		if($user_language == ''){
+			$user_language = JComponentHelper::getParams('com_languages')->get('site'); //the site's default
+		}
+
 		//SEF links
 		$issueLink = $this->getFeedRoute('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
 		$issueLink = 'http://' . $_SERVER['HTTP_HOST'] . $issueLink;
-		$issueLink = str_replace('component/improvemycity', 'abisa', $issueLink);
+		$issueLink = str_replace('component/improvemycity', 'imc', $issueLink);
+		$issueLink .= '?language='.$user_language;
 
-		$user =& JFactory::getUser($table->userid);	//user's id needed. Not admin's
+		$extension = 'com_improvemycity';
+		$base_dir = JPATH_ADMINISTRATOR;
+		$reload = true;
+		$lang->load($extension, $base_dir, $user_language, $reload);		
+
+
 		$app = JFactory::getApplication();
 		$mailfrom	= $app->getCfg('mailfrom');
 		$fromname	= $app->getCfg('fromname');

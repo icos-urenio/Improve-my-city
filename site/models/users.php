@@ -113,7 +113,7 @@ class ImprovemycityModelUsers extends JModel
 	}
 
 	
-	public function register($temp, $skipActivation = false)
+	public function register($temp, $skipActivation = false, $language = 'en-GB')
 	{
 
 		$config = JFactory::getConfig();
@@ -139,12 +139,11 @@ class ImprovemycityModelUsers extends JModel
 		// Prepare the data for the user object.
 		$data['email']		= $data['email1'];
 		$data['password']	= $data['password1'];
-		
-                //skipActivation set true ONLY from registerSocialUser (mobile.json.php)
-        
-                $useractivation = ($skipActivation ? 0 : $params->get('useractivation'));
-		
-                $sendpassword = $params->get('sendpassword', 1);
+		$data['params'] = array('admin_language'=>$language, 'language'=>$language);
+
+        //skipActivation set true ONLY from registerSocialUser (mobile.json.php)
+        $useractivation = ($skipActivation ? 0 : $params->get('useractivation'));
+        $sendpassword = $params->get('sendpassword', 1);
 	
 		// Check if the user needs to activate their account.
 		if ($skipActivation == true){
@@ -171,7 +170,7 @@ class ImprovemycityModelUsers extends JModel
 		if (!$user->save()) {
 			$this->setError(JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError()));
 			return $user->getError();
-                        //return JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError());
+            //return JText::sprintf('COM_USERS_REGISTRATION_SAVE_FAILED', $user->getError());
 		}
 	
 		// Compile the notification mail values.

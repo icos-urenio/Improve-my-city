@@ -457,7 +457,7 @@ class ImprovemycityControllerMobile extends JController
 			case 'el':
 			$language = 'el-GR';break;
 			default:
-			$languge = 'en-GB';break;
+			$language = 'en-GB';break;
 		}
 
 		$lang = JFactory::getLanguage();
@@ -479,7 +479,7 @@ class ImprovemycityControllerMobile extends JController
 		$email = JRequest::getVar('email');
 		$encrypted_password = JRequest::getVar('password');		
 		
-		if(empty($email) || empty($encrypted_password) || empty($name) || empty($username)){
+		if($email == '' || $encrypted_password == '' || $name == '' || $username == ''){
 			echo 'Wrong input';
 			return;
 		}
@@ -510,7 +510,7 @@ class ImprovemycityControllerMobile extends JController
 
 		//create user with username = email, email = email, password = decrypted_password, name = name; 
 		$temp = array('username' => $username, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
-		$return = $model->register($temp);
+		$return = $model->register($temp, $language);
 		
 		$ret = '';
 		if ($return === 'adminactivate'){
