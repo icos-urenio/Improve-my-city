@@ -86,7 +86,7 @@ if($this->popupmodal == 1)
 						
 						<?php if(!$this->guest) : ?>
 							<!--<button class="btn btn-success imc-right" onclick="if(checkAddress()){Joomla.submitbutton('issue.save')} else {alert(wrong_address);}return(false);"><i class="icon-ok icon-white"></i> <?php echo JText::_('POST_ISSUE') ?></button>-->
-							<button class="btn btn-success imc-right" onclick="checkAddress();return(false);"><i class="icon-ok icon-white"></i> <?php echo JText::_('POST_ISSUE') ?></button>
+							<button class="btn btn-success imc-right" onclick="Joomla.submitbutton('issue.save');"><i class="icon-ok icon-white"></i> <?php echo JText::_('POST_ISSUE') ?></button>
 						<?php else : //NOT LOGGED USER?>
 							<button class="btn btn-success disabled imc-right" disabled="disabled"><i class="icon-ok icon-white"></i> <?php echo JText::_('POST_ISSUE');?></button>
 						<?php endif; ?>
