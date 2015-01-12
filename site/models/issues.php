@@ -322,8 +322,4 @@ class ImprovemycityModelIssues extends JModelList
 		
 		return $result;
 	}
-}
-
-
-
-
+} 

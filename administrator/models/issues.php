@@ -31,7 +31,8 @@ class ImprovemycityModelissues extends JModelList
 				'id', 'a.id',
 				'title', 'a.title',      
 				'state', 'a.state',
-				'catid', 'a.catid'                
+				'catid', 'a.catid',                
+				'currentstatus', 'a.currentstatus'                
             );
         }
 
@@ -59,7 +60,10 @@ class ImprovemycityModelissues extends JModelList
 		
 		$categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
 		$this->setState('filter.category_id', $categoryId);		
-		
+
+        $currentstatus = $app->getUserStateFromRequest($this->context.'.filter.currentstatus', 'filter_currentstatus');
+        $this->setState('filter.currentstatus', $currentstatus);
+
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_improvemycity');
 		$this->setState('params', $params);
@@ -83,6 +87,7 @@ class ImprovemycityModelissues extends JModelList
 	{
 		// Compile the store id.
 		$id.= ':' . $this->getState('filter.search');
+		$id.= ':' . $this->getState('filter.currentstatus');
 		$id.= ':' . $this->getState('filter.state');
 		$id	.= ':'.$this->getState('filter.published');
 		$id	.= ':'.$this->getState('filter.category_id');
@@ -140,7 +145,12 @@ class ImprovemycityModelissues extends JModelList
 		elseif ($published === '') {
 			$query->where('(a.state = 0 OR a.state = 1)');
 		}		
-		
+
+		// Filter by currentstatus
+		$currentstatus = $this->getState('filter.currentstatus');
+		if (is_numeric($currentstatus) && $currentstatus > 0) {
+			$query->where('a.currentstatus IN ('.$currentstatus.')');
+		} 		
 		
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering');

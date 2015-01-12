@@ -38,7 +38,12 @@ $saveOrder	= $listOrder == 'a.ordering';
 				<option value=""><?php echo JText::_('JOPTION_SELECT_CATEGORY');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('category.options', 'com_improvemycity'), 'value', 'text', $this->state->get('filter.category_id'));?>
 			</select>			
-
+            <select name="filter_currentstatus" class="inputbox" onchange="this.form.submit()">
+				<option value="0"><?php echo JText::_('COM_IMPROVEMYCITY_SELECT_CURRENTSTATUS');?></option>
+                    <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 1 ?'selected="selected"':'');?> value="1"><?php echo JText::_('JOPTION_SELECT_STATUS_OPEN');?></option>
+                    <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 2 ?'selected="selected"':'');?> value="2"><?php echo JText::_('JOPTION_SELECT_STATUS_ACK');?></option>
+                    <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 3 ?'selected="selected"':'');?> value="3"><?php echo JText::_('JOPTION_SELECT_STATUS_CLOSED');?></option>
+			</select>
 		</div>
 	</fieldset>
 	<div class="clr"> </div>
