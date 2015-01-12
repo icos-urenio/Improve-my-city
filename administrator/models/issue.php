@@ -261,5 +261,52 @@ class ImprovemycityModelIssue extends JModelAdmin
 
 			}
 		}//settings
+
+		/* (Β) ****---  Send notification mail if category is changed to the appropriate admins (as defined on -updated- category note field)*/		
+		if($mailCategoryChangeAdmins == 1) {
+			
+			//get the recipient email(s) as defined in the "note" field of the selected category
+			$issueRecipient = '';
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			$query->select('a.note as note, a.title as title');
+			$query->from('`#__categories` AS a');
+			
+			$query->where('a.id = ' . $table->catid);		
+			$db->setQuery($query);
+			//$result = $db->loadResult();
+			$row = $db->loadAssoc();
+			if(!empty($row)){
+				$issueRecipient = $row['note'];
+				$arRecipient = explode(";",$issueRecipient);
+				$arRecipient = array_filter($arRecipient, 'strlen');
+				$categoryTitle = $row['title'];
+			}
+
+			if($prevCatid != -1 && !empty($issueRecipient)) {	//only if category note contains email(s) and category has changed
+				$subject = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_ISSUE_SUBJECT'), $user->name, $user->email);
+				
+				$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_ISSUE_BODY')
+						, $categoryTitle
+						, $table->title
+						, $table->address
+						, $issueLink
+						, $issueLink
+						, $issueAdminLink
+						, $issueAdminLink );
+				
+				$mail = JFactory::getMailer();
+				$mail->isHTML(true);
+				$mail->Encoding = 'base64';
+				foreach($arRecipient as $recipient)
+					$mail->addRecipient($recipient);
+				$mail->setSender(array($mailfrom, $fromname));
+				$mail->setSubject($sitename.': '.$subject);
+				$mail->setBody($body);
+				$sent = $mail->Send();
+			}
+
+		}//settings
+
 	}
 }
