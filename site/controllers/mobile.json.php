@@ -510,7 +510,7 @@ class ImprovemycityControllerMobile extends JController
 
 		//create user with username = email, email = email, password = decrypted_password, name = name; 
 		$temp = array('username' => $username, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
-		$return = $model->register($temp, $language);
+		$return = $model->register($temp, false, $language);
 		
 		$ret = '';
 		if ($return === 'adminactivate'){
@@ -536,12 +536,27 @@ class ImprovemycityControllerMobile extends JController
 			return;
 		}
 	
+        $language = JRequest::getVar('language');
+	    switch($language){
+			case 'en':
+			$language = 'en-GB';break;
+			case 'es':
+			$language = 'es-ES';break;
+			case 'pt':
+			$language = 'pt-PT';break;
+			case 'el':
+			$language = 'el-GR';break;
+			default:
+			$language = 'en-GB';break;
+		}
+
+
 		$username = JRequest::getVar('username');
 		$name = JRequest::getVar('name');
 		$email = JRequest::getVar('email');
 		$encrypted_password = JRequest::getVar('password');
 	
-		if(empty($email) || empty($encrypted_password) || empty($name) || empty($username)){
+		if($email == '' || $encrypted_password == '' || $name == '' || $username == ''){
 			echo 'Wrong input';
 			return;
 		}
@@ -572,7 +587,7 @@ class ImprovemycityControllerMobile extends JController
 	
 		//create user with username = email, email = email, password = decrypted_password, name = name;
 		$temp = array('username' => $username, 'email1' => $email, 'password1' => $decrypted_password, 'name' => $name);
-		$return = $model->register($temp, true); //true means skip activation
+		$return = $model->register($temp, true, $language); //true means skip activation
 	
 		$ret = '';
 		if ($return === 'adminactivate'){
