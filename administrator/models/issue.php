@@ -191,8 +191,10 @@ class ImprovemycityModelIssue extends JModelAdmin
 		//SEF links
 		$issueLink = $this->getFeedRoute('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
 		$issueLink = 'http://' . $_SERVER['HTTP_HOST'] . $issueLink;
-		$issueLink = str_replace('component/improvemycity', 'imc', $issueLink);
+		$issueLink = str_replace('component/improvemycity', 'abisa', $issueLink);
 		$issueLink .= '?language='.$user_language;
+
+		$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&task=issue.edit&id='.$table->id.'&language='.$user_language; 
 
 		$extension = 'com_improvemycity';
 		$base_dir = JPATH_ADMINISTRATOR;
@@ -283,7 +285,7 @@ class ImprovemycityModelIssue extends JModelAdmin
 				$categoryTitle = $row['title'];
 			}
 
-			if($prevCatid != -1 && !empty($issueRecipient)) {	//only if category note contains email(s) and category has changed
+			if($prevCatid != $table->catid && !empty($issueRecipient)) {	//only if category note contains email(s) and category has changed
 				$subject = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_ISSUE_SUBJECT'), $user->name, $user->email);
 				
 				$body = sprintf(JText::_('COM_IMPROVEMYCITY_MAIL_ADMINS_NEW_ISSUE_BODY')
