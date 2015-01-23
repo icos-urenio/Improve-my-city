@@ -84,7 +84,7 @@ class ImprovemycityModelAddissue extends ImprovemycityModelIssue
 		$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&task=issue.edit&id='.$id; 
 		
 		
-		$user = JFactory::getUser();
+		$user = JFactory::getUser($data['userid']);
 		$app = JFactory::getApplication();
 		$mailfrom	= $app->getCfg('mailfrom');
 		$fromname	= $app->getCfg('fromname');
