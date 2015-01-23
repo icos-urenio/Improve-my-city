@@ -265,7 +265,7 @@ class ImprovemycityModelIssue extends JModelAdmin
 		}//settings
 
 		/* (Β) ****---  Send notification mail if category is changed to the appropriate admins (as defined on -updated- category note field)*/		
-		if($mailCategoryChangeAdmins == 1) {
+		if($mailCategoryChangeAdmins == 1 && isset($table->id)) {
 			
 			//get the recipient email(s) as defined in the "note" field of the selected category
 			$issueRecipient = '';
