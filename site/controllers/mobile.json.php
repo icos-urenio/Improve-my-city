@@ -70,7 +70,7 @@ class ImprovemycityControllerMobile extends JController
 		//get model and items
 		$items = array();
 		if( ($x0up != 99999.0) && ($x0down != 99999.0) && ($y0up != 99999.0) && ($y0down != 99999.0)){
-			$model = $this->getModel('issues');
+			$model = $this->getModel('issues','',array('ignore_request' => true));;
 			$items	= $model->getItemsInBoundaries($x0up, $x0down, $y0up, $y0down, $limit);
 
 			//get timezone from Joomla settings	
@@ -100,7 +100,7 @@ class ImprovemycityControllerMobile extends JController
 			}			
 		}
 		else {
-			$model = $this->getModel('issues');
+			$model = $this->getModel('issues','',array('ignore_request' => true));
 			$items	= $model->getItems();
 
 			//get timezone from Joomla settings	
