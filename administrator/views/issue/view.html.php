@@ -225,12 +225,12 @@ class ImprovemycityViewIssue extends JView
 			  
 			  // Update current position info.
 			  updateMarkerPosition(latLng);
-			  geocodePosition(latLng);
+			  //geocodePosition(latLng);
 			  
 			  // Add dragging event listeners.
 			  google.maps.event.addListener(marker, 'dragstart', function() {
 				infowindow.close();
-				updateMarkerAddress('".JText::_('COM_IMPROVEMYCITY_MOVING')."');
+				//updateMarkerAddress('".JText::_('COM_IMPROVEMYCITY_MOVING')."');
 			  });
 			  
 			  google.maps.event.addListener(marker, 'drag', function() {
