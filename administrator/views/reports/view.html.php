@@ -20,7 +20,7 @@ class ImprovemycityViewReports extends JView
 	protected $items;
 	protected $pagination;
 	protected $state;        
-        
+	protected $statistics;        
         
 	/**
 	 * Display the view
@@ -29,6 +29,7 @@ class ImprovemycityViewReports extends JView
 	{
 		$this->state = $this->get('State');
 		$this->items = $this->get('Items');
+		$this->statistics = $this->get('Statistics');
 		$this->pagination = $this->get('Pagination');                
 
 		$canDo = ImprovemycityHelper::getActions();

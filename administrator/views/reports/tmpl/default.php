@@ -23,17 +23,18 @@ $saveOrder	= $listOrder == 'a.ordering';
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
 			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('Search'); ?>" />
+		    <div style="display:inline;"><span style="float:left;padding: 7px 5px 0 5px;">FROM:</span><?php echo JHtml::calendar($this->state->get('filter.from'), 'filter_from', 'filter_from');?></div>
+            <div style="display:inline;"><span style="float:left;padding: 7px 5px 0 5px;">TO:</span><?php echo JHtml::calendar($this->state->get('filter.to'), 'filter_to', 'filter_to');?></div>
 			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
 			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
                         
-                        <select name="filter_currentstatus" class="inputbox" onchange="this.form.submit()">
-				<option value="<?php echo $this->escape($this->state->get('filter.currentstatus')); ?>"><?php echo JText::_('COM_IMPROVEMYCITY_SELECT_CURRENTSTATUS');?></option>
-				<?php //echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true);?>
-                                <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 1 ?'selected="selected"':'');?> value="1"><?php echo JText::_('JOPTION_SELECT_STATUS_OPEN');?></option>
-                                <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 2 ?'selected="selected"':'');?> value="2"><?php echo JText::_('JOPTION_SELECT_STATUS_ACK');?></option>
-                                <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 3 ?'selected="selected"':'');?> value="3"><?php echo JText::_('JOPTION_SELECT_STATUS_CLOSED');?></option>
+            <select name="filter_currentstatus" class="inputbox" onchange="this.form.submit()">
+				<option value=""><?php echo JText::_('COM_IMPROVEMYCITY_SELECT_CURRENTSTATUS');?></option>
+                <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 1 ?'selected="selected"':'');?> value="1"><?php echo JText::_('JOPTION_SELECT_STATUS_OPEN');?></option>
+                <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 2 ?'selected="selected"':'');?> value="2"><?php echo JText::_('JOPTION_SELECT_STATUS_ACK');?></option>
+                <option <?php echo ($this->escape($this->state->get('filter.currentstatus')) == 3 ?'selected="selected"':'');?> value="3"><?php echo JText::_('JOPTION_SELECT_STATUS_CLOSED');?></option>
 			</select>
                      
 			<select name="filter_category_id" class="inputbox" onchange="this.form.submit()">
@@ -42,6 +43,16 @@ $saveOrder	= $listOrder == 'a.ordering';
 			</select>			
 
 		</div>
+		<div class="clr"> </div>
+		<div class="statistics">
+			<p style="padding-top: 20px; font-weight: bold;">
+			<?php echo JText::_('JOPTION_SELECT_STATUS_OPEN');?>: <?php echo $this->statistics['open'] ;?><br />
+			<?php echo JText::_('JOPTION_SELECT_STATUS_ACK');?>: <?php echo $this->statistics['ack'] ;?><br />
+			<?php echo JText::_('JOPTION_SELECT_STATUS_CLOSED');?>: <?php echo $this->statistics['closed'] ;?><br />
+			------------------------------<br />
+			<?php echo JText::_('COM_IMPROVEMYCITY_TITLE_ITEMS'); ?>: <?php echo $this->statistics['closed']+$this->statistics['ack']+$this->statistics['open'] ;?><br />			
+			</p>
+		</div>		
 	</fieldset>
 	<div class="clr"> </div>
 	<?php if(empty($this->items)) {echo '<strong>'.JText::_('COM_IMPROVEMYCITY_NO_ISSUES_YET').'</strong>'; }?>

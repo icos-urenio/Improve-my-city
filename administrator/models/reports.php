@@ -33,7 +33,7 @@ class ImprovemycityModelReports extends JModelList
 				'state', 'a.state',
 				'improvemycityid', 'a.improvemycityid',
 				'catid', 'a.catid',
-                                'currentstatus', 'a.currentstatus'
+                'currentstatus', 'a.currentstatus'
                 );
         }
 
@@ -59,8 +59,8 @@ class ImprovemycityModelReports extends JModelList
                 //$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
 		//$this->setState('filter.state', $published);
                 
-                $currentstatus = $app->getUserStateFromRequest($this->context.'.filter.currentstatus', 'filter_currentstatus');
-                $this->setState('filter.currentstatus', $currentstatus);
+        $currentstatus = $app->getUserStateFromRequest($this->context.'.filter.currentstatus', 'filter_currentstatus');
+        $this->setState('filter.currentstatus', $currentstatus);
                 
 		$categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
 		$this->setState('filter.category_id', $categoryId);
@@ -129,6 +129,13 @@ class ImprovemycityModelReports extends JModelList
 			}
 		}
 
+		// Filter by date
+		if($this->getState('filter.from')){
+			$query->where('a.reported > "'. $this->getState('filter.from'). '"');
+		}
+		if($this->getState('filter.to')){
+			$query->where('a.reported < "'. $this->getState('filter.to'). '"');
+		}
                 
 		// Filter by category
 		$categoryId = $this->getState('filter.category_id');
@@ -151,4 +158,28 @@ class ImprovemycityModelReports extends JModelList
 
 		return $query;
 	}
+
+	public function getStatistics() 
+	{
+		$db		= $this->getDbo();
+		$query = $this->getListQuery();
+		$query->select ('COUNT(a.currentstatus) AS counter');
+		$query->group('a.currentstatus');
+		$db->setQuery($query);
+		$results = $db->loadAssocList();
+
+		$counter1 = 0;
+		$counter2 = 0;
+		$counter3 = 0;
+		foreach ($results as $result) {
+			if($result['currentstatus'] == 1)
+				$counter1 = $result['counter'];
+			if($result['currentstatus'] == 2)
+				$counter2 = $result['counter'];
+			if($result['currentstatus'] == 3)
+				$counter3 = $result['counter'];
+		}
+		$ret = array('open'=>$counter1, 'ack'=>$counter2, 'closed'=>$counter3);
+		return $ret;
+	}	
 }
