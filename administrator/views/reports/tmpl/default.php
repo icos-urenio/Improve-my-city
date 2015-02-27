@@ -27,6 +27,7 @@ $saveOrder	= $listOrder == 'a.ordering';
             <div style="display:inline;"><span style="float:left;padding: 7px 5px 0 5px;">TO:</span><?php echo JHtml::calendar($this->state->get('filter.to'), 'filter_to', 'filter_to');?></div>
 			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
 			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<button type="button" onclick="document.location.href='index.php?option=com_improvemycity&view=reports&format=print'"><?php echo JText::_('PRINT'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
                         
