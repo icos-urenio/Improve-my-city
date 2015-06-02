@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `#__improvemycity_comments` (
   `description` text NOT NULL,
   `image` varchar(255) NOT NULL,
   `state` tinyint(3) NOT NULL DEFAULT '1',
+  `reported` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 
