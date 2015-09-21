@@ -191,7 +191,7 @@ class ImprovemycityModelIssue extends JModelAdmin
 		//SEF links
 		$issueLink = $this->getFeedRoute('index.php?option=com_improvemycity&view=issue&issue_id='.$table->id);
 		$issueLink = 'http://' . $_SERVER['HTTP_HOST'] . $issueLink;
-		$issueLink = str_replace('component/improvemycity', 'abisa', $issueLink);
+		//$issueLink = str_replace('component/improvemycity', '<your alias here>', $issueLink);
 		$issueLink .= '?language='.$user_language;
 
 		$issueAdminLink = JURI::root() . 'administrator/' . 'index.php?option=com_improvemycity&view=issue&task=issue.edit&id='.$table->id.'&language='.$user_language; 

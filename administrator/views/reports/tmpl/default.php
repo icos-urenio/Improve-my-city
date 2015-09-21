@@ -72,7 +72,7 @@ $saveOrder	= $listOrder == 'a.ordering';
       <th><?php echo JText::_('JOPTION_SELECT_STATUS_ACK');?></th>
       <th><?php echo JText::_('JOPTION_SELECT_STATUS_CLOSED');?></th>
       <th><?php echo JText::_('JGLOBAL_USERNAME');?></th>
-
+      <th><?php echo JText::_('JGLOBAL_USERNAME');?></th>
     </tr>
   </thead>
   <tbody>
@@ -102,7 +102,11 @@ $saveOrder	= $listOrder == 'a.ordering';
 		echo '<td>'.$item->acknowledged . '</td>' . "\n";
 		echo '<td>'.$item->closed . '</td>' . "\n";
 		echo '<td>'.$item->username . '</td>' . "\n";
-		
+		  $issuer = &JFactory::getUser($item->userid);
+  		  $userProfile = JUserHelper::getProfile( $item->userid );
+		  $issuer->address = $userProfile->profile['address1'];
+		  $issuer->phone = $userProfile->profile['phone'];
+		echo '<td>'.$issuer->email . '<br />'. $issuer->address . '<br />'. $issuer->phone . '</td>' . "\n";		
 		echo '</tr>'; 
 		
 	}

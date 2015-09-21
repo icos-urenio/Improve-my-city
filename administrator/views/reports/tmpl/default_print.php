@@ -32,6 +32,7 @@ JHtml::_('behavior.tooltip');
       <th><?php echo JText::_('JOPTION_SELECT_STATUS_ACK');?></th>
       <th><?php echo JText::_('JOPTION_SELECT_STATUS_CLOSED');?></th>
       <th><?php echo JText::_('JGLOBAL_USERNAME');?></th>
+      <th><?php echo JText::_('JGLOBAL_USERNAME');?></th>
     </tr>
   </thead>
   <tbody>
