@@ -231,7 +231,7 @@ class ImprovemycityModelIssue extends JModelAdmin
 				$mailer->Encoding = 'base64';
 				$mail->addRecipient($issueRecipient);
 				$mail->setSender(array($mailfrom, $fromname));
-				$mail->setSubject($sitename.': '.$subject);
+				$mail->setSubject($sitename.': '.$subject. ' #'. $table->id);
 
 				if($prev == 1 && $current == 2){	//open to ack
 					
